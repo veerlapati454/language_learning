@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Sign In — Wordtrail</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,6 +41,7 @@
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
+      width: 100%;
     }
     a { color: inherit; }
 
@@ -62,6 +63,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      width: 100%;
     }
     .streak-bar i { color: var(--stamp); }
 
@@ -72,6 +74,7 @@
       z-index: 0;
       overflow: hidden;
       pointer-events: none;
+      width: 100%;
     }
     .field-dots {
       position: absolute;
@@ -111,6 +114,7 @@
       min-height: calc(100vh - 32px);
       display: flex;
       align-items: stretch;
+      width: 100%;
     }
 
     .info-panel {
@@ -121,6 +125,8 @@
       padding: 60px 64px;
       border-right: 1px solid var(--line);
       position: relative;
+      width: 100%;
+      overflow: hidden;
     }
     .info-panel .unit-tag {
       font-family: var(--mono);
@@ -239,6 +245,7 @@
       align-items: center;
       justify-content: center;
       padding: 48px 40px;
+      width: 100%;
     }
 
     .back-home {
@@ -402,6 +409,15 @@
       font-size: 0.68rem;
       color: var(--ink-dim);
       letter-spacing: 0.04em;
+      width: 100%;
+    }
+
+    /* --- Overflow fixes --- */
+    .stage, .info-panel, .login-panel, .login-card, .role-selector, .form-group, .input-wrapper {
+      overflow-x: hidden;
+    }
+    .login-card {
+      max-width: 100%;
     }
 
     @media (max-width: 980px) {
@@ -409,11 +425,16 @@
       .info-panel { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 44px; }
       .login-panel { flex: 1; padding: 40px 24px 56px; }
       .readout-grid { max-width: 100%; }
+      .login-panel { flex: unset; width: 100%; }
+      .login-card { max-width: 440px; margin: 0 auto; }
     }
     @media (max-width: 480px) {
       .login-card { padding: 30px 22px 26px; }
       .form-options { flex-direction: column; gap: 12px; align-items: flex-start; }
       .back-home { position: static; display: inline-flex; margin: 16px 0 0 24px; }
+      .info-panel { padding: 60px 20px 32px; }
+      .readout-grid { grid-template-columns: 1fr 1fr; }
+      .postmark { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {

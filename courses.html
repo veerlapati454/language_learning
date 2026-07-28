@@ -1,702 +1,715 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Courses — Fluenta</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Courses — Fluenta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+  <style>
+    /* ---------- Reset & Base ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ---------- Reset & Base ---------- */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+      background-color: #F5F5F5;
+      color: #111111;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
 
-  html {
-    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
-    background-color: #F5F5F5;
-    color: #111111;
-    -webkit-font-smoothing: antialiased;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
-  }
+    body {
+      font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+      background-color: #F5F5F5;
+      color: #111111;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      overflow-x: hidden;
+    }
 
-  body {
-    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
-    background-color: #F5F5F5;
-    color: #111111;
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
 
-  img { display: block; max-width: 100%; }
-  a { text-decoration: none; color: inherit; }
-  ul { list-style: none; }
-  button { font-family: inherit; cursor: pointer; border: none; }
+    .wrap { max-width: 88rem; margin: 0 auto; padding: 0 1rem; }
+    @media (min-width: 640px) { .wrap { padding: 0 1.5rem; } }
+    @media (min-width: 1024px) { .wrap { padding: 0 2rem; } }
 
-  .wrap { max-width: 88rem; margin: 0 auto; }
+    @media (prefers-reduced-motion: reduce) {
+      [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
+    }
 
-  @media (prefers-reduced-motion: reduce) {
-    [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
-  }
+    /* ---------- Buttons ---------- */
+    .pill-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+      padding: 8px 8px 8px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+      white-space: nowrap;
+    }
+    .pill-btn:hover { background: #333333; }
+    .pill-btn .arrow-circle {
+      display: flex; align-items: center; justify-content: center;
+      background: #ffffff; border-radius: 999px; padding: 10px; width: 20px; height: 20px;
+      flex-shrink: 0;
+    }
+    .pill-btn.small { font-size: 15px; padding: 6px 6px 6px 22px; }
+    .pill-btn.small .arrow-circle { width: 16px; height: 16px; padding: 8px; }
+    .pill-btn.light { background: #ffffff; color: #111111; }
+    .pill-btn.light .arrow-circle { background: #111111; }
+    .pill-btn.light .arrow-circle svg path { stroke: #ffffff; }
+    .pill-btn.light:hover { background: #ececec; }
 
-  /* ---------- Buttons ---------- */
-  .pill-btn {
-    display: inline-flex; align-items: center; gap: 12px;
-    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
-    padding: 8px 8px 8px 28px; border-radius: 999px; transition: background-color 0.2s ease;
-  }
-  .pill-btn:hover { background: #333333; }
-  .pill-btn .arrow-circle {
-    display: flex; align-items: center; justify-content: center;
-    background: #ffffff; border-radius: 999px; padding: 10px; width: 20px; height: 20px;
-  }
-  .pill-btn.small { font-size: 15px; padding: 6px 6px 6px 22px; }
-  .pill-btn.small .arrow-circle { width: 16px; height: 16px; padding: 8px; }
-  .pill-btn.light { background: #ffffff; color: #111111; }
-  .pill-btn.light .arrow-circle { background: #111111; }
-  .pill-btn.light .arrow-circle svg path { stroke: #ffffff; }
-  .pill-btn.light:hover { background: #ececec; }
+    .nav-cta {
+      background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+      padding: 10px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: #333333; }
 
-  .nav-cta {
-    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
-    padding: 10px 28px; border-radius: 999px; transition: background-color 0.2s ease;
-  }
-  .nav-cta:hover { background: #333333; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: rgba(17,17,17,0.6); font-size: 14px; font-weight: 500;
+      margin-bottom: 10px; letter-spacing: 0.02em; text-transform: uppercase;
+    }
+    .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: #E3A548; }
 
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: rgba(17,17,17,0.6); font-size: 14px; font-weight: 500;
-    margin-bottom: 10px; letter-spacing: 0.02em; text-transform: uppercase;
-  }
-  .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: #E3A548; }
+    /* ---------- Navbar ---------- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 70;
+      padding: 16px 24px;
+      background: rgba(245, 245, 245, 0.85);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+      transform: translateZ(0);
+    }
+    nav.nav-scrolled {
+      background: rgba(245, 245, 245, 0.92);
+      border-bottom-color: rgba(17, 17, 17, 0.06);
+      box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
+      padding: 12px 24px;
+    }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; }
+    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .nav-logo {
+      width: clamp(48px, 8vw, 100px); height: clamp(28px, 4.4vw, 54px); flex-shrink: 0;
+      border-radius: 80px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
+    @media (max-width: 860px) { .nav-logo { width: 90px; height: 50px; } }
+    @media (max-width: 480px) { .nav-logo { width: 80px; height: 46px; } }
+    .nav-right { display: flex; align-items: center; gap: 32px; margin-left: auto; }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 15px; font-weight: 500; color: #4b4b4b; transition: color 0.2s ease; position: relative; }
+    .nav-center a::after {
+      content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1.5px;
+      background: linear-gradient(90deg, #E3A548, #2B2644);
+      transition: width 0.3s cubic-bezier(0.65,0,0.35,1);
+    }
+    .nav-center a:hover { color: #111111; }
+    .nav-center a:hover::after { width: 100%; }
+    .nav-center a.current { color: #111111; }
+    .nav-center a.current::after { width: 100%; }
+    @media (max-width: 860px) { .nav-center { display: none; } }
+    @media (max-width: 860px) { .nav-right .nav-cta { display: none; } }
 
-  /* ---------- Navbar ---------- */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 70;
-    padding: 16px 24px;
-    background: rgba(245, 245, 245, 0.85);
-    backdrop-filter: blur(10px) saturate(140%);
-    -webkit-backdrop-filter: blur(10px) saturate(140%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
-    transform: translateZ(0);
-  }
-  nav.nav-scrolled {
-    background: rgba(245, 245, 245, 0.92);
-    border-bottom-color: rgba(17, 17, 17, 0.06);
-    box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
-    padding: 12px 24px;
-  }
-  .nav-row { display: flex; align-items: center; justify-content: space-between; }
-  .nav-left { display: flex; align-items: center; gap: 12px; }
-  .nav-logo {
-    width: clamp(48px, 8vw, 100px); height: clamp(28px, 4.4vw, 54px); flex-shrink: 0;
-    border-radius: 80px; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
-  }
-  .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
-  @media (max-width: 860px) { .nav-logo { width: 90px; height: 50px; } }
-  @media (max-width: 480px) { .nav-logo { width: 80px; height: 46px; } }
-  .nav-right { display: flex; align-items: center; gap: 32px; margin-left: auto; }
-  .nav-center { display: flex; gap: 32px; }
-  .nav-center a { font-size: 15px; font-weight: 500; color: #4b4b4b; transition: color 0.2s ease; position: relative; }
-  .nav-center a::after {
-    content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1.5px;
-    background: linear-gradient(90deg, #E3A548, #2B2644);
-    transition: width 0.3s cubic-bezier(0.65,0,0.35,1);
-  }
-  .nav-center a:hover { color: #111111; }
-  .nav-center a:hover::after { width: 100%; }
-  .nav-center a.current { color: #111111; }
-  .nav-center a.current::after { width: 100%; }
-  @media (max-width: 860px) { .nav-center { display: none; } }
-  @media (max-width: 860px) { .nav-right .nav-cta { display: none; } }
+    /* ---------- Hamburger ---------- */
+    .nav-hamburger {
+      display: none; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 999px;
+      background: #111111; flex-shrink: 0; position: relative; z-index: 60;
+    }
+    @media (max-width: 860px) { .nav-hamburger { display: flex; } }
+    .nav-hamburger .burger-line {
+      position: absolute; width: 18px; height: 1.6px; background: #ffffff; border-radius: 2px;
+      transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), opacity 0.2s ease, top 0.3s cubic-bezier(0.65,0,0.35,1);
+    }
+    .nav-hamburger .burger-line:nth-child(1) { top: 16px; }
+    .nav-hamburger .burger-line:nth-child(2) { top: 22px; }
+    .nav-hamburger .burger-line:nth-child(3) { top: 28px; }
+    .nav-hamburger.is-open .burger-line:nth-child(1) { top: 22px; transform: rotate(45deg); }
+    .nav-hamburger.is-open .burger-line:nth-child(2) { opacity: 0; }
+    .nav-hamburger.is-open .burger-line:nth-child(3) { top: 22px; transform: rotate(-45deg); }
 
-  /* ---------- Hamburger ---------- */
-  .nav-hamburger {
-    display: none; align-items: center; justify-content: center;
-    width: 44px; height: 44px; border-radius: 999px;
-    background: #111111; flex-shrink: 0; position: relative; z-index: 60;
-  }
-  @media (max-width: 860px) { .nav-hamburger { display: flex; } }
-  .nav-hamburger .burger-line {
-    position: absolute; width: 18px; height: 1.6px; background: #ffffff; border-radius: 2px;
-    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), opacity 0.2s ease, top 0.3s cubic-bezier(0.65,0,0.35,1);
-  }
-  .nav-hamburger .burger-line:nth-child(1) { top: 16px; }
-  .nav-hamburger .burger-line:nth-child(2) { top: 22px; }
-  .nav-hamburger .burger-line:nth-child(3) { top: 28px; }
-  .nav-hamburger.is-open .burger-line:nth-child(1) { top: 22px; transform: rotate(45deg); }
-  .nav-hamburger.is-open .burger-line:nth-child(2) { opacity: 0; }
-  .nav-hamburger.is-open .burger-line:nth-child(3) { top: 22px; transform: rotate(-45deg); }
+    /* ---------- Mobile menu panel ---------- */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 55;
+      padding: 88px 24px 28px;
+      background: rgba(245, 245, 245, 0.99);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      box-shadow: 0 24px 48px rgba(17,17,17,0.14);
+      visibility: hidden; opacity: 0; transform: translateY(-16px);
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.65,0,0.35,1), visibility 0.35s;
+      height: 100vh; height: 100svh; overflow-y: auto;
+      flex-direction: column; justify-content: center;
+    }
+    @media (max-width: 860px) { .mobile-menu { display: flex; } }
+    .mobile-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
+    .mobile-menu-links { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; margin-bottom: 20px; flex: 1; }
+    .mobile-menu-links a {
+      font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+      padding: 10px 4px; border-bottom: 1px solid rgba(17,17,17,0.08);
+      color: #111111; text-align: center; width: 100%;
+    }
+    .mobile-menu-links a:last-child { border-bottom: none; }
+    .mobile-menu .nav-cta { display: flex; justify-content: center; width: 100%; text-align: center; }
+    body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
 
-  /* ---------- Mobile menu panel ---------- */
-  .mobile-menu {
-    display: none; position: fixed; inset: 0; z-index: 55;
-    padding: 88px 24px 28px;
-    background: rgba(245, 245, 245, 0.99);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    box-shadow: 0 24px 48px rgba(17,17,17,0.14);
-    visibility: hidden; opacity: 0; transform: translateY(-16px);
-    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.65,0,0.35,1), visibility 0.35s;
-    height: 100vh; height: 100svh; overflow-y: auto;
-    flex-direction: column; justify-content: center;
-  }
-  @media (max-width: 860px) { .mobile-menu { display: flex; } }
-  .mobile-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
-  .mobile-menu-links { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; margin-bottom: 20px; flex: 1; }
-  .mobile-menu-links a {
-    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
-    padding: 10px 4px; border-bottom: 1px solid rgba(17,17,17,0.08);
-    color: #111111; text-align: center; width: 100%;
-  }
-  .mobile-menu-links a:last-child { border-bottom: none; }
-  .mobile-menu .nav-cta { display: flex; justify-content: center; width: 100%; text-align: center; }
-  body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
+    section { background: #F5F5F5; padding: 96px 0; }
+    @media (max-width: 768px) { section { padding: 64px 0; } }
 
-  section { background: #F5F5F5; padding: 96px 24px; }
-  @media (max-width: 768px) { section { padding: 64px 20px; } }
+    .grad-text {
+      background: linear-gradient(100deg, #111111 40%, #E3A548 65%, #2B2644 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      background-size: 220% 100%;
+    }
 
-  .grad-text {
-    background: linear-gradient(100deg, #111111 40%, #E3A548 65%, #2B2644 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    background-size: 220% 100%;
-  }
+    /* ---------- Courses hero ---------- */
+    .courses-hero { position: relative; min-height: 62svh; display: flex; flex-direction: column; justify-content: flex-end; isolation: isolate; padding: 0; }
+    .courses-hero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #0c0a10; }
+    .courses-hero-media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); }
+    .courses-hero-media::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(9,8,14,0.72) 0%, rgba(9,8,14,0.3) 35%, rgba(9,8,14,0.92) 100%);
+    }
+    .courses-hero-inner { position: relative; z-index: 2; width: 100%; max-width: 88rem; margin: 0 auto; padding: 140px 24px 64px; }
+    @media (min-width: 640px) { .courses-hero-inner { padding: 140px 40px 64px; } }
+    @media (min-width: 1024px) { .courses-hero-inner { padding: 140px 48px 64px; } }
+    .courses-hero-inner .eyebrow { color: rgba(255,255,255,0.72); }
+    .courses-hero-inner .eyebrow .dot { background: #E3A548; }
+    .courses-hero-inner h1 { color: #ffffff; font-size: clamp(34px, 5vw, 62px); font-weight: 600; line-height: 1.05; letter-spacing: -0.04em; max-width: 780px; margin-bottom: 20px; }
+    .courses-hero-inner p { font-family: 'Inter', sans-serif; color: rgba(255,255,255,0.8); font-size: 17px; line-height: 1.6; max-width: 480px; margin-bottom: 28px; }
+    @media (max-width: 768px) { .courses-hero-inner { padding: 120px 20px 48px; } }
 
-  /* ---------- Courses hero ---------- */
-  .courses-hero { position: relative; min-height: 62svh; display: flex; flex-direction: column; justify-content: flex-end; isolation: isolate; padding: 0; }
-  .courses-hero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #0c0a10; }
-  .courses-hero-media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); }
-  .courses-hero-media::before {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(9,8,14,0.72) 0%, rgba(9,8,14,0.3) 35%, rgba(9,8,14,0.92) 100%);
-  }
-  .courses-hero-inner { position: relative; z-index: 2; width: 100%; max-width: 88rem; margin: 0 auto; padding: 140px 48px 64px; }
-  .courses-hero-inner .eyebrow { color: rgba(255,255,255,0.72); }
-  .courses-hero-inner .eyebrow .dot { background: #E3A548; }
-  .courses-hero-inner h1 { color: #ffffff; font-size: clamp(34px, 5vw, 62px); font-weight: 600; line-height: 1.05; letter-spacing: -0.04em; max-width: 780px; margin-bottom: 20px; }
-  .courses-hero-inner p { font-family: 'Inter', sans-serif; color: rgba(255,255,255,0.8); font-size: 17px; line-height: 1.6; max-width: 480px; margin-bottom: 28px; }
-  @media (max-width: 768px) { .courses-hero-inner { padding: 120px 24px 48px; } }
+    /* ---------- Language grid ---------- */
+    .lang-head { max-width: 620px; margin-bottom: 48px; padding: 0 1rem; }
+    @media (min-width: 640px) { .lang-head { padding: 0; } }
+    .lang-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+    .lang-head p { color: rgba(17,17,17,0.6); font-size: 16px; line-height: 1.6; max-width: 480px; }
+    .lang-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 640px) { .lang-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .lang-grid { grid-template-columns: repeat(3, 1fr); } }
+    .lang-card { position: relative; border-radius: 22px; overflow: hidden; min-height: 300px; isolation: isolate; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .lang-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px rgba(17,17,17,0.16); }
+    .lang-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .lang-card::before {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(9,8,14,0.05) 0%, rgba(9,8,14,0.15) 45%, rgba(9,8,14,0.86) 100%);
+    }
+    .lang-card-body { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; }
+    .lang-card-body h3 { color: #ffffff; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
+    .lang-card-body span { color: rgba(255,255,255,0.72); font-size: 13.5px; }
+    .lang-card-levels { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .lang-card-levels span {
+      background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px; padding: 4px 10px; font-size: 11.5px; color: rgba(255,255,255,0.85); font-weight: 500;
+    }
 
-  /* ---------- Language grid ---------- */
-  .lang-head { max-width: 620px; margin-bottom: 48px; }
-  .lang-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
-  .lang-head p { color: rgba(17,17,17,0.6); font-size: 16px; line-height: 1.6; max-width: 480px; }
-  .lang-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-  @media (min-width: 640px) { .lang-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1024px) { .lang-grid { grid-template-columns: repeat(3, 1fr); } }
-  .lang-card { position: relative; border-radius: 22px; overflow: hidden; min-height: 300px; isolation: isolate; transition: transform 0.25s ease, box-shadow 0.25s ease; }
-  .lang-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px rgba(17,17,17,0.16); }
-  .lang-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-  .lang-card::before {
-    content: ""; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(180deg, rgba(9,8,14,0.05) 0%, rgba(9,8,14,0.15) 45%, rgba(9,8,14,0.86) 100%);
-  }
-  .lang-card-body { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; }
-  .lang-card-body h3 { color: #ffffff; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
-  .lang-card-body span { color: rgba(255,255,255,0.72); font-size: 13.5px; }
-  .lang-card-levels { display: flex; gap: 6px; margin-top: 12px; }
-  .lang-card-levels span {
-    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 999px; padding: 4px 10px; font-size: 11.5px; color: rgba(255,255,255,0.85); font-weight: 500;
-  }
+    /* ---------- Method / path split (reused pattern) ---------- */
+    .split-section { background: #111111; }
+    .split-row { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+    @media (min-width: 860px) { .split-row { grid-template-columns: 1fr 1fr; gap: 64px; } }
+    .split-media { border-radius: 28px; overflow: hidden; min-height: 440px; order: 2; }
+    .split-media img { width: 100%; height: 100%; object-fit: cover; min-height: 440px; }
+    @media (min-width: 860px) { .split-media { order: 1; } .split-copy { order: 2; } }
+    .split-copy .eyebrow { color: rgba(255,255,255,0.55); }
+    .split-copy h2 { color: #ffffff; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 24px; }
+    .split-list { display: flex; flex-direction: column; gap: 22px; }
+    .split-item { display: flex; gap: 16px; align-items: flex-start; }
+    .split-icon {
+      flex-shrink: 0; width: 38px; height: 38px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+      display: flex; align-items: center; justify-content: center; font-size: 16px; color: #ffffff; font-weight: 600;
+    }
+    .split-item h4 { color: #ffffff; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
+    .split-item p { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.55; max-width: 380px; }
 
-  /* ---------- Method / path split (reused pattern) ---------- */
-  .split-section { background: #111111; }
-  .split-row { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
-  @media (min-width: 860px) { .split-row { grid-template-columns: 1fr 1fr; gap: 64px; } }
-  .split-media { border-radius: 28px; overflow: hidden; min-height: 440px; order: 2; }
-  .split-media img { width: 100%; height: 100%; object-fit: cover; min-height: 440px; }
-  @media (min-width: 860px) { .split-media { order: 1; } .split-copy { order: 2; } }
-  .split-copy .eyebrow { color: rgba(255,255,255,0.55); }
-  .split-copy h2 { color: #ffffff; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 24px; }
-  .split-list { display: flex; flex-direction: column; gap: 22px; }
-  .split-item { display: flex; gap: 16px; align-items: flex-start; }
-  .split-icon {
-    flex-shrink: 0; width: 38px; height: 38px; border-radius: 999px;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
-    display: flex; align-items: center; justify-content: center; font-size: 16px; color: #ffffff; font-weight: 600;
-  }
-  .split-item h4 { color: #ffffff; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
-  .split-item p { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.55; max-width: 380px; }
+    /* ---------- Course levels ---------- */
+    .levels-head { max-width: 620px; margin-bottom: 48px; padding: 0 1rem; }
+    @media (min-width: 640px) { .levels-head { padding: 0; } }
+    .levels-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+    .levels-head p { color: rgba(17,17,17,0.6); font-size: 16px; line-height: 1.6; max-width: 480px; }
+    .levels-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 640px) { .levels-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .levels-grid { grid-template-columns: repeat(4, 1fr); } }
+    .level-card { background: #ffffff; border-radius: 20px; padding: 28px; border: 1px solid rgba(0,0,0,0.06); transition: box-shadow 0.3s ease; }
+    .level-card:hover { box-shadow: 0 24px 48px rgba(17,17,17,0.1); }
+    .level-tag {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 999px; background: #F5F5F5;
+      font-size: 14px; font-weight: 700; margin-bottom: 22px; color: #2B2644;
+    }
+    .level-card h3 { font-size: 18.5px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .level-card p { font-size: 14.5px; color: rgba(17,17,17,0.6); line-height: 1.6; margin-bottom: 14px; }
+    .level-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .level-meta span { font-size: 12px; font-weight: 600; color: #E3A548; background: rgba(227,165,72,0.1); padding: 4px 10px; border-radius: 999px; }
 
-  /* ---------- Course levels ---------- */
-  .levels-head { max-width: 620px; margin-bottom: 48px; }
-  .levels-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
-  .levels-head p { color: rgba(17,17,17,0.6); font-size: 16px; line-height: 1.6; max-width: 480px; }
-  .levels-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 640px) { .levels-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1024px) { .levels-grid { grid-template-columns: repeat(4, 1fr); } }
-  .level-card { background: #ffffff; border-radius: 20px; padding: 28px; border: 1px solid rgba(0,0,0,0.06); transition: box-shadow 0.3s ease; }
-  .level-card:hover { box-shadow: 0 24px 48px rgba(17,17,17,0.1); }
-  .level-tag {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 44px; height: 44px; border-radius: 999px; background: #F5F5F5;
-    font-size: 14px; font-weight: 700; margin-bottom: 22px; color: #2B2644;
-  }
-  .level-card h3 { font-size: 18.5px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; }
-  .level-card p { font-size: 14.5px; color: rgba(17,17,17,0.6); line-height: 1.6; margin-bottom: 14px; }
-  .level-meta { display: flex; gap: 8px; flex-wrap: wrap; }
-  .level-meta span { font-size: 12px; font-weight: 600; color: #E3A548; background: rgba(227,165,72,0.1); padding: 4px 10px; border-radius: 999px; }
+    /* ---------- Spotlight split (light bg) ---------- */
+    .spotlight-row { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+    @media (min-width: 860px) { .spotlight-row { grid-template-columns: 1fr 1fr; gap: 64px; } }
+    .spotlight-media { border-radius: 28px; overflow: hidden; min-height: 400px; }
+    .spotlight-media img { width: 100%; height: 100%; object-fit: cover; min-height: 400px; }
+    .spotlight-copy h2 { font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 20px; }
+    .spotlight-copy p { color: rgba(17,17,17,0.65); font-size: 16.5px; line-height: 1.7; max-width: 480px; margin-bottom: 20px; }
+    .spotlight-bullets { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .spotlight-bullets div { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: rgba(17,17,17,0.75); font-weight: 500; }
+    .spotlight-bullets div span.chk {
+      width: 20px; height: 20px; border-radius: 999px; background: #111111; color: #fff;
+      display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
+    }
 
-  /* ---------- Spotlight split (light bg) ---------- */
-  .spotlight-row { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
-  @media (min-width: 860px) { .spotlight-row { grid-template-columns: 1fr 1fr; gap: 64px; } }
-  .spotlight-media { border-radius: 28px; overflow: hidden; min-height: 400px; }
-  .spotlight-media img { width: 100%; height: 100%; object-fit: cover; min-height: 400px; }
-  .spotlight-copy h2 { font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 20px; }
-  .spotlight-copy p { color: rgba(17,17,17,0.65); font-size: 16.5px; line-height: 1.7; max-width: 480px; margin-bottom: 20px; }
-  .spotlight-bullets { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
-  .spotlight-bullets div { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: rgba(17,17,17,0.75); font-weight: 500; }
-  .spotlight-bullets div span.chk {
-    width: 20px; height: 20px; border-radius: 999px; background: #111111; color: #fff;
-    display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
-  }
+    /* ---------- Final CTA ---------- */
+    .mesh-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; pointer-events: none; will-change: transform; }
+    .final-cta .mesh-blob-a { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #E3A548, transparent 70%); top: -120px; left: -80px; }
+    .final-cta .mesh-blob-b { width: 460px; height: 460px; background: radial-gradient(circle at 60% 40%, #6C5CE7, transparent 70%); bottom: -160px; right: -100px; }
+    .final-cta { background: #111111; border-radius: 28px; margin: 0 1rem; padding: 80px 40px; text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
+    @media (max-width: 640px) { .final-cta { margin: 0 0.75rem; padding: 56px 20px; } }
+    .final-cta h2 { color: #ffffff; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 560px; position: relative; z-index: 1; }
+    .final-cta p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 420px; position: relative; z-index: 1; }
+    .final-cta .pill-btn.light { position: relative; z-index: 1; }
+    @media (max-width: 768px) {
+      .final-cta { padding: 48px 20px; border-radius: 20px; }
+      .final-cta h2 { font-size: 30px; }
+      .final-cta-section { padding-left: 0; padding-right: 0; }
+    }
+    @media (max-width: 480px) {
+      .final-cta { padding: 40px 16px; margin: 0 0.5rem; border-radius: 16px; }
+      .final-cta h2 { font-size: 26px; }
+    }
 
-  /* ---------- Final CTA ---------- */
-  .mesh-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; pointer-events: none; will-change: transform; }
-  .final-cta .mesh-blob-a { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #E3A548, transparent 70%); top: -120px; left: -80px; }
-  .final-cta .mesh-blob-b { width: 460px; height: 460px; background: radial-gradient(circle at 60% 40%, #6C5CE7, transparent 70%); bottom: -160px; right: -100px; }
-  .final-cta { background: #111111; border-radius: 28px; margin: 0 24px; padding: 80px 40px; text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
-  .final-cta h2 { color: #ffffff; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 560px; position: relative; z-index: 1; }
-  .final-cta p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 420px; position: relative; z-index: 1; }
-  .final-cta .pill-btn.light { position: relative; z-index: 1; }
-  @media (max-width: 768px) {
-    .final-cta { padding: 56px 24px; margin: 0; border-radius: 0; }
-    .final-cta h2 { font-size: 30px; }
-    .final-cta-section { padding-left: 0; padding-right: 0; }
-  }
+    /* ---------- Footer ---------- */
+    footer { background: #111111; padding: 72px 0 32px; }
+    .footer-top { display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 48px; }
+    @media (min-width: 640px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .footer-top { grid-template-columns: 1.3fr 0.8fr 0.9fr 1.1fr; } }
+    .footer-logo-placeholder { width: 100%; max-width: 220px; height: 72px; margin-bottom: 16px; overflow: hidden; }
+    .footer-logo-placeholder img { width: 100px; height: 100px; object-fit: contain; }
+    .footer-tag { color: rgba(255,255,255,0.5); font-size: 14px; max-width: 300px; line-height: 1.5; margin-bottom: 24px; }
+    .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14.5px; color: rgba(255,255,255,0.75); margin-bottom: 12px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: #ffffff; }
+    .footer-address { font-style: normal; color: rgba(255,255,255,0.75); font-size: 14.5px; line-height: 1.7; margin-bottom: 20px; }
+    .footer-social { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-social a {
+      width: 38px; height: 38px; border-radius: 999px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .footer-social a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
+    .footer-social svg path, .footer-social svg rect, .footer-social svg line, .footer-social svg circle { stroke: rgba(255,255,255,0.85); }
+    .footer-social svg circle[r="0.9"] { fill: rgba(255,255,255,0.85); stroke: none; }
+    .footer-newsletter { margin-top: 4px; }
+    .footer-newsletter-form { display: flex; gap: 8px; max-width: 320px; flex-wrap: wrap; }
+    .footer-newsletter-form input[type="email"] {
+      flex: 1; min-width: 180px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px; padding: 11px 16px; font-size: 14px; color: #ffffff; font-family: inherit;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .footer-newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+    .footer-newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(227,165,72,0.6); background: rgba(255,255,255,0.1); }
+    .footer-newsletter-form button {
+      flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px; background: #E3A548;
+      display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
+    }
+    .footer-newsletter-form button:hover { background: #f0b968; }
+    .footer-newsletter-note { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+    .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .footer-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
+    }
+    .footer-badge svg { flex-shrink: 0; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 16px; }
+    .footer-bottom span { color: rgba(255,255,255,0.4); font-size: 13.5px; }
+    .footer-legal-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .footer-legal-links a { color: rgba(255,255,255,0.45); font-size: 13.5px; transition: color 0.2s ease; }
+    .footer-legal-links a:hover { color: #ffffff; }
 
-  /* ---------- Footer ---------- */
-  footer { background: #111111; padding: 72px 24px 32px; }
-  .footer-top { display: grid; grid-template-columns: 1.3fr 0.8fr 0.9fr 1.1fr; gap: 40px; margin-bottom: 48px; }
-  @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr; row-gap: 44px; } }
-  @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; } }
-  .footer-logo-placeholder { width: 100%; max-width: 220px; height: 72px; margin-bottom: 16px; overflow: hidden; }
-  .footer-logo-placeholder img { width: 100px; height: 100px; object-fit: contain; }
-  .footer-tag { color: rgba(255,255,255,0.5); font-size: 14px; max-width: 300px; line-height: 1.5; margin-bottom: 24px; }
-  .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
-  .footer-col a { display: block; font-size: 14.5px; color: rgba(255,255,255,0.75); margin-bottom: 12px; transition: color 0.2s ease; }
-  .footer-col a:hover { color: #ffffff; }
-  .footer-address { font-style: normal; color: rgba(255,255,255,0.75); font-size: 14.5px; line-height: 1.7; margin-bottom: 20px; }
-  .footer-social { display: flex; align-items: center; gap: 12px; }
-  .footer-social a {
-    width: 38px; height: 38px; border-radius: 999px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-  }
-  .footer-social a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
-  .footer-social svg path, .footer-social svg rect, .footer-social svg line, .footer-social svg circle { stroke: rgba(255,255,255,0.85); }
-  .footer-social svg circle[r="0.9"] { fill: rgba(255,255,255,0.85); stroke: none; }
-  .footer-newsletter { margin-top: 4px; }
-  .footer-newsletter-form { display: flex; gap: 8px; max-width: 320px; }
-  .footer-newsletter-form input[type="email"] {
-    flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 999px; padding: 11px 16px; font-size: 14px; color: #ffffff; font-family: inherit;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-  }
-  .footer-newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
-  .footer-newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(227,165,72,0.6); background: rgba(255,255,255,0.1); }
-  .footer-newsletter-form button {
-    flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px; background: #E3A548;
-    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
-  }
-  .footer-newsletter-form button:hover { background: #f0b968; }
-  .footer-newsletter-note { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 10px; line-height: 1.5; }
-  .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-  .footer-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
-  }
-  .footer-badge svg { flex-shrink: 0; }
-  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 16px; }
-  .footer-bottom span { color: rgba(255,255,255,0.4); font-size: 13.5px; }
-  .footer-legal-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-  .footer-legal-links a { color: rgba(255,255,255,0.45); font-size: 13.5px; transition: color 0.2s ease; }
-  .footer-legal-links a:hover { color: #ffffff; }
+    .grain-overlay {
+      position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
 
-  .grain-overlay {
-    position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: 0.02;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+    .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 998; pointer-events: none; border-radius: 999px; transform: translate(-50%, -50%); }
+    .cursor-dot { width: 6px; height: 6px; background: #111111; }
+    .cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(17,17,17,0.35); transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease; }
+    .cursor-ring.is-active { width: 54px; height: 54px; border-color: #E3A548; background: rgba(227,165,72,0.08); }
+    @media (max-width: 860px), (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
 
-  .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 998; pointer-events: none; border-radius: 999px; transform: translate(-50%, -50%); }
-  .cursor-dot { width: 6px; height: 6px; background: #111111; }
-  .cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(17,17,17,0.35); transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease; }
-  .cursor-ring.is-active { width: 54px; height: 54px; border-color: #E3A548; background: rgba(227,165,72,0.08); }
-  @media (max-width: 860px), (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
-
-  .magnetic { display: inline-flex; }
-
-</style>
+    .magnetic { display: inline-flex; }
+  </style>
 </head>
 <body>
 
-  <div class="grain-overlay"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+<div class="grain-overlay"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 
-  <nav>
-    <div class="nav-row wrap">
-      <div class="nav-left">
-        <div class="nav-logo">
-          <a href="index.html"><img src="./assets/stack4.webp" alt="Logo placeholder" onerror="this.style.display='none'"></a>
-        </div>
-      </div>
-      <div class="nav-right">
-        <div class="nav-center">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="courses.html" class="current">Courses</a>
-          <a href="app.html">App</a>
-          <a href="blog.html">Blog</a>
-          <a href="pricing.html">Pricing</a>
-          <a href="faq.html">FAQ</a>
-          <a href="contact.html">Contact</a>
-        </div>
-        <a href="login.html" class="nav-cta magnetic">Start Learning</a>
-        <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-          <span class="burger-line"></span>
-          <span class="burger-line"></span>
-          <span class="burger-line"></span>
-        </button>
+<nav>
+  <div class="nav-row wrap">
+    <div class="nav-left">
+      <div class="nav-logo">
+        <a href="index.html"><img src="./assets/stack4.webp" alt="Logo placeholder" onerror="this.style.display='none'"></a>
       </div>
     </div>
-  </nav>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="courses.html">Courses</a>
-      <a href="app.html">App</a>
-      <a href="blog.html">Blog</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
+    <div class="nav-right">
+      <div class="nav-center">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html" class="current">Courses</a>
+        <a href="app.html">App</a>
+        <a href="blog.html">Blog</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="login.html" class="nav-cta magnetic">Start Learning</a>
+      <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
     </div>
-    <a href="login.html" class="nav-cta magnetic">Start Learning</a>
   </div>
+</nav>
 
-  <!-- ============ 1. COURSES HERO ============ -->
-  <section class="courses-hero" style="padding:0;">
-    <div class="courses-hero-media">
-      <img src="./assets/l30.webp" alt="Open notebook with language vocabulary and a cup of coffee" fetchpriority="high" decoding="async">
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="courses.html">Courses</a>
+    <a href="app.html">App</a>
+    <a href="blog.html">Blog</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="login.html" class="nav-cta magnetic">Start Learning</a>
+</div>
+
+<!-- ============ 1. COURSES HERO ============ -->
+<section class="courses-hero" style="padding:0;">
+  <div class="courses-hero-media">
+    <img src="./assets/l30.webp" alt="Open notebook with language vocabulary and a cup of coffee" fetchpriority="high" decoding="async">
+  </div>
+  <div class="courses-hero-inner">
+    <div class="eyebrow"><span class="dot"></span>Courses</div>
+    <h1>One method, every language you actually want to speak.</h1>
+    <p>Every Fluenta course follows the same structure — placement, daily adaptive lessons, and live conversation — whether you're learning your first language or your fifth.</p>
+    <a href="404.html" class="pill-btn magnetic">
+      Find your course
+      <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ 2. CHOOSE YOUR LANGUAGE ============ -->
+<section id="languages" data-aos="fade-up">
+  <div class="wrap">
+    <div class="lang-head" data-aos="fade-up">
+      <div class="eyebrow"><span class="dot"></span>Our Languages</div>
+      <h2>42 languages, six of our most loved</h2>
+      <p>Every course is built by native-speaking linguists and adapts to your level from the very first lesson.</p>
     </div>
-    <div class="courses-hero-inner">
-      <div class="eyebrow"><span class="dot"></span>Courses</div>
-      <h1>One method, every language you actually want to speak.</h1>
-      <p>Every Fluenta course follows the same structure — placement, daily adaptive lessons, and live conversation — whether you're learning your first language or your fifth.</p>
+    <div class="lang-grid">
+      <div class="lang-card" data-aos="fade-up" data-aos-delay="0">
+        <img src="./assets/l31.webp" alt="Colorful street in Barcelona, Spain" loading="lazy" decoding="async">
+        <div class="lang-card-body">
+          <h3>Spanish</h3>
+          <span>3.2M learners on Fluenta</span>
+          <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div>
+        </div>
+      </div>
+      <div class="lang-card" data-aos="fade-up" data-aos-delay="60">
+        <img src="./assets/l32.webp" alt="Eiffel Tower in Paris, France" loading="lazy" decoding="async">
+        <div class="lang-card-body">
+          <h3>French</h3>
+          <span>2.1M learners on Fluenta</span>
+          <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div>
+        </div>
+      </div>
+      <div class="lang-card" data-aos="fade-up" data-aos-delay="120">
+        <img src="./assets/l33.webp" alt="Street crossing in Tokyo, Japan at night" loading="lazy" decoding="async">
+        <div class="lang-card-body">
+          <h3>Japanese</h3>
+          <span>1.4M learners on Fluenta</span>
+          <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
+        </div>
+      </div>
+      <div class="lang-card" data-aos="fade-up" data-aos-delay="180">
+        <img src="./assets/l34.webp" alt="Neuschwanstein castle in Germany" loading="lazy" decoding="async">
+        <div class="lang-card-body">
+          <h3>German</h3>
+          <span>980K learners on Fluenta</span>
+          <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
+        </div>
+      </div>
+      <div class="lang-card" data-aos="fade-up" data-aos-delay="240">
+        <img src="./assets/l35.webp" alt="Canal in Venice, Italy" loading="lazy" decoding="async">
+        <div class="lang-card-body">
+          <h3>Italian</h3>
+          <span>870K learners on Fluenta</span>
+          <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
+        </div>
+      </div>
+      <div class="lang-card" data-aos="fade-up" data-aos-delay="300">
+        <img src="./assets/l36.webp" alt="Palace gate in Seoul, South Korea" loading="lazy" decoding="async">
+        <div class="lang-card-body">
+          <h3>Korean</h3>
+          <span>760K learners on Fluenta</span>
+          <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. HOW YOUR PATH WORKS ============ -->
+<section id="path" class="split-section" data-aos="fade-up">
+  <div class="wrap split-row">
+    <div class="split-media" data-aos="fade-right">
+      <img src="./assets/l37.webp" alt="Learner following a lesson path on a laptop" loading="lazy" decoding="async">
+    </div>
+    <div class="split-copy" data-aos="fade-left">
+      <div class="eyebrow"><span class="dot"></span>How Your Path Works</div>
+      <h2>Every course follows the same three stages</h2>
+      <div class="split-list">
+        <div class="split-item">
+          <div class="split-icon">1</div>
+          <div>
+            <h4>Placement check-in</h4>
+            <p>A short conversation-style check-in places you at the right level, so you never repeat what you already know.</p>
+          </div>
+        </div>
+        <div class="split-item">
+          <div class="split-icon">2</div>
+          <div>
+            <h4>Daily adaptive lessons</h4>
+            <p>Ten to fifteen minutes a day, resequenced around exactly what you get wrong, not a fixed unit order.</p>
+          </div>
+        </div>
+        <div class="split-item">
+          <div class="split-icon">3</div>
+          <div>
+            <h4>Weekly live practice</h4>
+            <p>Once your lessons unlock it, small-group conversation rooms turn recognition into real spoken fluency.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. COURSE LEVELS ============ -->
+<section id="levels" data-aos="fade-up">
+  <div class="wrap">
+    <div class="levels-head" data-aos="fade-up">
+      <div class="eyebrow"><span class="dot"></span>Course Levels</div>
+      <h2>Structured from your first word to your first debate</h2>
+      <p>Every language course is split into four levels, roughly mapped to the CEFR scale, so you always know what's next.</p>
+    </div>
+    <div class="levels-grid">
+      <div class="level-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="level-tag">A1</div>
+        <h3>Beginner</h3>
+        <p>Greetings, everyday phrases, and enough grammar to build your first real sentences.</p>
+        <div class="level-meta"><span>~40 hours</span></div>
+      </div>
+      <div class="level-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="level-tag">A2–B1</div>
+        <h3>Intermediate</h3>
+        <p>Hold a conversation about daily life, travel, and work without switching back to English.</p>
+        <div class="level-meta"><span>~70 hours</span></div>
+      </div>
+      <div class="level-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="level-tag">B2</div>
+        <h3>Advanced</h3>
+        <p>Follow native-speed conversation, opinions, and media without needing things repeated.</p>
+        <div class="level-meta"><span>~90 hours</span></div>
+      </div>
+      <div class="level-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="level-tag">C1</div>
+        <h3>Fluent</h3>
+        <p>Debate, negotiate, and joke in the language — the level most learners set out for.</p>
+        <div class="level-meta"><span>~120 hours</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. FEATURED COURSE SPOTLIGHT ============ -->
+<section id="spotlight" data-aos="fade-up">
+  <div class="wrap spotlight-row">
+    <div class="spotlight-media" data-aos="fade-right">
+      <img src="./assets/l38.webp" alt="Traveler reading a map on a stone street" loading="lazy" decoding="async">
+    </div>
+    <div class="spotlight-copy" data-aos="fade-left">
+      <div class="eyebrow"><span class="dot"></span>Featured Course</div>
+      <h2>Spanish for Travelers</h2>
+      <p>An intensive four-week path built for people with a trip on the calendar. You'll leave able to order, ask directions, and make small talk — no memorized phrasebook required.</p>
+      <div class="spotlight-bullets">
+        <div><span class="chk">✓</span>20 daily lessons, 12 minutes each</div>
+        <div><span class="chk">✓</span>3 live conversation rooms with native hosts</div>
+        <div><span class="chk">✓</span>Offline phrase pack for airport and transit</div>
+      </div>
       <a href="404.html" class="pill-btn magnetic">
-        Find your course
+        Start this course
         <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ 2. CHOOSE YOUR LANGUAGE ============ -->
-  <section id="languages" data-aos="fade-up">
-    <div class="wrap">
-      <div class="lang-head" data-aos="fade-up">
-        <div class="eyebrow"><span class="dot"></span>Our Languages</div>
-        <h2>42 languages, six of our most loved</h2>
-        <p>Every course is built by native-speaking linguists and adapts to your level from the very first lesson.</p>
-      </div>
-      <div class="lang-grid">
-        <div class="lang-card" data-aos="fade-up" data-aos-delay="0">
-          <img src="./assets/l31.webp" alt="Colorful street in Barcelona, Spain" loading="lazy" decoding="async">
-          <div class="lang-card-body">
-            <h3>Spanish</h3>
-            <span>3.2M learners on Fluenta</span>
-            <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div>
+<!-- ============ 6. LIVE CONVERSATION ROOMS ============ -->
+<section id="live-rooms" class="split-section" data-aos="fade-up">
+  <div class="wrap split-row">
+    <div class="split-media" data-aos="fade-right">
+      <img src="./assets/l39.webp" alt="Small group having a conversation over coffee" loading="lazy" decoding="async">
+    </div>
+    <div class="split-copy" data-aos="fade-left">
+      <div class="eyebrow"><span class="dot"></span>Live Conversation Rooms</div>
+      <h2>Practice out loud, every week, with a real native speaker</h2>
+      <div class="split-list">
+        <div class="split-item">
+          <div class="split-icon">💬</div>
+          <div>
+            <h4>Small groups only</h4>
+            <p>Rooms cap at six learners, so everyone actually gets to talk instead of just listening.</p>
           </div>
         </div>
-        <div class="lang-card" data-aos="fade-up" data-aos-delay="60">
-          <img src="./assets/l32.webp" alt="Eiffel Tower in Paris, France" loading="lazy" decoding="async">
-          <div class="lang-card-body">
-            <h3>French</h3>
-            <span>2.1M learners on Fluenta</span>
-            <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div>
+        <div class="split-item">
+          <div class="split-icon">🕒</div>
+          <div>
+            <h4>Every time zone, most hours</h4>
+            <p>New rooms open around the clock, hosted by native speakers from over 60 countries.</p>
           </div>
         </div>
-        <div class="lang-card" data-aos="fade-up" data-aos-delay="120">
-          <img src="./assets/l33.webp" alt="Street crossing in Tokyo, Japan at night" loading="lazy" decoding="async">
-          <div class="lang-card-body">
-            <h3>Japanese</h3>
-            <span>1.4M learners on Fluenta</span>
-            <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
-          </div>
-        </div>
-        <div class="lang-card" data-aos="fade-up" data-aos-delay="180">
-          <img src="./assets/l34.webp" alt="Neuschwanstein castle in Germany" loading="lazy" decoding="async">
-          <div class="lang-card-body">
-            <h3>German</h3>
-            <span>980K learners on Fluenta</span>
-            <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
-          </div>
-        </div>
-        <div class="lang-card" data-aos="fade-up" data-aos-delay="240">
-          <img src="./assets/l35.webp" alt="Canal in Venice, Italy" loading="lazy" decoding="async">
-          <div class="lang-card-body">
-            <h3>Italian</h3>
-            <span>870K learners on Fluenta</span>
-            <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
-          </div>
-        </div>
-        <div class="lang-card" data-aos="fade-up" data-aos-delay="300">
-          <img src="./assets/l36.webp" alt="Palace gate in Seoul, South Korea" loading="lazy" decoding="async">
-          <div class="lang-card-body">
-            <h3>Korean</h3>
-            <span>760K learners on Fluenta</span>
-            <div class="lang-card-levels"><span>Beginner</span><span>Intermediate</span></div>
+        <div class="split-item">
+          <div class="split-icon">🎓</div>
+          <div>
+            <h4>Matched to your level</h4>
+            <p>You're only ever grouped with learners at the same course level, so pacing stays comfortable.</p>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ 3. HOW YOUR PATH WORKS ============ -->
-  <section id="path" class="split-section" data-aos="fade-up">
-    <div class="wrap split-row">
-      <div class="split-media" data-aos="fade-right">
-        <img src="./assets/l37.webp" alt="Learner following a lesson path on a laptop" loading="lazy" decoding="async">
+<!-- ============ 7. FINAL CTA + FOOTER ============ -->
+<section class="final-cta-section" style="padding-top: 96px;" data-aos="fade-up">
+  <div class="final-cta" data-aos="zoom-in">
+    <div class="mesh-blob mesh-blob-a" id="ctaBlobA" style="opacity:0.4;"></div>
+    <div class="mesh-blob mesh-blob-b" id="ctaBlobB" style="opacity:0.3;"></div>
+    <h2>Pick a language. We'll handle the path.</h2>
+    <p>Join 12 million learners building real fluency, one daily lesson at a time.</p>
+    <a href="404.html" class="pill-btn light magnetic">
+      Create free account
+      <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<footer id="help" data-aos="fade-up">
+  <div class="wrap">
+    <div class="footer-top">
+      <div data-aos="fade-up">
+        <div class="footer-logo-placeholder">
+          <a href="index.html"><img src="./assets/stackly_logo.webp" alt="Your logo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></a>
+        </div>
+        <p class="footer-tag">An adaptive, reward-powered language platform built for real fluency. Learn 42 languages through daily lessons and live conversation with native speakers.</p>
+        <div class="footer-newsletter">
+          <form class="footer-newsletter-form" onsubmit="window.location.href='404.html'; return false;">
+            <input type="email" placeholder="Your email address" aria-label="Email address" required>
+            <button type="submit" aria-label="Subscribe to newsletter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </form>
+          <p class="footer-newsletter-note">One email a month with study tips and new language launches. Unsubscribe anytime.</p>
+        </div>
       </div>
-      <div class="split-copy" data-aos="fade-left">
-        <div class="eyebrow"><span class="dot"></span>How Your Path Works</div>
-        <h2>Every course follows the same three stages</h2>
-        <div class="split-list">
-          <div class="split-item">
-            <div class="split-icon">1</div>
-            <div>
-              <h4>Placement check-in</h4>
-              <p>A short conversation-style check-in places you at the right level, so you never repeat what you already know.</p>
-            </div>
-          </div>
-          <div class="split-item">
-            <div class="split-icon">2</div>
-            <div>
-              <h4>Daily adaptive lessons</h4>
-              <p>Ten to fifteen minutes a day, resequenced around exactly what you get wrong, not a fixed unit order.</p>
-            </div>
-          </div>
-          <div class="split-item">
-            <div class="split-icon">3</div>
-            <div>
-              <h4>Weekly live practice</h4>
-              <p>Once your lessons unlock it, small-group conversation rooms turn recognition into real spoken fluency.</p>
-            </div>
-          </div>
+
+      <div class="footer-col" data-aos="fade-up" data-aos-delay="80">
+        <h5>Quick Links</h5>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="app.html">App</a>
+        <a href="blog.html">Blog</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <div class="footer-col" data-aos="fade-up" data-aos-delay="140">
+        <h5>Resources</h5>
+        <a href="404.html">Help Center</a>
+        <a href="404.html">Community</a>
+        <a href="404.html">Learner Stories</a>
+        <a href="404.html">Careers</a>
+        <a href="404.html">Press Kit</a>
+        <a href="404.html">Partner With Us</a>
+      </div>
+
+      <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+        <h5>Contact</h5>
+        <address class="footer-address">
+          221B HITEX Avenue<br>
+          JUBILEE 400<br>
+          HYDERABAD<br>
+          <a href="mailto:hello@fluenta.com" style="display:inline; margin:0;">hello@fluenta.com</a><br>
+          <a href="tel:+914012345678" style="display:inline; margin:0;">+91 40 1234 5678</a>
+        </address>
+        <div class="footer-social">
+          <a href="404.html" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 8H13.5C12.6716 8 12 8.67157 12 9.5V11H15L14.5 14H12V21H9V14H7V11H9V9.5C9 7.01472 11.0147 5 13.5 5H15V8Z" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="404.html" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
+          </a>
+          <a href="404.html" aria-label="X / Twitter">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+          <a href="404.html" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1"/><path d="M11.5 17V13.2C11.5 11.6 12.5 10.6 13.9 10.6C15.2 10.6 16 11.5 16 13.2V17" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <div class="footer-badges">
+          <span class="footer-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12L11 14L15 10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            GDPR compliant
+          </span>
+          <span class="footer-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/></svg>
+            Secure payments
+          </span>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ============ 4. COURSE LEVELS ============ -->
-  <section id="levels" data-aos="fade-up">
-    <div class="wrap">
-      <div class="levels-head" data-aos="fade-up">
-        <div class="eyebrow"><span class="dot"></span>Course Levels</div>
-        <h2>Structured from your first word to your first debate</h2>
-        <p>Every language course is split into four levels, roughly mapped to the CEFR scale, so you always know what's next.</p>
-      </div>
-      <div class="levels-grid">
-        <div class="level-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="level-tag">A1</div>
-          <h3>Beginner</h3>
-          <p>Greetings, everyday phrases, and enough grammar to build your first real sentences.</p>
-          <div class="level-meta"><span>~40 hours</span></div>
-        </div>
-        <div class="level-card" data-aos="fade-up" data-aos-delay="80">
-          <div class="level-tag">A2–B1</div>
-          <h3>Intermediate</h3>
-          <p>Hold a conversation about daily life, travel, and work without switching back to English.</p>
-          <div class="level-meta"><span>~70 hours</span></div>
-        </div>
-        <div class="level-card" data-aos="fade-up" data-aos-delay="160">
-          <div class="level-tag">B2</div>
-          <h3>Advanced</h3>
-          <p>Follow native-speed conversation, opinions, and media without needing things repeated.</p>
-          <div class="level-meta"><span>~90 hours</span></div>
-        </div>
-        <div class="level-card" data-aos="fade-up" data-aos-delay="240">
-          <div class="level-tag">C1</div>
-          <h3>Fluent</h3>
-          <p>Debate, negotiate, and joke in the language — the level most learners set out for.</p>
-          <div class="level-meta"><span>~120 hours</span></div>
-        </div>
+    <div class="footer-bottom">
+      <span>© 2026 STACKLY, Inc. All rights reserved.</span>
+      <div class="footer-legal-links">
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms of Service</a>
+        <a href="404.html">Cookie Settings</a>
+        <a href="sitemap.html">Sitemap</a>
       </div>
     </div>
-  </section>
-
-  <!-- ============ 5. FEATURED COURSE SPOTLIGHT ============ -->
-  <section id="spotlight" data-aos="fade-up">
-    <div class="wrap spotlight-row">
-      <div class="spotlight-media" data-aos="fade-right">
-        <img src="./assets/l38.webp" alt="Traveler reading a map on a stone street" loading="lazy" decoding="async">
-      </div>
-      <div class="spotlight-copy" data-aos="fade-left">
-        <div class="eyebrow"><span class="dot"></span>Featured Course</div>
-        <h2>Spanish for Travelers</h2>
-        <p>An intensive four-week path built for people with a trip on the calendar. You'll leave able to order, ask directions, and make small talk — no memorized phrasebook required.</p>
-        <div class="spotlight-bullets">
-          <div><span class="chk">✓</span>20 daily lessons, 12 minutes each</div>
-          <div><span class="chk">✓</span>3 live conversation rooms with native hosts</div>
-          <div><span class="chk">✓</span>Offline phrase pack for airport and transit</div>
-        </div>
-        <a href="404.html" class="pill-btn magnetic">
-          Start this course
-          <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 6. LIVE CONVERSATION ROOMS ============ -->
-  <section id="live-rooms" class="split-section" data-aos="fade-up">
-    <div class="wrap split-row">
-      <div class="split-media" data-aos="fade-right">
-        <img src="./assets/l39.webp" alt="Small group having a conversation over coffee" loading="lazy" decoding="async">
-      </div>
-      <div class="split-copy" data-aos="fade-left">
-        <div class="eyebrow"><span class="dot"></span>Live Conversation Rooms</div>
-        <h2>Practice out loud, every week, with a real native speaker</h2>
-        <div class="split-list">
-          <div class="split-item">
-            <div class="split-icon">💬</div>
-            <div>
-              <h4>Small groups only</h4>
-              <p>Rooms cap at six learners, so everyone actually gets to talk instead of just listening.</p>
-            </div>
-          </div>
-          <div class="split-item">
-            <div class="split-icon">🕒</div>
-            <div>
-              <h4>Every time zone, most hours</h4>
-              <p>New rooms open around the clock, hosted by native speakers from over 60 countries.</p>
-            </div>
-          </div>
-          <div class="split-item">
-            <div class="split-icon">🎓</div>
-            <div>
-              <h4>Matched to your level</h4>
-              <p>You're only ever grouped with learners at the same course level, so pacing stays comfortable.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 7. FINAL CTA + FOOTER ============ -->
-  <section class="final-cta-section" style="padding-top: 96px;" data-aos="fade-up">
-    <div class="final-cta" data-aos="zoom-in">
-      <div class="mesh-blob mesh-blob-a" id="ctaBlobA" style="opacity:0.4;"></div>
-      <div class="mesh-blob mesh-blob-b" id="ctaBlobB" style="opacity:0.3;"></div>
-      <h2>Pick a language. We'll handle the path.</h2>
-      <p>Join 12 million learners building real fluency, one daily lesson at a time.</p>
-      <a href="404.html" class="pill-btn light magnetic">
-        Create free account
-        <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </a>
-    </div>
-  </section>
-
-  <footer id="help" data-aos="fade-up">
-    <div class="wrap">
-      <div class="footer-top">
-        <div data-aos="fade-up">
-          <div class="footer-logo-placeholder">
-            <a href="index.html"><img src="./assets/stackly_logo.webp" alt="Your logo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></a>
-          </div>
-          <p class="footer-tag">An adaptive, reward-powered language platform built for real fluency. Learn 42 languages through daily lessons and live conversation with native speakers.</p>
-          <div class="footer-newsletter">
-            <form class="footer-newsletter-form" onsubmit="window.location.href='404.html'; return false;">
-              <input type="email" placeholder="Your email address" aria-label="Email address" required>
-              <button type="submit" aria-label="Subscribe to newsletter">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </form>
-            <p class="footer-newsletter-note">One email a month with study tips and new language launches. Unsubscribe anytime.</p>
-          </div>
-        </div>
-
-        <div class="footer-col" data-aos="fade-up" data-aos-delay="80">
-          <h5>Quick Links</h5>
-          <a href="about.html">About</a>
-          <a href="courses.html">Courses</a>
-          <a href="app.html">App</a>
-          <a href="blog.html">Blog</a>
-          <a href="pricing.html">Pricing</a>
-          <a href="faq.html">FAQ</a>
-          <a href="contact.html">Contact</a>
-        </div>
-
-        <div class="footer-col" data-aos="fade-up" data-aos-delay="140">
-          <h5>Resources</h5>
-          <a href="404.html">Help Center</a>
-          <a href="404.html">Community</a>
-          <a href="404.html">Learner Stories</a>
-          <a href="404.html">Careers</a>
-          <a href="404.html">Press Kit</a>
-          <a href="404.html">Partner With Us</a>
-        </div>
-
-        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
-          <h5>Contact</h5>
-          <address class="footer-address">
-            221B HITEX Avenue<br>
-            JUBILEE 400<br>
-            HYDERABAD<br>
-            <a href="mailto:hello@fluenta.com" style="display:inline; margin:0;">hello@fluenta.com</a><br>
-            <a href="tel:+914012345678" style="display:inline; margin:0;">+91 40 1234 5678</a>
-          </address>
-          <div class="footer-social">
-            <a href="404.html" aria-label="Facebook">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 8H13.5C12.6716 8 12 8.67157 12 9.5V11H15L14.5 14H12V21H9V14H7V11H9V9.5C9 7.01472 11.0147 5 13.5 5H15V8Z" stroke-width="1.6" stroke-linejoin="round"/></svg>
-            </a>
-            <a href="404.html" aria-label="Instagram">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
-            </a>
-            <a href="404.html" aria-label="X / Twitter">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg>
-            </a>
-            <a href="404.html" aria-label="LinkedIn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1"/><path d="M11.5 17V13.2C11.5 11.6 12.5 10.6 13.9 10.6C15.2 10.6 16 11.5 16 13.2V17" stroke-width="1.6" stroke-linecap="round"/></svg>
-            </a>
-          </div>
-          <div class="footer-badges">
-            <span class="footer-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12L11 14L15 10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              GDPR compliant
-            </span>
-            <span class="footer-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/></svg>
-              Secure payments
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 STACKLY, Inc. All rights reserved.</span>
-        <div class="footer-legal-links">
-          <a href="404.html">Privacy Policy</a>
-          <a href="404.html">Terms of Service</a>
-          <a href="404.html">Cookie Settings</a>
-          <a href="sitemap.html">Sitemap</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  </div>
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -795,7 +808,6 @@
     if (reduceMotion) { forceRevealEverything(); return; }
 
     try {
-      /* Magnetic buttons */
       if (!isCoarse) {
         document.querySelectorAll('.magnetic').forEach(function (el) {
           var strength = 0.35;
@@ -810,7 +822,6 @@
         });
       }
 
-      /* Custom cursor */
       var dot = document.getElementById('cursorDot');
       var ring = document.getElementById('cursorRing');
       if (dot && ring && !isCoarse) {
@@ -827,7 +838,6 @@
         });
       } else if (dot && ring) { dot.style.display = 'none'; ring.style.display = 'none'; }
 
-      /* Ambient CTA blobs */
       gsap.set('.mesh-blob', { opacity: 0 });
       document.querySelectorAll('.final-cta .mesh-blob').forEach(function (blob, i) {
         gsap.to(blob, {
@@ -839,7 +849,6 @@
         });
       });
 
-      /* Universal section slide-in reveal */
       (function revealAllSections() {
         var DIST = 36;
         function fromVars(type) {
@@ -885,6 +894,5 @@
     }
   })();
 </script>
-
 </body>
 </html>
