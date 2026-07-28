@@ -622,7 +622,7 @@
 
           <!-- Submit -->
           <button type="submit" class="signup-btn" id="submitBtn">
-            <i class="fas fa-user-plus"></i> Create My Passport
+            <i class="fas fa-user-plus"></i> Create
           </button>
         </form>
 
@@ -804,7 +804,7 @@
         const isTermsValid = validateTerms();
 
         if (isNameValid && isUserValid && isEmailValid && isPassValid && isConfirmValid && isTermsValid) {
-          window.location.href = 'dashboard.html';
+          window.location.href = '404.html';
         } else {
           if (!isNameValid) { fullName.focus(); return; }
           if (!isUserValid) { username.focus(); return; }
