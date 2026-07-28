@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal — Fluenta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+<style>
+
+  /* ---------- Reset & Base ---------- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --paper: #FFFDF8;
+    --paper-warm: #FBF4E6;
+    --cork: #EAE2CC;
+    --cork-line: rgba(17,17,17,0.07);
+    --ink: #111111;
+    --gold: #E3A548;
+    --indigo: #2B2644;
+    --coral: #D96C4B;
+    --sky: #5B8FA8;
+    --sage: #6E8B6E;
+    --plum: #8A5C7C;
+  }
+
+  html {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+
+  .wrap { max-width: 88rem; margin: 0 auto; }
+  .hand { font-family: 'Caveat', cursive; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
+  }
+
+  /* ---------- Buttons ---------- */
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 8px 8px 28px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+  }
+  .pill-btn:hover { background: #333333; }
+  .pill-btn .arrow-circle {
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border-radius: 999px; padding: 10px; width: 20px; height: 20px;
+  }
+  .pill-btn.small { font-size: 15px; padding: 6px 6px 6px 22px; }
+  .pill-btn.small .arrow-circle { width: 16px; height: 16px; padding: 8px; }
+  .pill-btn.light { background: #ffffff; color: #111111; }
+  .pill-btn.light .arrow-circle { background: #111111; }
+  .pill-btn.light .arrow-circle svg path { stroke: #ffffff; }
+  .pill-btn.light:hover { background: #ececec; }
+
+  .nav-cta {
+    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+    padding: 10px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+  }
+  .nav-cta:hover { background: #333333; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(17,17,17,0.6);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: #E3A548; }
+
+  /* ---------- Navbar (unchanged across site) ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 70;
+    padding: 16px 24px;
+    background: rgba(245, 245, 245, 0.85);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    transform: translateZ(0);
+  }
+  nav.nav-scrolled {
+    background: rgba(245, 245, 245, 0.92);
+    border-bottom-color: rgba(17, 17, 17, 0.06);
+    box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
+    padding: 12px 24px;
+  }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; }
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .nav-logo {
+    width: clamp(48px, 8vw, 100px); height: clamp(28px, 4.4vw, 54px); flex-shrink: 0;
+    border-radius: 80px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
+  @media (max-width: 860px) { .nav-logo { width: 90px; height: 50px; } }
+  @media (max-width: 480px) { .nav-logo { width: 80px; height: 46px; } }
+  .nav-right { display: flex; align-items: center; gap: 32px; margin-left: auto; }
+  .nav-center { display: flex; gap: 32px; }
+  .nav-center a { font-size: 15px; font-weight: 500; color: #4b4b4b; transition: color 0.2s ease; position: relative; }
+  .nav-center a::after {
+    content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1.5px;
+    background: linear-gradient(90deg, #E3A548, #2B2644);
+    transition: width 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-center a:hover { color: #111111; }
+  .nav-center a:hover::after { width: 100%; }
+  .nav-center a.is-active { color: #111111; }
+  .nav-center a.is-active::after { width: 100%; }
+  @media (max-width: 860px) { .nav-center { display: none; } }
+  @media (max-width: 860px) { .nav-right .nav-cta { display: none; } }
+
+  /* ---------- Hamburger ---------- */
+  .nav-hamburger {
+    display: none;
+    align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: #111111; flex-shrink: 0;
+    position: relative; z-index: 60;
+  }
+  @media (max-width: 860px) { .nav-hamburger { display: flex; } }
+  .nav-hamburger .burger-line {
+    position: absolute; width: 18px; height: 1.6px; background: #ffffff; border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), opacity 0.2s ease, top 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-hamburger .burger-line:nth-child(1) { top: 16px; }
+  .nav-hamburger .burger-line:nth-child(2) { top: 22px; }
+  .nav-hamburger .burger-line:nth-child(3) { top: 28px; }
+  .nav-hamburger.is-open .burger-line:nth-child(1) { top: 22px; transform: rotate(45deg); }
+  .nav-hamburger.is-open .burger-line:nth-child(2) { opacity: 0; }
+  .nav-hamburger.is-open .burger-line:nth-child(3) { top: 22px; transform: rotate(-45deg); }
+
+  /* ---------- Mobile menu panel ---------- */
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 55;
+    padding: 88px 24px 28px;
+    background: rgba(245, 245, 245, 0.99);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 24px 48px rgba(17,17,17,0.14);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.65,0,0.35,1), visibility 0.35s;
+    height: 100vh;
+    height: 100svh;
+    overflow-y: auto;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (max-width: 860px) { .mobile-menu { display: flex; } }
+  .mobile-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
+  .mobile-menu-links { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; margin-bottom: 20px; flex: 1; }
+  .mobile-menu-links a {
+    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+    padding: 10px 4px; border-bottom: 1px solid rgba(17,17,17,0.08);
+    color: #111111;
+    text-align: center;
+    width: 100%;
+  }
+  .mobile-menu-links a:last-child { border-bottom: none; }
+  .mobile-menu .nav-cta { display: flex; justify-content: center; width: 100%; text-align: center; }
+  body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
+
+  /* ================================================================
+     JOURNAL CANVAS — the page reads as one continuous corkboard where
+     study notes get pinned. Sections don't reset background color;
+     they share a single cork surface with a soft dot-grid, and every
+     block of content is a "pinned" card: postcard, index card, tab,
+     or stamp. Rotation + pins + tape stand in for drop shadows/boxes.
+     ================================================================ */
+
+  .journal-canvas {
+    position: relative;
+    background:
+      radial-gradient(circle, var(--cork-line) 1px, transparent 1.2px) 0 0/22px 22px,
+      var(--cork);
+  }
+
+  /* ---------- Blog hero ---------- */
+  .blog-hero {
+    position: relative;
+    padding: 148px 24px 84px;
+    background: var(--indigo);
+    overflow: hidden;
+    border-bottom: 2px dashed rgba(255,255,255,0.14);
+  }
+  .blog-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(120% 90% at 85% 0%, rgba(227,165,72,0.18), transparent 55%),
+                radial-gradient(90% 70% at 5% 100%, rgba(217,108,75,0.16), transparent 55%);
+  }
+  .blog-hero-inner { position: relative; z-index: 1; max-width: 640px; }
+  .blog-hero .eyebrow { color: rgba(255,255,255,0.65); }
+  .blog-hero h1 {
+    color: #ffffff; font-size: clamp(36px, 5.4vw, 60px); font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1.06; margin-bottom: 18px;
+  }
+  .blog-hero p { color: rgba(255,255,255,0.62); font-size: 17px; line-height: 1.6; max-width: 500px; }
+
+  /* postmark stamp, top right of hero */
+  .postmark {
+    position: absolute; top: 130px; right: 6%;
+    width: 118px; height: 118px;
+    border: 1.5px dashed rgba(255,255,255,0.4);
+    border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; color: rgba(255,255,255,0.7);
+    transform: rotate(-9deg);
+    z-index: 1;
+  }
+  .postmark span { font-family: 'Caveat', cursive; font-size: 20px; line-height: 1.2; font-weight: 600; }
+  @media (max-width: 900px) { .postmark { display: none; } }
+
+  .blog-filter-row { display: flex ;justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; position: relative; z-index: 1; }
+  .blog-filter-pill {
+    font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600;
+    color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 8px 18px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .blog-filter-pill:hover { background: rgba(255,255,255,0.12); color: #ffffff; transform: translateY(-2px); }
+  .blog-filter-pill.is-active { background: var(--gold); border-color: var(--gold); color: #111111; }
+
+  /* ---------- Generic section spacing ---------- */
+  section { padding: 92px 24px; }
+  @media (max-width: 768px) { section { padding: 60px 20px; } }
+
+  /* ---------- Gradient heading accent ---------- */
+  .grad-text {
+    background: linear-gradient(100deg, #111111 40%, #E3A548 65%, #2B2644 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 220% 100%;
+  }
+
+  /* ---------- Featured post — the big postcard ---------- */
+  .featured-section { padding-top: 76px; padding-bottom: 40px; }
+  .featured-label {
+    font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700;
+    color: rgba(17,17,17,0.55); margin-bottom: 18px; transform: rotate(-2deg);
+    display: inline-block;
+  }
+  .featured-post {
+    display: grid; grid-template-columns: 1fr; gap: 0;
+    background: var(--paper); border-radius: 6px; overflow: hidden;
+    position: relative;
+    transform: rotate(-0.6deg);
+    box-shadow: 0 1px 0 #fff, 0 22px 40px rgba(17,17,17,0.14), 0 2px 0 rgba(17,17,17,0.03);
+    transition: transform 0.35s cubic-bezier(0.65,0,0.35,1), box-shadow 0.35s ease;
+  }
+  .featured-post:hover { transform: rotate(0deg) translateY(-4px); box-shadow: 0 1px 0 #fff, 0 34px 60px rgba(17,17,17,0.18); }
+  .featured-post::before {
+    /* pushpin */
+    content: ""; position: absolute; top: -9px; left: 44px; width: 16px; height: 16px;
+    border-radius: 999px; z-index: 3;
+    background: radial-gradient(circle at 35% 30%, #ff9d8a, var(--coral) 65%);
+    box-shadow: 0 3px 5px rgba(17,17,17,0.35);
+  }
+  @media (min-width: 900px) { .featured-post { grid-template-columns: 1.1fr 0.9fr; } }
+  .featured-media { position: relative; min-height: 260px; overflow: hidden; }
+  .featured-media img { width: 100%; height: 100%; min-height: 260px; object-fit: cover; transition: transform 0.6s ease; filter: saturate(0.92); }
+  .featured-post:hover .featured-media img { transform: scale(1.04); }
+  @media (min-width: 900px) { .featured-media { min-height: 100%; } .featured-media img { min-height: 100%; } }
+  /* airmail stripe */
+  .featured-media::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px;
+    background: repeating-linear-gradient(-45deg, var(--coral) 0 14px, var(--paper) 14px 20px, var(--indigo) 20px 34px, var(--paper) 34px 40px);
+    opacity: 0.9;
+  }
+  .featured-body { padding: 40px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+  .featured-tag {
+    color: var(--coral); font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  .featured-body h3 { font-size: clamp(24px, 3vw, 32px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; }
+  .featured-body p { color: rgba(17,17,17,0.62); font-size: 15.5px; line-height: 1.65; margin-bottom: 24px; max-width: 480px; }
+  .featured-meta { display: flex; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px dashed rgba(17,17,17,0.18); }
+  .featured-meta img { width: 38px; height: 38px; border-radius: 999px; object-fit: cover; }
+  .featured-meta .fm-name { font-size: 14px; font-weight: 600; }
+  .featured-meta .fm-sub { font-size: 12.5px; color: rgba(17,17,17,0.5); }
+
+  /* ---------- Blog grid — index cards on the board ---------- */
+  .blog-grid-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 44px; flex-wrap: wrap; }
+  .blog-grid-head h2 { font-size: 38px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+  .blog-count { font-family: 'Caveat', cursive; font-size: 20px; font-weight: 600; color: rgba(17,17,17,0.5); transform: rotate(-2deg); display: inline-block; }
+
+  .blog-grid { display: grid; grid-template-columns: 1fr; gap: 30px 22px; }
+  @media (min-width: 700px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .blog-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .blog-card {
+    background: var(--paper); border-radius: 4px; overflow: visible; display: flex; flex-direction: column;
+    position: relative;
+    box-shadow: 0 1px 0 #fff, 0 14px 26px rgba(17,17,17,0.10);
+    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), box-shadow 0.3s ease;
+  }
+  .blog-card:nth-child(6n+1) { transform: rotate(-1.4deg); }
+  .blog-card:nth-child(6n+2) { transform: rotate(1.1deg); }
+  .blog-card:nth-child(6n+3) { transform: rotate(-0.6deg); }
+  .blog-card:nth-child(6n+4) { transform: rotate(1.4deg); }
+  .blog-card:nth-child(6n+5) { transform: rotate(-1deg); }
+  .blog-card:nth-child(6n+6) { transform: rotate(0.7deg); }
+  .blog-card:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 1px 0 #fff, 0 22px 40px rgba(17,17,17,0.16); z-index: 2; }
+
+  /* washi tape corner */
+  .blog-card::before {
+    content: ""; position: absolute; top: -10px; left: 20px; width: 58px; height: 22px;
+    background: var(--gold); opacity: 0.85; transform: rotate(-7deg);
+    box-shadow: 0 2px 4px rgba(17,17,17,0.15);
+  }
+  .blog-card:nth-child(3n+2)::before { background: var(--sky); left: auto; right: 20px; transform: rotate(6deg); }
+  .blog-card:nth-child(3n+3)::before { background: var(--plum); }
+
+  .blog-card-media { position: relative; overflow: hidden; height: 190px; }
+  .blog-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; filter: saturate(0.92); }
+  .blog-card:hover .blog-card-media img { transform: scale(1.06); }
+  /* perforation seam between image and text, like a stamp edge */
+  .blog-card-media::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 12px;
+    background-image: radial-gradient(circle, var(--paper) 4px, transparent 4.2px);
+    background-size: 16px 16px; background-position: 8px 0;
+  }
+  .blog-card-body { padding: 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .blog-tag { color: var(--coral); font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .blog-card h4 { font-size: 18.5px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
+  .blog-card p { color: rgba(17,17,17,0.6); font-size: 14px; line-height: 1.55; }
+  .blog-meta { margin-top: auto; padding-top: 10px; border-top: 1px dashed rgba(17,17,17,0.15); display: flex; align-items: center; justify-content: space-between; color: rgba(17,17,17,0.45); font-size: 12.5px; }
+
+  /* ---------- Topics — a card-catalog drawer of tabs ---------- */
+  .topics-section { padding-top: 24px; }
+  .topics-head { max-width: 560px; margin-bottom: 44px; }
+  .topics-head h2 { font-size: 38px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px; }
+  .topics-head p { color: rgba(17,17,17,0.6); font-size: 15.5px; line-height: 1.6; }
+  .topics-grid { display: grid; grid-template-columns: 1fr; gap: 20px 16px; }
+  @media (min-width: 700px) { .topics-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .topics-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .topic-card {
+    background: var(--paper); border-radius: 0 12px 12px 12px; padding: 30px 26px 26px; position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 1px 0 #fff, 0 10px 22px rgba(17,17,17,0.08);
+  }
+  .topic-card:hover { transform: translateY(-5px); box-shadow: 0 1px 0 #fff, 0 20px 34px rgba(17,17,17,0.13); }
+  /* file-folder tab */
+  .topic-card::before {
+    content: attr(data-tab); position: absolute; top: -26px; left: 0;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 15px;
+    color: #111111; background: var(--gold);
+    padding: 5px 16px 6px; border-radius: 8px 8px 0 0;
+  }
+  .topic-card:nth-child(3n+2)::before { background: var(--sky); }
+  .topic-card:nth-child(3n+3)::before { background: var(--coral); color: #fff; }
+
+  .topic-icon {
+    width: 44px; height: 44px; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    background: rgba(227,165,72,0.14); margin-bottom: 18px; border: 1px dashed rgba(17,17,17,0.18);
+  }
+  .topic-card:nth-child(3n+2) .topic-icon { background: rgba(91,143,168,0.14); }
+  .topic-card:nth-child(3n+3) .topic-icon { background: rgba(217,108,75,0.14); }
+  .topic-icon svg { width: 21px; height: 21px; }
+  .topic-card h4 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .topic-card p { color: rgba(17,17,17,0.6); font-size: 14px; line-height: 1.55; margin-bottom: 16px; }
+  .topic-count { font-family: 'Caveat', cursive; font-size: 17px; font-weight: 600; color: rgba(17,17,17,0.5); }
+
+  /* ---------- Reader voices — postcards received ---------- */
+  .voices-section { padding-top: 24px; }
+  .voices-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+  .voices-head h2 { font-size: 38px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+  .voices-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  @media (min-width: 640px) { .voices-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .voices-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .voice-card {
+    background: var(--indigo); border-radius: 6px; padding: 26px 22px; display: flex; flex-direction: column; gap: 16px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 16px 30px rgba(17,17,17,0.16);
+  }
+  .voice-card:nth-child(2), .voice-card:nth-child(4) { background: #182b2a; }
+  .voice-card:nth-child(odd) { transform: rotate(-0.8deg); }
+  .voice-card:nth-child(even) { transform: rotate(0.8deg); }
+  /* stamp corner */
+  .voice-card::after {
+    content: "✎"; position: absolute; top: 14px; right: 14px;
+    width: 30px; height: 30px; border: 1.5px dashed rgba(255,255,255,0.35); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(255,255,255,0.5);
+    transform: rotate(6deg);
+  }
+  .voice-quote-mark { font-family: 'Caveat', cursive; color: var(--gold); font-size: 40px; line-height: 0.6; font-weight: 700; }
+  .voice-card p.voice-text { color: rgba(255,255,255,0.82); font-size: 15px; line-height: 1.6; flex: 1; }
+  .voice-person { display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.16); }
+  .voice-person img { width: 34px; height: 34px; border-radius: 999px; object-fit: cover; }
+  .voice-person .vp-name { font-size: 13.5px; font-weight: 600; color: #ffffff; }
+  .voice-person .vp-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  /* ---------- Newsletter CTA — drop it in the mailbox ---------- */
+  .mesh-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; pointer-events: none; will-change: transform; }
+  .final-cta-section { padding-top: 24px; }
+  .final-cta {
+    background: var(--indigo); border-radius: 22px; margin: 0 24px; padding: 78px 40px;
+    text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;
+    border: 2px dashed rgba(255,255,255,0.16);
+  }
+  .final-cta .mesh-blob-a { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #E3A548, transparent 70%); top: -120px; left: -80px; }
+  .final-cta .mesh-blob-b { width: 460px; height: 460px; background: radial-gradient(circle at 60% 40%, #D96C4B, transparent 70%); bottom: -160px; right: -100px; }
+  .final-cta .hand-label { font-family: 'Caveat', cursive; font-size: 22px; color: var(--gold); margin-bottom: 10px; position: relative; z-index: 1; transform: rotate(-2deg); }
+  .final-cta h2 { color: #ffffff; font-size: 46px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 560px; position: relative; z-index: 1; }
+  .final-cta p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 420px; position: relative; z-index: 1; }
+  .final-cta .pill-btn.light { position: relative; z-index: 1; }
+  @media (max-width: 768px) {
+    .final-cta { padding: 56px 24px; margin: 0 12px; border-radius: 16px; }
+    .final-cta h2 { font-size: 32px; }
+  }
+
+  /* ---------- Footer (unchanged across site) ---------- */
+  footer { background: #111111; padding: 72px 24px 32px; }
+  .footer-top { display: grid; grid-template-columns: 1.3fr 0.8fr 0.9fr 1.1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr; row-gap: 44px; } }
+  @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; } }
+  .footer-logo-placeholder { width: 100%; max-width: 220px; height: 72px; margin-bottom: 16px; overflow: hidden; }
+  .footer-logo-placeholder img { width: 100px; height: 100px; object-fit: contain; }
+  .footer-logo-placeholder span { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; }
+  .footer-tag { color: rgba(255,255,255,0.5); font-size: 14px; max-width: 300px; line-height: 1.5; margin-bottom: 24px; }
+  .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14.5px; color: rgba(255,255,255,0.75); margin-bottom: 12px; transition: color 0.2s ease; }
+  .footer-col a:hover { color: #ffffff; }
+  .footer-address { font-style: normal; color: rgba(255,255,255,0.75); font-size: 14.5px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; align-items: center; gap: 12px; }
+  .footer-social a {
+    width: 38px; height: 38px; border-radius: 999px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .footer-social a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
+  .footer-social svg path, .footer-social svg rect, .footer-social svg line, .footer-social svg circle { stroke: rgba(255,255,255,0.85); }
+  .footer-social svg circle[r="0.9"] { fill: rgba(255,255,255,0.85); stroke: none; }
+
+  .footer-newsletter { margin-top: 4px; }
+  .footer-newsletter-form { display: flex; gap: 8px; max-width: 320px; }
+  .footer-newsletter-form input[type="email"] {
+    flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px; padding: 11px 16px; font-size: 14px; color: #ffffff; font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .footer-newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+  .footer-newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(227,165,72,0.6); background: rgba(255,255,255,0.1); }
+  .footer-newsletter-form button {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px; background: #E3A548;
+    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
+  }
+  .footer-newsletter-form button:hover { background: #f0b968; }
+  .footer-newsletter-note { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+
+  .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .footer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
+  }
+  .footer-badge svg { flex-shrink: 0; }
+
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 16px; }
+  .footer-bottom span { color: rgba(255,255,255,0.4); font-size: 13.5px; }
+  .footer-legal-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .footer-legal-links a { color: rgba(255,255,255,0.45); font-size: 13.5px; transition: color 0.2s ease; }
+  .footer-legal-links a:hover { color: #ffffff; }
+
+  /* ---------- Grain overlay ---------- */
+  .grain-overlay {
+    position: fixed; inset: 0; z-index: 999; pointer-events: none;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Custom cursor ---------- */
+  .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 998; pointer-events: none; border-radius: 999px; transform: translate(-50%, -50%); }
+  .cursor-dot { width: 6px; height: 6px; background: #111111; }
+  .cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(17,17,17,0.35); transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease; }
+  .cursor-ring.is-active { width: 54px; height: 54px; border-color: #E3A548; background: rgba(227,165,72,0.08); }
+  @media (max-width: 860px), (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+  .magnetic { display: inline-flex; }
+
+  /* ---------- Mobile refinements ---------- */
+  @media (max-width: 640px) {
+    .blog-hero { padding: 132px 20px 56px; }
+    .blog-card:hover, .topic-card:hover, .featured-post:hover, .voice-card { transform: none !important; }
+    .blog-card, .voice-card { box-shadow: 0 1px 0 #fff, 0 10px 18px rgba(17,17,17,0.10) !important; }
+    .featured-body { padding: 28px; }
+    .final-cta h2 { font-size: 28px; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="grain-overlay"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav>
+    <div class="nav-row wrap">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <a href="index.html"><img src="./assets/stack4.webp" alt="Logo placeholder" onerror="this.style.display='none'"></a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-center">
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html">App</a>
+          <a href="blog.html" class="is-active">Blog</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <a href="#" class="nav-cta magnetic">Start Learning</a>
+        <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-links">
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="app.html">App</a>
+      <a href="blog.html">Blog</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="#" class="nav-cta magnetic">Start Learning</a>
+  </div>
+
+  <!-- ============ BLOG HERO ============ -->
+  <section class="blog-hero" data-aos="fade-up">
+    <div class="wrap blog-hero-inner">
+      <div class="eyebrow"><span class="dot"></span>The Fluenta Journal</div>
+      <h1>Fewer hacks. More of what actually works.</h1>
+      <p>Field notes from our teaching team, our learning scientists, and the millions of people using Fluenta every day — on building a habit that sticks, speaking sooner than feels comfortable, and what the research really says about learning as an adult.</p>
+    </div>
+    <div class="postmark" aria-hidden="true"><span>Vol. 04<br>2026</span></div>
+    <div class="wrap blog-filter-row">
+      <a href="#" class="blog-filter-pill is-active">All Posts</a>
+      <a href="#" class="blog-filter-pill">Habits</a>
+      <a href="#" class="blog-filter-pill">Speaking</a>
+      <a href="#" class="blog-filter-pill">Culture</a>
+      <a href="#" class="blog-filter-pill">Research</a>
+      <a href="#" class="blog-filter-pill">Inside Fluenta</a>
+    </div>
+  </section>
+
+  <div class="journal-canvas">
+
+  <!-- ============ FEATURED POST ============ -->
+  <section class="featured-section" data-aos="fade-up">
+    <div class="wrap">
+      <span class="featured-label">☞ pinned to the top</span>
+      <a href="404.html" class="featured-post">
+        <div class="featured-media">
+          <img src="./assets/l54.webp" alt="Person practicing a language lesson on a laptop at a kitchen table" loading="lazy" decoding="async">
+        </div>
+        <div class="featured-body">
+          <div class="featured-tag">Habits</div>
+          <h3>The 12-minute rule: how our most consistent learners actually study</h3>
+          <p>We looked at study patterns across two million active learners and found something surprising: the people who progress fastest aren't studying the longest. They're showing up in short, almost boring sessions, at the same time, on the same days. Here's the pattern, and how to build it into a week that already feels full.</p>
+          <div class="featured-meta">
+            <img src="./assets/l43.webp" alt="Author avatar">
+            <div>
+              <div class="fm-name">Dr. Amara Osei</div>
+              <div class="fm-sub">Head of Learning Science · 9 min read</div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ BLOG GRID ============ -->
+  <section id="posts" style="padding-top: 20px;" data-aos="fade-up">
+    <div class="wrap">
+      <div class="blog-grid-head">
+        <h2>Latest from the <span class="grad-text">journal</span></h2>
+        <span class="blog-count">6 articles, and counting</span>
+      </div>
+
+      <div class="blog-grid">
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="blog-card-media">
+            <img src="./assets/l44.webp" alt="Two people having an animated conversation over coffee" loading="lazy" decoding="async">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-tag">Speaking</div>
+            <h4>You will sound like a beginner. Do it anyway.</h4>
+            <p>A short script for the first sixty seconds of a live conversation, built to survive the moment your mind goes blank.</p>
+            <div class="blog-meta"><span>Marcus Lindqvist</span><span>5 min read</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="blog-card-media">
+            <img src="./assets/l45.webp" alt="Traveler ordering food from a street vendor abroad" loading="lazy" decoding="async">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-tag">Culture</div>
+            <h4>What guidebooks don't teach you about small talk</h4>
+            <p>The everyday phrases locals actually reach for — at the market, on a train, waiting in line — and why textbook greetings fall flat.</p>
+            <div class="blog-meta"><span>Sofia Reyes</span><span>6 min read</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="blog-card-media">
+            <img src="./assets/l46.webp" alt="Person listening to a podcast while commuting" loading="lazy" decoding="async">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-tag">Habits</div>
+            <h4>Immersion without a plane ticket</h4>
+            <p>Living abroad isn't the only way to surround yourself with a language. Here's how to rebuild that environment from home.</p>
+            <div class="blog-meta"><span>Jonas Weber</span><span>7 min read</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="blog-card-media">
+            <img src="./assets/l47.webp" alt="Person smiling while checking their progress on a phone" loading="lazy" decoding="async">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-tag">Inside Fluenta</div>
+            <h4>Why we let your streak survive a missed day</h4>
+            <p>Most habit apps punish a single lapse. Here's the reasoning behind Fluenta's streak freezes, and what we optimize for instead.</p>
+            <div class="blog-meta"><span>Priya Nair</span><span>4 min read</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="blog-card-media">
+            <img src="./assets/l48.webp" alt="Older adult studying with headphones and a notebook" loading="lazy" decoding="async">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-tag">Research</div>
+            <h4>Is it harder to learn a language after 30?</h4>
+            <p>The "critical period" gets cited constantly and misunderstood just as often. A plain look at what actually changes with age.</p>
+            <div class="blog-meta"><span>Dr. Amara Osei</span><span>8 min read</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="blog-card-media">
+            <img src="./assets/l49.webp" alt="Teacher leading a small group language class" loading="lazy" decoding="async" onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=700&q=80'">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-tag">Inside Fluenta</div>
+            <h4>How teachers fold Fluenta into a class they already run</h4>
+            <p>Three educators on using live conversation rooms and progress dashboards as homework, not extra prep.</p>
+            <div class="blog-meta"><span>Marcus Lindqvist</span><span>5 min read</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BROWSE BY TOPIC ============ -->
+  <section class="topics-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="topics-head">
+        <h2>Browse by <span class="grad-text">topic</span></h2>
+        <p>Every article on the journal falls into one of these drawers. Pick the one that matches what you're stuck on right now.</p>
+      </div>
+      <div class="topics-grid">
+        <div class="topic-card" data-tab="habits" data-aos="fade-up" data-aos-delay="0">
+          <div class="topic-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3L4 7L12 11L20 7L12 3Z" stroke="#E3A548" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 12L12 16L20 12" stroke="#E3A548" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 17L12 21L20 17" stroke="#E3A548" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <h4>Building the habit</h4>
+          <p>Streaks, schedules, and the small routines that make daily practice feel automatic instead of effortful.</p>
+          <span class="topic-count">14 articles</span>
+        </div>
+        <div class="topic-card" data-tab="speaking" data-aos="fade-up" data-aos-delay="60">
+          <div class="topic-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M8 12C8 10 9.5 8 12 8C14.5 8 16 10 16 12C16 14 14.5 16 12 16" stroke="#5B8FA8" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#5B8FA8" stroke-width="1.6"/></svg></div>
+          <h4>Finding your voice</h4>
+          <p>Warm-ups, conversation starters, and ways to get comfortable speaking out loud before you feel "ready."</p>
+          <span class="topic-count">19 articles</span>
+        </div>
+        <div class="topic-card" data-tab="grammar" data-aos="fade-up" data-aos-delay="120">
+          <div class="topic-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6H20M4 12H20M4 18H14" stroke="#D96C4B" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <h4>Grammar without the dread</h4>
+          <p>The rules explained the way a native speaker would actually describe them to a friend, not a textbook.</p>
+          <span class="topic-count">22 articles</span>
+        </div>
+        <div class="topic-card" data-tab="culture" data-aos="fade-up" data-aos-delay="0">
+          <div class="topic-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12C3 12 6 5 12 5C18 5 21 12 21 12C21 12 18 19 12 19C6 19 3 12 3 12Z" stroke="#E3A548" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" stroke="#E3A548" stroke-width="1.6"/></svg></div>
+          <h4>Culture &amp; travel</h4>
+          <p>The context behind the phrases — customs, etiquette, and the things a dictionary can't tell you.</p>
+          <span class="topic-count">16 articles</span>
+        </div>
+        <div class="topic-card" data-tab="research" data-aos="fade-up" data-aos-delay="60">
+          <div class="topic-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5C4 5 6.5 3 12 3C17.5 3 20 5 20 5V19C20 19 17.5 17 12 17C6.5 17 4 19 4 19Z" stroke="#5B8FA8" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 3V17" stroke="#5B8FA8" stroke-width="1.6"/></svg></div>
+          <h4>The research</h4>
+          <p>Studies on memory, age, and acquisition, translated out of academic language and into what to actually do.</p>
+          <span class="topic-count">11 articles</span>
+        </div>
+        <div class="topic-card" data-tab="fluenta" data-aos="fade-up" data-aos-delay="120">
+          <div class="topic-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="#D96C4B" stroke-width="1.6"/><path d="M9 12H15M9 9H15M9 15H12" stroke="#D96C4B" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <h4>Inside Fluenta</h4>
+          <p>How the app is built, why certain features exist, and what's coming next — straight from the team.</p>
+          <span class="topic-count">9 articles</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ READER VOICES ============ -->
+  <section class="voices-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="voices-head">
+        <h2>Postcards from <span class="grad-text">readers</span></h2>
+      </div>
+      <div class="voices-grid">
+        <div class="voice-card" data-aos="fade-up" data-aos-delay="0">
+          <span class="voice-quote-mark">&ldquo;</span>
+          <p class="voice-text">The 12-minute rule article changed how I schedule my whole week. I stopped waiting for a free hour that never came.</p>
+          <div class="voice-person">
+            <img src="./assets/l50.webp" alt="Reader avatar">
+            <div><div class="vp-name">Elena T.</div><div class="vp-sub">Learning Portuguese, 8 months</div></div>
+          </div>
+        </div>
+        <div class="voice-card" data-aos="fade-up" data-aos-delay="60">
+          <span class="voice-quote-mark">&ldquo;</span>
+          <p class="voice-text">I forwarded the streak-freeze article to my whole study group. It finally explained why we kept quitting after one bad week.</p>
+          <div class="voice-person">
+            <img src="./assets/l51.webp" alt="Reader avatar">
+            <div><div class="vp-name">Devon R.</div><div class="vp-sub">Learning Japanese, 2 years</div></div>
+          </div>
+        </div>
+        <div class="voice-card" data-aos="fade-up" data-aos-delay="120">
+          <span class="voice-quote-mark">&ldquo;</span>
+          <p class="voice-text">The piece on small talk taught me more useful phrases for my trip than three weeks of flashcards had.</p>
+          <div class="voice-person">
+            <img src="./assets/l52.webp" alt="Reader avatar">
+            <div><div class="vp-name">Aiko M.</div><div class="vp-sub">Learning Spanish, 5 months</div></div>
+          </div>
+        </div>
+        <div class="voice-card" data-aos="fade-up" data-aos-delay="180">
+          <span class="voice-quote-mark">&ldquo;</span>
+          <p class="voice-text">I started Fluenta at 47 half-convinced I was too old. The research article on age and acquisition put that worry to rest.</p>
+          <div class="voice-person">
+            <img src="./assets/l53.webp" alt="Reader avatar">
+            <div><div class="vp-name">Carlos B.</div><div class="vp-sub">Learning German, 1 year</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER CTA ============ -->
+  <section class="final-cta-section" data-aos="fade-up">
+    <div class="final-cta" data-aos="zoom-in">
+      <div class="mesh-blob mesh-blob-a" style="opacity:0.4;"></div>
+      <div class="mesh-blob mesh-blob-b" style="opacity:0.3;"></div>
+      <div class="hand-label">no junk mail, promise</div>
+      <h2>Get study tips in your inbox.</h2>
+      <p>One email a month — new articles, learner stories, and language launches. No spam, unsubscribe anytime.</p>
+      <a href="404.html" class="pill-btn light magnetic">
+        Subscribe to the journal
+        <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  </div><!-- /.journal-canvas -->
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="help" data-aos="fade-up">
+    <div class="wrap">
+      <div class="footer-top">
+        <div data-aos="fade-up">
+          <div class="footer-logo-placeholder">
+            <a href="index.html"><img src="./assets/stackly_logo.webp" alt="Your logo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></a>
+          </div>
+          <p class="footer-tag">An adaptive, reward-powered language platform built for real fluency. Learn 42 languages through daily lessons and live conversation with native speakers.</p>
+
+          <div class="footer-newsletter">
+            <form class="footer-newsletter-form" onsubmit="window.location.href='404.html'; return false;">
+              <input type="email" placeholder="Your email address" aria-label="Email address" required>
+              <button type="submit" aria-label="Subscribe to newsletter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </form>
+            <p class="footer-newsletter-note">One email a month with study tips and new language launches. Unsubscribe anytime.</p>
+          </div>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="80">
+          <h5>Quick Links</h5>
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html">App</a>
+          <a href="blog.html">Blog</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="140">
+          <h5>Resources</h5>
+          <a href="404.html">Help Center</a>
+          <a href="404.html">Community</a>
+          <a href="404.html">Learner Stories</a>
+          <a href="404.html">Careers</a>
+          <a href="404.html">Press Kit</a>
+          <a href="404.html">Partner With Us</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+          <h5>Contact</h5>
+          <address class="footer-address">
+            221B HITEX Avenue<br>
+            JUBILEE 400<br>
+            HYDERABAD<br>
+            <a href="mailto:hello@fluenta.com" style="display:inline; margin:0;">hello@fluenta.com</a><br>
+            <a href="tel:+914012345678" style="display:inline; margin:0;">+91 40 1234 5678</a>
+          </address>
+          <div class="footer-social">
+            <a href="404.html" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 8H13.5C12.6716 8 12 8.67157 12 9.5V11H15L14.5 14H12V21H9V14H7V11H9V9.5C9 7.01472 11.0147 5 13.5 5H15V8Z" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
+            </a>
+            <a href="404.html" aria-label="X / Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1"/><path d="M11.5 17V13.2C11.5 11.6 12.5 10.6 13.9 10.6C15.2 10.6 16 11.5 16 13.2V17" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <div class="footer-badges">
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12L11 14L15 10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              GDPR compliant
+            </span>
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/></svg>
+              Secure payments
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 STACKLY, Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Cookie Settings</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  function forceScrollTop() {
+    if (location.hash) { history.replaceState(null, '', location.pathname + location.search); }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+  forceScrollTop();
+  window.addEventListener('DOMContentLoaded', forceScrollTop);
+  window.addEventListener('load', forceScrollTop);
+  window.addEventListener('pageshow', forceScrollTop);
+  setTimeout(forceScrollTop, 0);
+  setTimeout(forceScrollTop, 300);
+
+  if (typeof AOS !== 'undefined') {
+    AOS.init({ duration: 250, easing: 'ease-out-cubic', once: true, offset: 40 });
+  }
+  window.addEventListener('load', function () {
+    if (typeof AOS !== 'undefined') { AOS.refresh(); }
+    if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(); }
+  });
+  setTimeout(function () {
+    document.querySelectorAll('[data-aos]').forEach(function (el) {
+      if (!el.classList.contains('aos-animate')) { el.classList.add('aos-animate'); }
+    });
+  }, 350);
+
+  var siteNav = document.querySelector('nav');
+  var navScrollTicking = false;
+  function updateNavScrolled() {
+    if (window.scrollY > 40) { siteNav.classList.add('nav-scrolled'); } else { siteNav.classList.remove('nav-scrolled'); }
+    navScrollTicking = false;
+  }
+  updateNavScrolled();
+  window.addEventListener('scroll', function () {
+    if (!navScrollTicking) { requestAnimationFrame(updateNavScrolled); navScrollTicking = true; }
+  }, { passive: true });
+
+  (function () {
+    var hamburger = document.getElementById('navHamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!hamburger || !menu) return;
+    var savedScrollY = 0;
+    function openMenu() {
+      savedScrollY = window.scrollY || window.pageYOffset;
+      document.body.style.top = (-savedScrollY) + 'px';
+      menu.classList.add('is-open');
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Close menu');
+      document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+      menu.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      document.body.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollY);
+    }
+    hamburger.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (menu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); }
+    });
+    menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 860) closeMenu(); });
+  })();
+
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isCoarse = window.matchMedia('(hover: none)').matches || window.innerWidth < 860;
+
+    function forceRevealEverything() {
+      document.querySelectorAll('[data-aos]').forEach(function (el) {
+        el.style.opacity = ''; el.style.transform = ''; el.style.visibility = '';
+        el.classList.add('aos-animate');
+      });
+    }
+    window.addEventListener('load', function () { setTimeout(forceRevealEverything, 2500); });
+
+    if (typeof gsap === 'undefined') { forceRevealEverything(); return; }
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
+    } else { forceRevealEverything(); return; }
+    gsap.ticker.lagSmoothing(0);
+    if (reduceMotion) { forceRevealEverything(); return; }
+
+    try {
+      gsap.set('.mesh-blob', { opacity: 0 });
+      document.querySelectorAll('.final-cta .mesh-blob').forEach(function (blob, i) {
+        gsap.to(blob, {
+          opacity: 1,
+          x: (i % 2 === 0 ? 1 : -1) * gsap.utils.random(40, 90),
+          y: gsap.utils.random(-50, 50),
+          duration: gsap.utils.random(9, 14),
+          ease: 'sine.inOut', repeat: -1, yoyo: true, force3D: true
+        });
+      });
+
+      if (!isCoarse) {
+        document.querySelectorAll('.magnetic').forEach(function (el) {
+          var strength = 0.35;
+          var xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
+          var yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+          el.addEventListener('mousemove', function (e) {
+            var b = el.getBoundingClientRect();
+            xTo((e.clientX - b.left - b.width / 2) * strength);
+            yTo((e.clientY - b.top - b.height / 2) * strength);
+          });
+          el.addEventListener('mouseleave', function () { xTo(0); yTo(0); });
+        });
+      }
+
+      var dot = document.getElementById('cursorDot');
+      var ring = document.getElementById('cursorRing');
+      if (dot && ring && !isCoarse) {
+        var dotX = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3.out' });
+        var dotY = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3.out' });
+        var ringX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
+        var ringY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
+        window.addEventListener('mousemove', function (e) {
+          dotX(e.clientX); dotY(e.clientY); ringX(e.clientX); ringY(e.clientY);
+        }, { passive: true });
+        document.querySelectorAll('a, button, summary, .blog-card, .featured-post, .blog-filter-pill, .topic-card').forEach(function (el) {
+          el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); });
+          el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); });
+        });
+      } else if (dot && ring) { dot.style.display = 'none'; ring.style.display = 'none'; }
+
+      gsap.utils.toArray('h1, h2').forEach(function (h) {
+        gsap.fromTo(h, { letterSpacing: '0.01em' }, {
+          letterSpacing: '-0.03em', duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: h, start: 'top 90%' }
+        });
+      });
+
+      (function revealAllSections() {
+        var DIST = 36;
+        function fromVars(type) {
+          switch (type) {
+            case 'fade-down': return { y: -DIST, opacity: 0 };
+            case 'fade-left': return { x: DIST, opacity: 0 };
+            case 'fade-right': return { x: -DIST, opacity: 0 };
+            case 'zoom-in': return { scale: 0.86, opacity: 0 };
+            case 'fade-up': default: return { y: DIST, opacity: 0 };
+          }
+        }
+        var groups = new Map();
+        document.querySelectorAll('[data-aos]').forEach(function (el) {
+          var parent = el.parentElement;
+          var type = el.getAttribute('data-aos') || 'fade-up';
+          var groupKey = parent.__gsGroupId || (parent.__gsGroupId = Math.random().toString(36).slice(2));
+          var fullKey = groupKey + '|' + type;
+          if (!groups.has(fullKey)) groups.set(fullKey, []);
+          groups.get(fullKey).push(el);
+        });
+        groups.forEach(function (els) {
+          if (!els.length) return;
+          var type = els[0].getAttribute('data-aos') || 'fade-up';
+          var from = fromVars(type);
+          var isStagger = els.length > 1;
+          gsap.set(els, from);
+          ScrollTrigger.batch(els, {
+            start: 'top 92%', once: true,
+            onEnter: function (batch) {
+              gsap.to(batch, {
+                x: 0, y: 0, scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out',
+                stagger: isStagger ? 0.04 : 0, clearProps: 'willChange'
+              });
+            }
+          });
+        });
+        ScrollTrigger.refresh();
+      })();
+
+    } catch (err) {
+      console.error('Animation setup failed, revealing all content instead:', err);
+      forceRevealEverything();
+    }
+  })();
+</script>
+
+</body>
+</html>

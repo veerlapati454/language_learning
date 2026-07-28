@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — Wordtrail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #F1E8D3;
+      --paper-panel: #E9DFC4;
+      --card: #FBF6EA;
+      --ink: #26332B;
+      --ink-dim: #756C58;
+      --teal: #1F6F64;
+      --teal-bright: #2C9184;
+      --mustard: #D6A335;
+      --mustard-bright: #E8B84B;
+      --stamp: #A6403A;
+      --line: rgba(38,51,43,0.14);
+      --line-bright: rgba(38,51,43,0.24);
+      --display: 'Fraunces', serif;
+      --body: 'Nunito Sans', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      font-family: var(--body);
+      color: var(--ink);
+      min-height: 100dvh;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: inherit; }
+
+    /* ---------- Streak banner ---------- */
+    .streak-bar {
+      background: var(--ink);
+      color: var(--mustard-bright);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 7px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .streak-bar i { color: var(--stamp); }
+
+    /* ---------- Background field ---------- */
+    .field-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .field-dots {
+      position: absolute;
+      inset: -2px;
+      background-image: radial-gradient(rgba(38,51,43,0.14) 1px, transparent 1.4px);
+      background-size: 26px 26px;
+    }
+    .field-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 26% 18%, rgba(31,111,100,0.10), transparent 55%),
+                  radial-gradient(ellipse at 82% 88%, rgba(214,163,53,0.14), transparent 55%);
+    }
+    .postmark {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px dashed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      mix-blend-mode: multiply;
+      opacity: 0.16;
+    }
+    .postmark.p1 { top: 8%; left: 6%; width: 150px; height: 150px; border-color: var(--teal); color: var(--teal); font-size: 0.62rem; transform: rotate(-14deg); }
+    .postmark.p2 { top: 62%; left: 12%; width: 110px; height: 110px; border-color: var(--stamp); color: var(--stamp); font-size: 0.56rem; transform: rotate(9deg); }
+    .postmark.p3 { top: 20%; left: 78%; width: 130px; height: 130px; border-color: var(--mustard); color: #7A5A12; font-size: 0.6rem; transform: rotate(6deg); }
+    .postmark.p4 { top: 74%; left: 68%; width: 96px; height: 96px; border-color: var(--teal); color: var(--teal); font-size: 0.5rem; transform: rotate(-8deg); }
+
+    /* ---------- Layout ---------- */
+    .stage {
+      position: relative;
+      z-index: 1;
+      min-height: calc(100vh - 32px);
+      display: flex;
+      align-items: stretch;
+    }
+
+    .info-panel {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 64px;
+      border-right: 1px solid var(--line);
+      position: relative;
+    }
+    .info-panel .unit-tag {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+    .info-panel .unit-tag::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--stamp);
+      border-radius: 50%;
+    }
+
+    .info-panel h1 {
+      font-family: var(--display);
+      font-size: clamp(2.3rem, 4.6vw, 3.4rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      max-width: 560px;
+    }
+    .info-panel h1 em { font-style: italic; color: var(--stamp); }
+
+    .info-panel p.lede {
+      color: var(--ink-dim);
+      font-size: 1rem;
+      max-width: 440px;
+      margin-top: 18px;
+      line-height: 1.6;
+    }
+
+    .readout-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 1px;
+      background: var(--line);
+      margin-top: 44px;
+      max-width: 520px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .readout {
+      background: var(--card);
+      padding: 16px 18px;
+    }
+    .readout .label {
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 8px;
+    }
+    .readout .value {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--teal);
+    }
+    .readout .value.amber { color: var(--stamp); }
+
+    .compass-wrap {
+      margin-top: 44px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .compass {
+      width: 78px; height: 78px;
+      border-radius: 50%;
+      border: 1px solid var(--line-bright);
+      position: relative;
+      flex-shrink: 0;
+      background: var(--card);
+    }
+    .compass::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      border: 1px dashed var(--line-bright);
+    }
+    .compass .needle {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 2px; height: 26px;
+      background: var(--stamp);
+      transform-origin: bottom center;
+      transform: translate(-50%, -100%) rotate(0deg);
+      animation: spin 10s linear infinite;
+      border-radius: 2px;
+    }
+    @keyframes spin { 100% { transform: translate(-50%, -100%) rotate(360deg); } }
+    .coord-strip {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.03em;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .coord-strip span strong { color: var(--ink); }
+
+    /* ---------- Login panel ---------- */
+    .login-panel {
+      flex: 0 0 460px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+    }
+
+    .back-home {
+      position: absolute;
+      top: 48px;
+      left: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-dim);
+      font-size: 0.8rem;
+      font-family: var(--mono);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      z-index: 2;
+    }
+    .back-home:hover { color: var(--stamp); }
+
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+      background: var(--card);
+      border: 1px solid var(--line-bright);
+      border-radius: 10px;
+      padding: 38px 32px 32px;
+      position: relative;
+      box-shadow: 0 20px 40px -24px rgba(38,51,43,0.25);
+    }
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 10px 10px 0 0;
+      background: linear-gradient(90deg, var(--teal), var(--mustard));
+    }
+    .stamp-seal {
+      position: absolute;
+      top: -18px; right: 22px;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 2px dashed var(--stamp);
+      color: var(--stamp);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.2;
+      transform: rotate(-10deg);
+    }
+
+    .login-logo { text-align: center; margin-bottom: 26px; }
+    .login-logo .logo-placeholder { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .login-logo .logo-placeholder img { max-width: 140px; height: auto; display: block; }
+    .login-logo .logo-placeholder .logo-fallback {
+      display: flex; align-items: center; justify-content: center;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(31,111,100,0.08); border: 1px solid var(--teal);
+      color: var(--teal); font-size: 11px; font-family: var(--display); font-weight: 700;
+      text-align: center; line-height: 1.3; padding: 6px;
+    }
+    .login-logo .eyebrow { color: var(--teal); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; }
+    .login-logo p { color: var(--ink-dim); font-size: 0.86rem; margin-top: 8px; font-family: var(--body); }
+
+    .role-selector {
+      display: flex; gap: 2px; margin-bottom: 24px;
+      background: var(--paper-panel); padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .role-btn {
+      flex: 1; padding: 10px 14px; border: none; border-radius: 6px;
+      background: transparent; color: var(--ink-dim);
+      font-family: var(--body); font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .role-btn.active { background: var(--teal); color: var(--card); }
+    .role-btn:hover:not(.active) { color: var(--ink); background: rgba(38,51,43,0.05); }
+    .role-btn i { margin-right: 7px; }
+
+    .form-group { margin-bottom: 18px; position: relative; }
+    .form-group label {
+      display: block; font-size: 0.7rem; font-weight: 700; color: var(--ink-dim);
+      margin-bottom: 8px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .form-group .input-wrapper {
+      position: relative; display: flex; align-items: center;
+      background: var(--paper); border: 1px solid var(--line-bright); border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .form-group .input-wrapper:focus-within {
+      border-color: var(--teal); box-shadow: 0 0 0 3px rgba(31,111,100,0.14);
+    }
+    .form-group .input-wrapper .input-icon { padding: 0 0 0 14px; color: var(--ink-dim); font-size: 0.85rem; flex-shrink: 0; }
+    .form-group .input-wrapper input {
+      width: 100%; padding: 13px 14px 13px 12px; background: transparent; border: none;
+      outline: none; color: var(--ink); font-size: 0.92rem; font-family: var(--body); font-weight: 600;
+    }
+    .form-group .input-wrapper input::placeholder { color: var(--ink-dim); opacity: 0.7; font-weight: 400; }
+    .form-group .input-wrapper .toggle-password {
+      padding: 0 14px 0 0; color: var(--ink-dim); cursor: pointer; transition: color 0.2s ease;
+      flex-shrink: 0; background: transparent; border: none; font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .form-group .input-wrapper .toggle-password:hover { color: var(--teal); }
+    .form-group .input-wrapper .toggle-password:focus-visible { outline: 2px solid var(--teal); border-radius: 4px; }
+    .form-group .input-wrapper .toggle-password i { pointer-events: none; }
+
+    .validation-msg { font-size: 0.74rem; color: var(--stamp); margin-top: 6px; display: none; font-family: var(--body); }
+    .validation-msg.show { display: block; }
+
+    .form-options { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 24px; }
+    .form-options .remember-me { display: flex; align-items: center; gap: 8px; color: var(--ink-dim); font-size: 0.8rem; cursor: pointer; font-family: var(--body); }
+    .form-options .remember-me input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--teal); cursor: pointer; }
+    .form-options .forgot-password { color: var(--ink-dim); font-size: 0.8rem; text-decoration: none; transition: color 0.2s ease; font-family: var(--body); font-weight: 600; }
+    .form-options .forgot-password:hover { color: var(--stamp); }
+
+    .login-btn {
+      width: 100%; padding: 14px; border: none; border-radius: 8px;
+      background: var(--teal); color: var(--card); font-size: 0.94rem; font-weight: 800;
+      font-family: var(--body); letter-spacing: 0.01em;
+      cursor: pointer; transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .login-btn:hover { background: var(--teal-bright); box-shadow: 0 8px 24px -8px rgba(31,111,100,0.5); }
+    .login-btn:active { transform: translateY(1px); }
+    .login-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .divider { display: flex; align-items: center; gap: 16px; margin: 22px 0; color: var(--ink-dim); font-size: 0.7rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    .create-account { text-align: center; margin-top: 6px; }
+    .create-account p { color: var(--ink-dim); font-size: 0.86rem; font-family: var(--body); }
+    .create-account a { color: var(--stamp); font-weight: 800; text-decoration: none; transition: color 0.2s ease; }
+    .create-account a:hover { color: var(--ink); }
+
+    .error-msg {
+      background: rgba(166,64,58,0.08); border: 1px solid rgba(166,64,58,0.35); border-radius: 8px;
+      padding: 10px 14px; color: var(--stamp); font-size: 0.82rem; margin-bottom: 16px;
+      display: none; align-items: center; gap: 10px; font-family: var(--body); font-weight: 600;
+    }
+    .error-msg.show { display: flex; }
+    .error-msg i { font-size: 0.95rem; }
+
+    footer.foot-strip {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--line);
+      padding: 14px 32px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 980px) {
+      .stage { flex-direction: column; }
+      .info-panel { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 44px; }
+      .login-panel { flex: 1; padding: 40px 24px 56px; }
+      .readout-grid { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .login-card { padding: 30px 22px 26px; }
+      .form-options { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .back-home { position: static; display: inline-flex; margin: 16px 0 0 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .compass .needle { animation: none !important; }
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 1000px var(--paper) inset !important;
+      -webkit-text-fill-color: var(--ink) !important;
+      border-color: var(--line-bright);
+      transition: background-color 5000s ease-in-out 0s;
+    }
+    input::-ms-clear, input::-ms-reveal { display: none; width: 0; height: 0; }
+    input::-webkit-search-decoration, input::-webkit-search-cancel-button,
+    input::-webkit-search-results-button, input::-webkit-search-results-decoration { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="streak-bar"><i class="fas fa-fire"></i> Sign in to keep your streak alive</div>
+
+  <div class="field-layer">
+    <div class="field-dots"></div>
+    <div class="field-vignette"></div>
+    <div class="postmark p1">Buenos<br/>Aires</div>
+    <div class="postmark p2">Tokyo</div>
+    <div class="postmark p3">Paris</div>
+    <div class="postmark p4">Seoul</div>
+  </div>
+
+  <a href="index.html" class="back-home" data-aos="fade-right" data-aos-duration="600">
+    <i class="fas fa-arrow-left"></i> Back to Home
+  </a>
+
+  <div class="stage">
+    <div class="info-panel">
+      <div class="unit-tag" data-aos="fade-up" data-aos-duration="600">Your Passport — Active</div>
+      <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="80">
+        Pick up where you <em>left off</em>
+      </h1>
+      <p class="lede" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160">
+        Every lesson stamps a new page in your language passport. Sign in to keep collecting words, sounds, and streaks.
+      </p>
+
+      <div class="readout-grid" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
+        <div class="readout">
+          <div class="label">Day Streak</div>
+          <div class="value amber">47</div>
+        </div>
+        <div class="readout">
+          <div class="label">Words Learned</div>
+          <div class="value">1,284</div>
+        </div>
+        <div class="readout">
+          <div class="label">Level</div>
+          <div class="value">B2</div>
+        </div>
+      </div>
+
+      <div class="compass-wrap" data-aos="fade-up" data-aos-duration="700" data-aos-delay="320">
+        <div class="compass"><div class="needle"></div></div>
+        <div class="coord-strip">
+          <span>Learning: <strong>Spanish</strong></span>
+          <span>Native: <strong>English</strong></span>
+          <span>Daily goal: <strong>15 min</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-panel">
+      <div class="login-card" data-aos="fade-left" data-aos-duration="700">
+        <div class="stamp-seal">Learner<br/>Passport</div>
+
+        <div class="login-logo">
+          <div class="logo-placeholder">
+            <img
+              id="logoImage"
+              src="./assets/stack3.webp"
+              alt="Wordtrail"
+              onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+            />
+            <div id="logoFallback" class="logo-fallback" style="display:none;">
+              <span>WT</span>
+            </div>
+          </div>
+          <span class="eyebrow">Wordtrail</span>
+          <p>Sign in to continue your lesson</p>
+        </div>
+
+        <div class="role-selector">
+          <button class="role-btn active" data-role="learner" id="learnerRole">
+            <i class="fas fa-book"></i> Learner
+          </button>
+          <button class="role-btn" data-role="teacher" id="teacherRole">
+            <i class="fas fa-chalkboard-teacher"></i> Educator
+          </button>
+        </div>
+
+        <div class="error-msg" id="errorMsg">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="errorText">Invalid email or password. Please try again.</span>
+        </div>
+
+        <form id="loginForm" autocomplete="off">
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon"><i class="fas fa-envelope"></i></span>
+              <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+            <div class="validation-msg" id="emailValidation">
+              <i class="fas fa-info-circle"></i> Please enter a valid email address
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password"><i class="fas fa-lock"></i> Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon"><i class="fas fa-lock"></i></span>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+                autocomplete="current-password"
+              />
+              <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                <i class="fas fa-eye" id="toggleIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" /> Keep me signed in
+            </label>
+            <a href="404.html" class="forgot-password">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="login-btn" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i> Continue Learning
+          </button>
+        </form>
+
+        <div class="divider">or</div>
+
+        <div class="create-account">
+          <p>New to Wordtrail? <a href="signup.html">Start your first lesson</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot-strip">
+    <span>STACKLY © 2026</span>
+    <span>Your streak is saved the moment you sign in</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      if (window.AOS) {
+        AOS.init({ once: true, easing: 'ease-out-cubic' });
+      }
+
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const togglePassword = document.getElementById('togglePassword');
+      const toggleIcon = document.getElementById('toggleIcon');
+      const loginForm = document.getElementById('loginForm');
+      const loginBtn = document.getElementById('loginBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      const errorText = document.getElementById('errorText');
+      const emailValidation = document.getElementById('emailValidation');
+      const learnerRoleBtn = document.getElementById('learnerRole');
+      const teacherRoleBtn = document.getElementById('teacherRole');
+
+      let selectedRole = 'learner';
+      let isPasswordVisible = false;
+
+      // --- Role Selection ---
+      function setRole(role) {
+        selectedRole = role;
+        [learnerRoleBtn, teacherRoleBtn].forEach(btn => btn.classList.remove('active'));
+        if (role === 'learner') learnerRoleBtn.classList.add('active');
+        else teacherRoleBtn.classList.add('active');
+        hideError();
+        validateEmail();
+      }
+
+      learnerRoleBtn.addEventListener('click', () => setRole('learner'));
+      teacherRoleBtn.addEventListener('click', () => setRole('teacher'));
+
+      // --- Email Validation ---
+      function validateEmail() {
+        const email = emailInput.value.trim();
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (email.length > 0 && !emailRegex.test(email)) {
+          emailValidation.classList.add('show');
+          return false;
+        } else {
+          emailValidation.classList.remove('show');
+          return email.length > 0 && emailRegex.test(email);
+        }
+      }
+
+      emailInput.addEventListener('input', () => { validateEmail(); hideError(); });
+      emailInput.addEventListener('blur', validateEmail);
+
+      // --- Password Toggle ---
+      togglePassword.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        isPasswordVisible = !isPasswordVisible;
+        passwordInput.type = isPasswordVisible ? 'text' : 'password';
+        toggleIcon.className = isPasswordVisible ? 'fas fa-eye-slash' : 'fas fa-eye';
+        passwordInput.focus();
+      });
+
+      togglePassword.addEventListener('mousedown', (e) => e.preventDefault());
+
+      // --- Error handling ---
+      function showError(message) {
+        errorText.textContent = message || 'Invalid email or password. Please try again.';
+        errorMsg.classList.add('show');
+      }
+
+      function hideError() {
+        errorMsg.classList.remove('show');
+      }
+
+      // --- Direct navigation without loading delay ---
+      function redirectToDashboard() {
+        const email = emailInput.value.trim();
+        const redirectUrl = (selectedRole === 'teacher') ? 'teacherdashboard.html' : 'dashboard.html';
+
+        const userData = {
+          email: email,
+          role: selectedRole,
+          name: email.split('@')[0]
+        };
+
+        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('userRole', selectedRole);
+        localStorage.setItem('userEmail', email);
+
+        window.location.replace(redirectUrl);
+      }
+
+      // --- Login handler ---
+      function handleLogin(e) {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(email)) {
+          showError('Please enter a valid email address');
+          emailInput.focus();
+          return;
+        }
+
+        if (password.length < 4) {
+          showError('Password must be at least 4 characters');
+          passwordInput.focus();
+          return;
+        }
+
+        redirectToDashboard();
+      }
+
+      loginForm.addEventListener('submit', handleLogin);
+
+      passwordInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          loginForm.dispatchEvent(new Event('submit'));
+        }
+      });
+
+      emailInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          passwordInput.focus();
+        }
+      });
+
+      // --- Init ---
+      setRole('learner');
+      hideError();
+    })();
+  </script>
+
+</body>
+</html>

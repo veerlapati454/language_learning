@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App — Fluenta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+<style>
+
+  /* ---------- Reset & Base ---------- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+
+  .wrap { max-width: 88rem; margin: 0 auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
+  }
+
+  /* ---------- Buttons ---------- */
+  .pill-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+    padding: 8px 8px 8px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+  }
+  .pill-btn:hover { background: #333333; }
+  .pill-btn .arrow-circle {
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border-radius: 999px; padding: 10px; width: 20px; height: 20px;
+  }
+  .pill-btn.small { font-size: 15px; padding: 6px 6px 6px 22px; }
+  .pill-btn.small .arrow-circle { width: 16px; height: 16px; padding: 8px; }
+  .pill-btn.light { background: #ffffff; color: #111111; }
+  .pill-btn.light .arrow-circle { background: #111111; }
+  .pill-btn.light .arrow-circle svg path { stroke: #ffffff; }
+  .pill-btn.light:hover { background: #ececec; }
+
+  .nav-cta {
+    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+    padding: 10px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+  }
+  .nav-cta:hover { background: #333333; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: rgba(17,17,17,0.6); font-size: 14px; font-weight: 500;
+    margin-bottom: 10px; letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: #E3A548; }
+
+  /* ---------- Navbar ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 70;
+    padding: 16px 24px;
+    background: rgba(245, 245, 245, 0.85);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    transform: translateZ(0);
+  }
+  nav.nav-scrolled {
+    background: rgba(245, 245, 245, 0.92);
+    border-bottom-color: rgba(17, 17, 17, 0.06);
+    box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
+    padding: 12px 24px;
+  }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; }
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .nav-logo {
+    width: clamp(48px, 8vw, 100px); height: clamp(28px, 4.4vw, 54px); flex-shrink: 0;
+    border-radius: 80px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
+  @media (max-width: 860px) { .nav-logo { width: 90px; height: 50px; } }
+  @media (max-width: 480px) { .nav-logo { width: 80px; height: 46px; } }
+  .nav-right { display: flex; align-items: center; gap: 32px; margin-left: auto; }
+  .nav-center { display: flex; gap: 32px; }
+  .nav-center a { font-size: 15px; font-weight: 500; color: #4b4b4b; transition: color 0.2s ease; position: relative; }
+  .nav-center a::after {
+    content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1.5px;
+    background: linear-gradient(90deg, #E3A548, #2B2644);
+    transition: width 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-center a:hover { color: #111111; }
+  .nav-center a:hover::after { width: 100%; }
+  .nav-center a.current { color: #111111; }
+  .nav-center a.current::after { width: 100%; }
+  @media (max-width: 860px) { .nav-center { display: none; } }
+  @media (max-width: 860px) { .nav-right .nav-cta { display: none; } }
+
+  /* ---------- Hamburger ---------- */
+  .nav-hamburger {
+    display: none; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: #111111; flex-shrink: 0; position: relative; z-index: 60;
+  }
+  @media (max-width: 860px) { .nav-hamburger { display: flex; } }
+  .nav-hamburger .burger-line {
+    position: absolute; width: 18px; height: 1.6px; background: #ffffff; border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), opacity 0.2s ease, top 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-hamburger .burger-line:nth-child(1) { top: 16px; }
+  .nav-hamburger .burger-line:nth-child(2) { top: 22px; }
+  .nav-hamburger .burger-line:nth-child(3) { top: 28px; }
+  .nav-hamburger.is-open .burger-line:nth-child(1) { top: 22px; transform: rotate(45deg); }
+  .nav-hamburger.is-open .burger-line:nth-child(2) { opacity: 0; }
+  .nav-hamburger.is-open .burger-line:nth-child(3) { top: 22px; transform: rotate(-45deg); }
+
+  /* ---------- Mobile menu panel ---------- */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 55;
+    padding: 88px 24px 28px;
+    background: rgba(245, 245, 245, 0.99);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 24px 48px rgba(17,17,17,0.14);
+    visibility: hidden; opacity: 0; transform: translateY(-16px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.65,0,0.35,1), visibility 0.35s;
+    height: 100vh; height: 100svh; overflow-y: auto;
+    flex-direction: column; justify-content: center;
+  }
+  @media (max-width: 860px) { .mobile-menu { display: flex; } }
+  .mobile-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
+  .mobile-menu-links { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; margin-bottom: 20px; flex: 1; }
+  .mobile-menu-links a {
+    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+    padding: 10px 4px; border-bottom: 1px solid rgba(17,17,17,0.08);
+    color: #111111; text-align: center; width: 100%;
+  }
+  .mobile-menu-links a:last-child { border-bottom: none; }
+  .mobile-menu .nav-cta { display: flex; justify-content: center; width: 100%; text-align: center; }
+  body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
+
+  section { background: #F5F5F5; padding: 96px 24px; }
+  @media (max-width: 768px) { section { padding: 64px 20px; } }
+
+  .grad-text {
+    background: linear-gradient(100deg, #111111 40%, #E3A548 65%, #2B2644 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 220% 100%;
+  }
+
+  /* ---------- App hero ---------- */
+  .app-hero { padding-top: 160px; }
+  @media (max-width: 768px) { .app-hero { padding-top: 128px; } }
+  .app-hero-row { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+  @media (min-width: 900px) { .app-hero-row { grid-template-columns: 1.05fr 0.95fr; gap: 48px; } }
+  .app-hero-copy h1 { font-size: clamp(34px, 5vw, 58px); font-weight: 600; line-height: 1.06; letter-spacing: -0.04em; margin-bottom: 20px; max-width: 560px; }
+  .app-hero-copy p { color: rgba(17,17,17,0.62); font-size: 17px; line-height: 1.65; max-width: 460px; margin-bottom: 32px; }
+  .store-badges { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+  .store-badge {
+    display: inline-flex; align-items: center; gap: 10px; background: #111111; color: #ffffff;
+    padding: 10px 20px; border-radius: 14px; transition: background-color 0.2s ease;
+  }
+  .store-badge:hover { background: #333333; }
+  .store-badge .store-badge-text span { display: block; font-size: 10px; color: rgba(255,255,255,0.6); line-height: 1.3; }
+  .store-badge .store-badge-text strong { display: block; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .app-hero-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+  .app-hero-stats div { display: flex; flex-direction: column; }
+  .app-hero-stats strong { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .app-hero-stats span { font-size: 13px; color: rgba(17,17,17,0.55); }
+  .app-hero-media { position: relative; border-radius: 32px; overflow: hidden; min-height: 460px; }
+  .app-hero-media img { width: 100%; height: 100%; object-fit: cover; min-height: 460px; }
+  .app-hero-float {
+    position: absolute; left: 20px; bottom: 20px; z-index: 2;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
+    border-radius: 16px; padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 16px 32px rgba(17,17,17,0.16);
+  }
+  .app-hero-float .flame { font-size: 20px; }
+  .app-hero-float strong { display: block; font-size: 15px; font-weight: 600; }
+  .app-hero-float span { font-size: 12px; color: rgba(17,17,17,0.55); }
+
+  /* ---------- Feature grid ---------- */
+  .app-features-head { max-width: 620px; margin-bottom: 48px; }
+  .app-features-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+  .app-features-head p { color: rgba(17,17,17,0.6); font-size: 16px; line-height: 1.6; max-width: 480px; }
+  .app-features-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 640px) { .app-features-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .app-features-grid { grid-template-columns: repeat(4, 1fr); } }
+  .app-feature-card { background: #ffffff; border-radius: 20px; padding: 28px; border: 1px solid rgba(0,0,0,0.06); transition: box-shadow 0.3s ease; }
+  .app-feature-card:hover { box-shadow: 0 24px 48px rgba(17,17,17,0.1); }
+  .app-feature-icon {
+    width: 44px; height: 44px; border-radius: 999px; background: #F5F5F5;
+    display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 22px;
+  }
+  .app-feature-card h3 { font-size: 18.5px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .app-feature-card p { font-size: 14.5px; color: rgba(17,17,17,0.6); line-height: 1.6; }
+
+  /* ---------- Split sections (reused) ---------- */
+  .split-section { background: #111111; }
+  .split-row { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+  @media (min-width: 860px) { .split-row { grid-template-columns: 1fr 1fr; gap: 64px; } }
+  .split-media { border-radius: 28px; overflow: hidden; min-height: 440px; order: 2; }
+  .split-media img { width: 100%; height: 100%; object-fit: cover; min-height: 440px; }
+  @media (min-width: 860px) { .split-media { order: 1; } .split-copy { order: 2; } }
+  .split-copy .eyebrow { color: rgba(255,255,255,0.55); }
+  .split-copy h2 { color: #ffffff; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 24px; }
+  .split-list { display: flex; flex-direction: column; gap: 22px; }
+  .split-item { display: flex; gap: 16px; align-items: flex-start; }
+  .split-icon {
+    flex-shrink: 0; width: 38px; height: 38px; border-radius: 999px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+    display: flex; align-items: center; justify-content: center; font-size: 16px; color: #ffffff; font-weight: 600;
+  }
+  .split-item h4 { color: #ffffff; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .split-item p { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.55; max-width: 380px; }
+
+  /* ---------- Light split (screens showcase) ---------- */
+  .light-split-row { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+  @media (min-width: 860px) { .light-split-row { grid-template-columns: 1fr 1fr; gap: 64px; } }
+  .light-split-media { border-radius: 28px; overflow: hidden; min-height: 420px; }
+  .light-split-media img { width: 100%; height: 100%; object-fit: cover; min-height: 420px; }
+  .light-split-copy h2 { font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 20px; }
+  .light-split-copy p { color: rgba(17,17,17,0.65); font-size: 16.5px; line-height: 1.7; max-width: 480px; margin-bottom: 16px; }
+  .light-split-copy p:last-of-type { margin-bottom: 0; }
+
+  /* ---------- Streak / stats band ---------- */
+  .app-stats-section { background: #2B2644; padding: 80px 24px; position: relative; overflow: hidden; }
+  .app-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; text-align: left; position: relative; z-index: 1; }
+  @media (min-width: 860px) { .app-stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .app-stat-num { color: #ffffff; font-size: 46px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+  .app-stat-label { color: rgba(255,255,255,0.55); font-size: 15px; }
+
+  /* ---------- Download band ---------- */
+  .download-section { background: #ffffff; }
+  .download-inner {
+    display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; text-align: center;
+    background: #111111; border-radius: 28px; padding: 72px 40px; position: relative; overflow: hidden;
+  }
+  @media (min-width: 640px) { .download-inner { padding: 80px 56px; } }
+  .download-inner h2 { color: #ffffff; font-size: 38px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 8px; }
+  .download-inner p { color: rgba(255,255,255,0.62); font-size: 16px; max-width: 460px; margin: 0 auto 28px; }
+  .download-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .download-note { color: rgba(255,255,255,0.35); font-size: 13px; margin-top: 24px; }
+
+  /* ---------- Final CTA ---------- */
+  .mesh-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; pointer-events: none; will-change: transform; }
+  .final-cta .mesh-blob-a { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #E3A548, transparent 70%); top: -120px; left: -80px; }
+  .final-cta .mesh-blob-b { width: 460px; height: 460px; background: radial-gradient(circle at 60% 40%, #6C5CE7, transparent 70%); bottom: -160px; right: -100px; }
+  .final-cta { background: #111111; border-radius: 28px; margin: 0 24px; padding: 80px 40px; text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
+  .final-cta h2 { color: #ffffff; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 560px; position: relative; z-index: 1; }
+  .final-cta p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 420px; position: relative; z-index: 1; }
+  .final-cta .pill-btn.light { position: relative; z-index: 1; }
+  @media (max-width: 768px) {
+    .final-cta { padding: 56px 24px; margin: 0; border-radius: 0; }
+    .final-cta h2 { font-size: 30px; }
+    .final-cta-section { padding-left: 0; padding-right: 0; }
+  }
+
+  /* ---------- Footer ---------- */
+  footer { background: #111111; padding: 72px 24px 32px; }
+  .footer-top { display: grid; grid-template-columns: 1.3fr 0.8fr 0.9fr 1.1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr; row-gap: 44px; } }
+  @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; } }
+  .footer-logo-placeholder { width: 100%; max-width: 220px; height: 72px; margin-bottom: 16px; overflow: hidden; }
+  .footer-logo-placeholder img { width: 100px; height: 100px; object-fit: contain; }
+  .footer-tag { color: rgba(255,255,255,0.5); font-size: 14px; max-width: 300px; line-height: 1.5; margin-bottom: 24px; }
+  .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14.5px; color: rgba(255,255,255,0.75); margin-bottom: 12px; transition: color 0.2s ease; }
+  .footer-col a:hover { color: #ffffff; }
+  .footer-address { font-style: normal; color: rgba(255,255,255,0.75); font-size: 14.5px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; align-items: center; gap: 12px; }
+  .footer-social a {
+    width: 38px; height: 38px; border-radius: 999px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .footer-social a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
+  .footer-social svg path, .footer-social svg rect, .footer-social svg line, .footer-social svg circle { stroke: rgba(255,255,255,0.85); }
+  .footer-social svg circle[r="0.9"] { fill: rgba(255,255,255,0.85); stroke: none; }
+  .footer-newsletter { margin-top: 4px; }
+  .footer-newsletter-form { display: flex; gap: 8px; max-width: 320px; }
+  .footer-newsletter-form input[type="email"] {
+    flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px; padding: 11px 16px; font-size: 14px; color: #ffffff; font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .footer-newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+  .footer-newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(227,165,72,0.6); background: rgba(255,255,255,0.1); }
+  .footer-newsletter-form button {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px; background: #E3A548;
+    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
+  }
+  .footer-newsletter-form button:hover { background: #f0b968; }
+  .footer-newsletter-note { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+  .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .footer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
+  }
+  .footer-badge svg { flex-shrink: 0; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 16px; }
+  .footer-bottom span { color: rgba(255,255,255,0.4); font-size: 13.5px; }
+  .footer-legal-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .footer-legal-links a { color: rgba(255,255,255,0.45); font-size: 13.5px; transition: color 0.2s ease; }
+  .footer-legal-links a:hover { color: #ffffff; }
+
+  .grain-overlay {
+    position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 998; pointer-events: none; border-radius: 999px; transform: translate(-50%, -50%); }
+  .cursor-dot { width: 6px; height: 6px; background: #111111; }
+  .cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(17,17,17,0.35); transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease; }
+  .cursor-ring.is-active { width: 54px; height: 54px; border-color: #E3A548; background: rgba(227,165,72,0.08); }
+  @media (max-width: 860px), (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+  .magnetic { display: inline-flex; }
+
+</style>
+</head>
+<body>
+
+  <div class="grain-overlay"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <nav>
+    <div class="nav-row wrap">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <a href="index.html"><img src="./assets/stack4.webp" alt="Logo placeholder" onerror="this.style.display='none'"></a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-center">
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html" class="current">App</a>
+          <a href="blog.html">Blog</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <a href="index.html#pricing" class="nav-cta magnetic">Start Learning</a>
+        <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-links">
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="app.html">App</a>
+      <a href="blog.html">Blog</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="index.html#pricing" class="nav-cta magnetic">Start Learning</a>
+  </div>
+
+  <!-- ============ 1. APP HERO ============ -->
+  <section class="app-hero" data-aos="fade-up">
+    <div class="wrap app-hero-row">
+      <div class="app-hero-copy" data-aos="fade-right">
+        <div class="eyebrow"><span class="dot"></span>The Fluenta App</div>
+        <h1>Your daily lesson fits in a pocket.</h1>
+        <p>Same adaptive lessons, same live conversation rooms, built for the ten minutes you actually have — on the train, in line, between meetings.</p>
+        <div class="store-badges">
+          <a href="404.html" class="store-badge magnetic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16.5 3C16.5 4.2 16 5.3 15.2 6.1C14.4 7 13.1 7.6 11.9 7.5C11.8 6.3 12.3 5.1 13.1 4.3C13.9 3.4 15.3 2.7 16.5 3Z" fill="#ffffff"/><path d="M20.5 17.3C20 18.4 19.6 18.9 19 19.8C18.1 21 17.2 22.2 15.8 22.2C14.4 22.3 14 21.4 12.4 21.4C10.8 21.4 10.3 22.2 9 22.3C7.6 22.3 6.6 21 5.7 19.8C3.9 17.3 2.5 12.7 4.4 9.6C5.3 8 7 7 8.8 7C10.2 6.9 11.5 7.9 12.4 7.9C13.2 7.9 14.8 6.7 16.5 6.9C17.2 6.9 19.2 7.2 20.5 9C20.4 9.1 18.1 10.4 18.1 13.2C18.2 16.5 20.9 17.6 20.5 17.3Z" fill="#ffffff"/></svg>
+            <span class="store-badge-text"><span>Download on the</span><strong>App Store</strong></span>
+          </a>
+          <a href="404.html" class="store-badge magnetic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 3.5L14.5 12L4 20.5V3.5Z" fill="#ffffff"/><path d="M15.6 11L18.9 8.9C20.1 9.6 20.9 10.3 20.9 11.9C20.9 13.6 20 14.3 18.9 15L15.6 12.9L15.6 11Z" fill="#ffffff"/></svg>
+            <span class="store-badge-text"><span>Get it on</span><strong>Google Play</strong></span>
+          </a>
+        </div>
+        <div class="app-hero-stats">
+          <div><strong>4.9★</strong><span>App Store rating</span></div>
+          <div><strong>12M+</strong><span>App downloads</span></div>
+          <div><strong>42</strong><span>Languages on the app</span></div>
+        </div>
+      </div>
+      <div class="app-hero-media" data-aos="fade-left">
+        <img src="./assets/l40.webp" alt="Person using a language learning app on their phone" loading="lazy" decoding="async">
+        <div class="app-hero-float">
+          <span class="flame">🔥</span>
+          <div>
+            <strong>48-day streak</strong>
+            <span>Keep it going today</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. APP FEATURES ============ -->
+  <section id="features" data-aos="fade-up">
+    <div class="wrap">
+      <div class="app-features-head" data-aos="fade-up">
+        <div class="eyebrow"><span class="dot"></span>What's Inside</div>
+        <h2>Everything that makes a lesson stick, in your pocket</h2>
+        <p>The app carries every part of the Fluenta method — it's just built for the moments you have between things.</p>
+      </div>
+      <div class="app-features-grid">
+        <div class="app-feature-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="app-feature-icon">🔔</div>
+          <h3>Smart reminders</h3>
+          <p>Nudges arrive at the time you actually study, learned from your own habits — not a fixed 8pm ping.</p>
+        </div>
+        <div class="app-feature-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="app-feature-icon">📶</div>
+          <h3>Full offline mode</h3>
+          <p>Download any lesson path and keep your streak alive on a flight, a commute, or with no signal at all.</p>
+        </div>
+        <div class="app-feature-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="app-feature-icon">🔥</div>
+          <h3>Streaks that matter</h3>
+          <p>Streak freezes and weekly goals are built around real life, not punishing you for one missed Tuesday.</p>
+        </div>
+        <div class="app-feature-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="app-feature-icon">🎧</div>
+          <h3>Widgets & lock screen</h3>
+          <p>A home-screen widget and lock-screen practice card mean a lesson is never more than a glance away.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. INSIDE A LESSON ============ -->
+  <section id="lesson-screens" data-aos="fade-up">
+    <div class="wrap light-split-row">
+      <div class="light-split-media" data-aos="fade-right">
+        <img src="./assets/l41.webp" alt="Close up of someone tapping through a lesson on their phone" loading="lazy" decoding="async">
+      </div>
+      <div class="light-split-copy" data-aos="fade-left">
+        <div class="eyebrow"><span class="dot"></span>Inside a Lesson</div>
+        <h2>Ten minutes, built around your voice</h2>
+        <p>Every app lesson mixes listening, writing, and speaking prompts, using your phone's microphone to score pronunciation in real time — so you're practicing the part that actually matters in a real conversation.</p>
+        <p>Get something wrong and the app doesn't just mark it red. It resurfaces that exact word a few lessons later, right before you'd naturally forget it again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. LIVE ROOMS, ON THE GO ============ -->
+  <section id="app-live-rooms" class="split-section" data-aos="fade-up">
+    <div class="wrap split-row">
+      <div class="split-media" data-aos="fade-right">
+        <img src="./assets/l42.webp" alt="Person on a video call from their phone" loading="lazy" decoding="async">
+      </div>
+      <div class="split-copy" data-aos="fade-left">
+        <div class="eyebrow"><span class="dot"></span>Live Rooms, On the Go</div>
+        <h2>Join a real conversation from wherever you are</h2>
+        <div class="split-list">
+          <div class="split-item">
+            <div class="split-icon">📍</div>
+            <div>
+              <h4>One-tap join</h4>
+              <p>A push notification opens straight into your matched room — no scheduling link to dig up.</p>
+            </div>
+          </div>
+          <div class="split-item">
+            <div class="split-icon">🎙️</div>
+            <div>
+              <h4>Built for mobile audio</h4>
+              <p>Noise suppression and auto-gain keep conversations clear over café Wi-Fi or a spotty commute.</p>
+            </div>
+          </div>
+          <div class="split-item">
+            <div class="split-icon">📝</div>
+            <div>
+              <h4>Recap after every room</h4>
+              <p>A short summary and corrected phrases land in your app the moment the room ends.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. APP BY THE NUMBERS ============ -->
+  <section class="app-stats-section" data-aos="fade-up">
+    <div class="wrap app-stats-grid">
+      <div data-aos="fade-up">
+        <div class="app-stat-num" data-count="12" data-suffix="M+">0</div>
+        <div class="app-stat-label">App downloads</div>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="100">
+        <div class="app-stat-num" data-count="18" data-suffix="M+">0</div>
+        <div class="app-stat-label">Lessons completed offline</div>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="200">
+        <div class="app-stat-num" data-count="52" data-suffix="">0</div>
+        <div class="app-stat-label">Days, average longest streak</div>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="300">
+        <div class="app-stat-num" data-count="4.9" data-decimal="1" data-suffix="★">0</div>
+        <div class="app-stat-label">Average app store rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. DOWNLOAD CTA ============ -->
+  <section class="download-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="download-inner" data-aos="zoom-in">
+        <h2>Get Fluenta on your phone</h2>
+        <p>Free to download, with a placement check-in that takes less than two minutes.</p>
+        <div class="download-badges">
+          <a href="404.html" class="store-badge magnetic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16.5 3C16.5 4.2 16 5.3 15.2 6.1C14.4 7 13.1 7.6 11.9 7.5C11.8 6.3 12.3 5.1 13.1 4.3C13.9 3.4 15.3 2.7 16.5 3Z" fill="#ffffff"/><path d="M20.5 17.3C20 18.4 19.6 18.9 19 19.8C18.1 21 17.2 22.2 15.8 22.2C14.4 22.3 14 21.4 12.4 21.4C10.8 21.4 10.3 22.2 9 22.3C7.6 22.3 6.6 21 5.7 19.8C3.9 17.3 2.5 12.7 4.4 9.6C5.3 8 7 7 8.8 7C10.2 6.9 11.5 7.9 12.4 7.9C13.2 7.9 14.8 6.7 16.5 6.9C17.2 6.9 19.2 7.2 20.5 9C20.4 9.1 18.1 10.4 18.1 13.2C18.2 16.5 20.9 17.6 20.5 17.3Z" fill="#ffffff"/></svg>
+            <span class="store-badge-text"><span>Download on the</span><strong>App Store</strong></span>
+          </a>
+          <a href="404.html" class="store-badge magnetic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 3.5L14.5 12L4 20.5V3.5Z" fill="#ffffff"/><path d="M15.6 11L18.9 8.9C20.1 9.6 20.9 10.3 20.9 11.9C20.9 13.6 20 14.3 18.9 15L15.6 12.9L15.6 11Z" fill="#ffffff"/></svg>
+            <span class="store-badge-text"><span>Get it on</span><strong>Google Play</strong></span>
+          </a>
+        </div>
+        <p class="download-note">Also available on iPad and tablet. Your progress syncs across every device.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. FINAL CTA + FOOTER ============ -->
+  <section class="final-cta-section" style="padding-top: 96px;" data-aos="fade-up">
+    <div class="final-cta" data-aos="zoom-in">
+      <div class="mesh-blob mesh-blob-a" id="ctaBlobA" style="opacity:0.4;"></div>
+      <div class="mesh-blob mesh-blob-b" id="ctaBlobB" style="opacity:0.3;"></div>
+      <h2>Your streak is waiting.</h2>
+      <p>Join 12 million learners building real fluency, one daily lesson at a time.</p>
+      <a href="index.html#pricing" class="pill-btn light magnetic">
+        Create free account
+        <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <footer id="help" data-aos="fade-up">
+    <div class="wrap">
+      <div class="footer-top">
+        <div data-aos="fade-up">
+          <div class="footer-logo-placeholder">
+            <a href="index.html"><img src="./assets/stackly_logo.webp" alt="Your logo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></a>
+          </div>
+          <p class="footer-tag">An adaptive, reward-powered language platform built for real fluency. Learn 42 languages through daily lessons and live conversation with native speakers.</p>
+          <div class="footer-newsletter">
+            <form class="footer-newsletter-form" onsubmit="window.location.href='404.html'; return false;">
+              <input type="email" placeholder="Your email address" aria-label="Email address" required>
+              <button type="submit" aria-label="Subscribe to newsletter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </form>
+            <p class="footer-newsletter-note">One email a month with study tips and new language launches. Unsubscribe anytime.</p>
+          </div>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="80">
+          <h5>Quick Links</h5>
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html">App</a>
+          <a href="blog.html">Blog</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="140">
+          <h5>Resources</h5>
+          <a href="404.html">Help Center</a>
+          <a href="404.html">Community</a>
+          <a href="404.html">Learner Stories</a>
+          <a href="404.html">Careers</a>
+          <a href="404.html">Press Kit</a>
+          <a href="404.html">Partner With Us</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+          <h5>Contact</h5>
+          <address class="footer-address">
+            221B HITEX Avenue<br>
+            JUBILEE 400<br>
+            HYDERABAD<br>
+            <a href="mailto:hello@fluenta.com" style="display:inline; margin:0;">hello@fluenta.com</a><br>
+            <a href="tel:+914012345678" style="display:inline; margin:0;">+91 40 1234 5678</a>
+          </address>
+          <div class="footer-social">
+            <a href="404.html" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 8H13.5C12.6716 8 12 8.67157 12 9.5V11H15L14.5 14H12V21H9V14H7V11H9V9.5C9 7.01472 11.0147 5 13.5 5H15V8Z" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
+            </a>
+            <a href="404.html" aria-label="X / Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1"/><path d="M11.5 17V13.2C11.5 11.6 12.5 10.6 13.9 10.6C15.2 10.6 16 11.5 16 13.2V17" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <div class="footer-badges">
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12L11 14L15 10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              GDPR compliant
+            </span>
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/></svg>
+              Secure payments
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 STACKLY, Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Cookie Settings</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  function forceScrollTop() {
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+  forceScrollTop();
+  window.addEventListener('DOMContentLoaded', forceScrollTop);
+  window.addEventListener('load', forceScrollTop);
+  window.addEventListener('pageshow', forceScrollTop);
+  setTimeout(forceScrollTop, 0);
+  setTimeout(forceScrollTop, 300);
+
+  if (typeof AOS !== 'undefined') {
+    AOS.init({ duration: 250, easing: 'ease-out-cubic', once: true, offset: 40 });
+  }
+
+  window.addEventListener('load', function () {
+    if (typeof AOS !== 'undefined') AOS.refresh();
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+  });
+
+  setTimeout(function () {
+    document.querySelectorAll('[data-aos]').forEach(function (el) {
+      if (!el.classList.contains('aos-animate')) el.classList.add('aos-animate');
+    });
+  }, 350);
+
+  var siteNav = document.querySelector('nav');
+  var navScrollTicking = false;
+  function updateNavScrolled() {
+    if (window.scrollY > 40) siteNav.classList.add('nav-scrolled');
+    else siteNav.classList.remove('nav-scrolled');
+    navScrollTicking = false;
+  }
+  updateNavScrolled();
+  window.addEventListener('scroll', function () {
+    if (!navScrollTicking) { requestAnimationFrame(updateNavScrolled); navScrollTicking = true; }
+  }, { passive: true });
+
+  (function () {
+    var hamburger = document.getElementById('navHamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!hamburger || !menu) return;
+    var savedScrollY = 0;
+    function openMenu() {
+      savedScrollY = window.scrollY || window.pageYOffset;
+      document.body.style.top = (-savedScrollY) + 'px';
+      menu.classList.add('is-open'); hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true'); hamburger.setAttribute('aria-label', 'Close menu');
+      document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+      menu.classList.remove('is-open'); hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false'); hamburger.setAttribute('aria-label', 'Open menu');
+      document.body.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollY);
+    }
+    hamburger.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (menu.classList.contains('is-open')) closeMenu(); else openMenu();
+    });
+    menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 860) closeMenu(); });
+  })();
+
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isCoarse = window.matchMedia('(hover: none)').matches || window.innerWidth < 860;
+
+    function forceRevealEverything() {
+      document.querySelectorAll('[data-aos]').forEach(function (el) {
+        el.style.opacity = ''; el.style.transform = ''; el.style.visibility = '';
+        el.classList.add('aos-animate');
+      });
+    }
+    window.addEventListener('load', function () { setTimeout(forceRevealEverything, 2500); });
+
+    if (typeof gsap === 'undefined') { forceRevealEverything(); return; }
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
+    } else { forceRevealEverything(); return; }
+    gsap.ticker.lagSmoothing(0);
+    if (reduceMotion) { forceRevealEverything(); return; }
+
+    try {
+      /* Magnetic buttons */
+      if (!isCoarse) {
+        document.querySelectorAll('.magnetic').forEach(function (el) {
+          var strength = 0.35;
+          var xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
+          var yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+          el.addEventListener('mousemove', function (e) {
+            var b = el.getBoundingClientRect();
+            xTo((e.clientX - b.left - b.width / 2) * strength);
+            yTo((e.clientY - b.top - b.height / 2) * strength);
+          });
+          el.addEventListener('mouseleave', function () { xTo(0); yTo(0); });
+        });
+      }
+
+      /* Custom cursor */
+      var dot = document.getElementById('cursorDot');
+      var ring = document.getElementById('cursorRing');
+      if (dot && ring && !isCoarse) {
+        var dotX = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3.out' });
+        var dotY = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3.out' });
+        var ringX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
+        var ringY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
+        window.addEventListener('mousemove', function (e) {
+          dotX(e.clientX); dotY(e.clientY); ringX(e.clientX); ringY(e.clientY);
+        }, { passive: true });
+        document.querySelectorAll('a, button, summary, .app-feature-card').forEach(function (el) {
+          el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); });
+          el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); });
+        });
+      } else if (dot && ring) { dot.style.display = 'none'; ring.style.display = 'none'; }
+
+      /* Ambient CTA blobs */
+      gsap.set('.mesh-blob', { opacity: 0 });
+      document.querySelectorAll('.final-cta .mesh-blob').forEach(function (blob, i) {
+        gsap.to(blob, {
+          opacity: 1,
+          x: (i % 2 === 0 ? 1 : -1) * gsap.utils.random(40, 90),
+          y: gsap.utils.random(-50, 50),
+          duration: gsap.utils.random(9, 14),
+          ease: 'sine.inOut', repeat: -1, yoyo: true, force3D: true
+        });
+      });
+
+      /* Stat count-up */
+      document.querySelectorAll('.app-stat-num[data-count]').forEach(function (el) {
+        var target = parseFloat(el.getAttribute('data-count'));
+        var suffix = el.getAttribute('data-suffix') || '';
+        var decimals = parseInt(el.getAttribute('data-decimal') || '0', 10);
+        var proxy = { val: 0 };
+        ScrollTrigger.create({
+          trigger: el, start: 'top 88%', once: true,
+          onEnter: function () {
+            gsap.to(proxy, {
+              val: target, duration: 1, ease: 'power2.out',
+              onUpdate: function () { el.textContent = proxy.val.toFixed(decimals) + suffix; }
+            });
+          }
+        });
+      });
+
+      /* Universal section slide-in reveal */
+      (function revealAllSections() {
+        var DIST = 36;
+        function fromVars(type) {
+          switch (type) {
+            case 'fade-down': return { y: -DIST, opacity: 0 };
+            case 'fade-left': return { x: DIST, opacity: 0 };
+            case 'fade-right': return { x: -DIST, opacity: 0 };
+            case 'zoom-in': return { scale: 0.86, opacity: 0 };
+            case 'fade-up': default: return { y: DIST, opacity: 0 };
+          }
+        }
+        var groups = new Map();
+        document.querySelectorAll('[data-aos]').forEach(function (el) {
+          var parent = el.parentElement;
+          var type = el.getAttribute('data-aos') || 'fade-up';
+          var groupKey = parent.__gsGroupId || (parent.__gsGroupId = Math.random().toString(36).slice(2));
+          var fullKey = groupKey + '|' + type;
+          if (!groups.has(fullKey)) groups.set(fullKey, []);
+          groups.get(fullKey).push(el);
+        });
+        groups.forEach(function (els) {
+          if (!els.length) return;
+          var type = els[0].getAttribute('data-aos') || 'fade-up';
+          var from = fromVars(type);
+          var isStagger = els.length > 1;
+          gsap.set(els, from);
+          ScrollTrigger.batch(els, {
+            start: 'top 92%', once: true,
+            onEnter: function (batch) {
+              gsap.to(batch, {
+                x: 0, y: 0, scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out',
+                stagger: isStagger ? 0.04 : 0, clearProps: 'willChange'
+              });
+            }
+          });
+        });
+        ScrollTrigger.refresh();
+      })();
+
+    } catch (err) {
+      console.error('Animation setup failed, revealing all content instead:', err);
+      forceRevealEverything();
+    }
+  })();
+</script>
+
+</body>
+</html>

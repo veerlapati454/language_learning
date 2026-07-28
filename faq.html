@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Fluenta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+<style>
+
+  /* ---------- Reset & Base ---------- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+
+  .wrap { max-width: 88rem; margin: 0 auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
+  }
+
+  /* ---------- Buttons ---------- */
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 8px 8px 28px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+  }
+  .pill-btn:hover { background: #333333; }
+  .pill-btn .arrow-circle {
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border-radius: 999px; padding: 10px; width: 20px; height: 20px;
+  }
+  .pill-btn.small { font-size: 15px; padding: 6px 6px 6px 22px; }
+  .pill-btn.small .arrow-circle { width: 16px; height: 16px; padding: 8px; }
+  .pill-btn.light { background: #ffffff; color: #111111; }
+  .pill-btn.light .arrow-circle { background: #111111; }
+  .pill-btn.light .arrow-circle svg path { stroke: #ffffff; }
+  .pill-btn.light:hover { background: #ececec; }
+
+  .nav-cta {
+    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+    padding: 10px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+  }
+  .nav-cta:hover { background: #333333; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(17,17,17,0.6);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: #E3A548; }
+  .eyebrow.on-dark { color: rgba(255,255,255,0.6); }
+
+  /* ---------- Navbar ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 70;
+    padding: 16px 24px;
+    background: rgba(245, 245, 245, 0.85);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    transform: translateZ(0);
+  }
+  nav.nav-scrolled {
+    background: rgba(245, 245, 245, 0.92);
+    border-bottom-color: rgba(17, 17, 17, 0.06);
+    box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
+    padding: 12px 24px;
+  }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; }
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .nav-logo {
+    width: clamp(48px, 8vw, 100px); height: clamp(28px, 4.4vw, 54px); flex-shrink: 0;
+    border-radius: 80px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
+  @media (max-width: 860px) { .nav-logo { width: 90px; height: 50px; } }
+  @media (max-width: 480px) { .nav-logo { width: 80px; height: 46px; } }
+  .nav-right { display: flex; align-items: center; gap: 32px; margin-left: auto; }
+  .nav-center { display: flex; gap: 32px; }
+  .nav-center a { font-size: 15px; font-weight: 500; color: #4b4b4b; transition: color 0.2s ease; position: relative; }
+  .nav-center a.is-active { color: #111111; }
+  .nav-center a::after {
+    content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1.5px;
+    background: linear-gradient(90deg, #E3A548, #2B2644);
+    transition: width 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-center a:hover { color: #111111; }
+  .nav-center a:hover::after, .nav-center a.is-active::after { width: 100%; }
+  @media (max-width: 860px) { .nav-center { display: none; } }
+  @media (max-width: 860px) { .nav-right .nav-cta { display: none; } }
+
+  /* ---------- Hamburger ---------- */
+  .nav-hamburger {
+    display: none;
+    align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: #111111; flex-shrink: 0;
+    position: relative; z-index: 60;
+  }
+  @media (max-width: 860px) { .nav-hamburger { display: flex; } }
+  .nav-hamburger .burger-line {
+    position: absolute; width: 18px; height: 1.6px; background: #ffffff; border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), opacity 0.2s ease, top 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-hamburger .burger-line:nth-child(1) { top: 16px; }
+  .nav-hamburger .burger-line:nth-child(2) { top: 22px; }
+  .nav-hamburger .burger-line:nth-child(3) { top: 28px; }
+  .nav-hamburger.is-open .burger-line:nth-child(1) { top: 22px; transform: rotate(45deg); }
+  .nav-hamburger.is-open .burger-line:nth-child(2) { opacity: 0; }
+  .nav-hamburger.is-open .burger-line:nth-child(3) { top: 22px; transform: rotate(-45deg); }
+
+  /* ---------- Mobile menu panel ---------- */
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 55;
+    padding: 88px 24px 28px;
+    background: rgba(245, 245, 245, 0.99);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 24px 48px rgba(17,17,17,0.14);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.65,0,0.35,1), visibility 0.35s;
+    height: 100vh;
+    height: 100svh;
+    overflow-y: auto;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (max-width: 860px) { .mobile-menu { display: flex; } }
+  .mobile-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
+  .mobile-menu-links { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; margin-bottom: 20px; flex: 1; }
+  .mobile-menu-links a {
+    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+    padding: 10px 4px; border-bottom: 1px solid rgba(17,17,17,0.08);
+    color: #111111;
+    text-align: center;
+    width: 100%;
+  }
+  .mobile-menu-links a:last-child { border-bottom: none; }
+  .mobile-menu .nav-cta { display: flex; justify-content: center; width: 100%; text-align: center; }
+  body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
+
+  /* ---------- Grain overlay & cursor ---------- */
+  .grain-overlay {
+    position: fixed; inset: 0; z-index: 999; pointer-events: none;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 998; pointer-events: none; border-radius: 999px; transform: translate(-50%, -50%); }
+  .cursor-dot { width: 6px; height: 6px; background: #111111; }
+  .cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(17,17,17,0.35); transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease; }
+  .cursor-ring.is-active { width: 54px; height: 54px; border-color: #E3A548; background: rgba(227,165,72,0.08); }
+  @media (max-width: 860px), (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+  .magnetic { display: inline-flex; }
+
+  /* ---------- Gradient heading accent ---------- */
+  .grad-text {
+    background: linear-gradient(100deg, #111111 40%, #E3A548 65%, #2B2644 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 220% 100%;
+  }
+
+  /* ---------- Generic section spacing ---------- */
+  section { background: #F5F5F5; padding: 96px 24px; }
+  @media (max-width: 768px) { section { padding: 64px 20px; } }
+
+  /* ---------- FAQ PAGE HERO ---------- */
+  .faqhero-screen { position: relative; }
+  .faqhero {
+    position: relative;
+    min-height: 56svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    isolation: isolate;
+  }
+  .faqhero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #0c0a10; }
+  .faqhero-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    transform: scale(1.06) translateZ(0);
+    animation: faqheroZoom 32s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes faqheroZoom { 0% { transform: scale(1.06) translateZ(0); } 100% { transform: scale(1.14) translateZ(0); } }
+  .faqhero-media::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(9,8,14,0.8) 0%, rgba(9,8,14,0.4) 32%, rgba(9,8,14,0.4) 55%, rgba(9,8,14,0.94) 100%);
+  }
+  .faqhero-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(120% 90% at 12% 105%, rgba(227,165,72,0.26), transparent 58%);
+  }
+  .faqhero-inner { position: relative; z-index: 2; width: 100%; max-width: 88rem; margin: 0 auto; padding: 48px 48px 64px; }
+  .faqhero-eyebrow-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .faqhero-eyebrow-item { font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.78); }
+  .faqhero-eyebrow-sep { width: 3px; height: 3px; border-radius: 999px; background: #E3A548; flex-shrink: 0; }
+  .faqhero-title { color: #ffffff; font-size: clamp(32px, 4.6vw, 58px); font-weight: 600; line-height: 1.04; letter-spacing: -0.04em; max-width: 780px; margin-bottom: 18px; }
+  .faqhero-lede { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; color: rgba(255,255,255,0.82); font-size: 16.5px; line-height: 1.6; max-width: 480px; margin-bottom: 28px; }
+  .faqhero-search {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px; padding: 6px 6px 6px 22px; max-width: 460px;
+    backdrop-filter: blur(8px);
+  }
+  .faqhero-search input {
+    flex: 1; min-width: 0; background: transparent; border: none; outline: none;
+    color: #ffffff; font-family: 'Inter', sans-serif; font-size: 14.5px; padding: 10px 0;
+  }
+  .faqhero-search input::placeholder { color: rgba(255,255,255,0.5); }
+  .faqhero-search button {
+    flex-shrink: 0; width: 38px; height: 38px; border-radius: 999px; background: #E3A548;
+    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
+  }
+  .faqhero-search button:hover { background: #f0b968; }
+  @media (max-width: 768px) { .faqhero-inner { padding: 78px 24px 40px; } }
+
+  /* ---------- Jump-link category rail ---------- */
+  .faq-jump-section { padding-top: 56px; padding-bottom: 0; }
+  .faq-jump-rail { display: flex; flex-wrap: wrap; gap: 10px; }
+  .faq-jump-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px; padding: 10px 18px 10px 14px;
+    font-size: 14px; font-weight: 500; color: #111111;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  }
+  .faq-jump-pill:hover { transform: translateY(-2px); border-color: rgba(227,165,72,0.5); background: #fff8ec; }
+  .faq-jump-pill .jp-num { color: #E3A548; font-weight: 700; font-size: 12px; }
+
+  /* ---------- FAQ Category block (image + accordion) ---------- */
+  .faq-cat { padding-top: 40px; padding-bottom: 40px; }
+  .faq-cat-inner { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  @media (min-width: 900px) { .faq-cat-inner { grid-template-columns: 0.85fr 1.25fr; gap: 48px; } }
+  .faq-cat.reverse .faq-cat-inner { direction: rtl; }
+  .faq-cat.reverse .faq-cat-inner > * { direction: ltr; }
+
+  .faq-cat-media { position: relative; border-radius: 26px; overflow: hidden; min-height: 300px; background: #1b1b1b; }
+  .faq-cat-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .faq-cat-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.45) 100%); }
+  .faq-cat-tag {
+    position: absolute; left: 20px; bottom: 20px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.28);
+    backdrop-filter: blur(6px);
+    color: #ffffff; font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 8px 16px; border-radius: 999px;
+  }
+  @media (min-width: 900px) { .faq-cat-media { min-height: 100%; } }
+
+  .faq-cat-head { margin-bottom: 20px; }
+  .faq-cat-head h3 { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 10px; }
+  .faq-cat-head p { color: rgba(17,17,17,0.6); font-size: 15px; line-height: 1.6; max-width: 480px; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 12px; }
+  .faq-item { background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; overflow: hidden; }
+  .faq-item summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 22px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item .faq-plus { flex-shrink: 0; width: 22px; height: 22px; border-radius: 999px; background: #F5F5F5; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.25s ease; }
+  .faq-item .faq-plus::before, .faq-item .faq-plus::after { content: ""; position: absolute; background: #111111; border-radius: 2px; }
+  .faq-item .faq-plus::before { width: 10px; height: 1.6px; }
+  .faq-item .faq-plus::after { width: 1.6px; height: 10px; transition: opacity 0.2s ease; }
+  .faq-item[open] .faq-plus { transform: rotate(45deg); background: #111111; }
+  .faq-item[open] .faq-plus::before, .faq-item[open] .faq-plus::after { background: #ffffff; }
+  .faq-item .faq-answer { padding: 0 22px 20px; color: rgba(17,17,17,0.6); font-size: 14.5px; line-height: 1.6; max-width: 560px; }
+
+  /* ---------- Divider ---------- */
+  .faq-divider { max-width: 88rem; margin: 0 auto; height: 1px; background: rgba(17,17,17,0.08); }
+
+  /* ---------- Still need help / contact strip ---------- */
+  .faq-help-section { padding-top: 40px; }
+  .faq-help-inner {
+    background: #111111; border-radius: 28px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr; position: relative;
+  }
+  @media (min-width: 900px) { .faq-help-inner { grid-template-columns: 1.1fr 1fr; } }
+  .faq-help-copy { padding: 56px 44px; position: relative; z-index: 1; }
+  .faq-help-copy h2 { color: #ffffff; font-size: 38px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 14px; max-width: 420px; }
+  .faq-help-copy p { color: rgba(255,255,255,0.6); font-size: 15.5px; line-height: 1.6; max-width: 400px; margin-bottom: 28px; }
+  .faq-help-channels { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+  .faq-help-channel { display: flex; align-items: center; gap: 14px; }
+  .faq-help-channel .chan-icon {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 999px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .faq-help-channel .chan-text .chan-title { color: #ffffff; font-size: 14.5px; font-weight: 600; }
+  .faq-help-channel .chan-text .chan-sub { color: rgba(255,255,255,0.5); font-size: 13px; }
+  .faq-help-media { position: relative; min-height: 280px; }
+  .faq-help-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .faq-help-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #111111 0%, rgba(17,17,17,0.1) 30%, transparent 60%); }
+  @media (max-width: 900px) { .faq-help-media { min-height: 220px; } .faq-help-media::after { background: linear-gradient(0deg, #111111 0%, rgba(17,17,17,0.1) 25%, transparent 55%); } }
+  @media (max-width: 640px) { .faq-help-copy { padding: 40px 24px; } .faq-help-copy h2 { font-size: 30px; } }
+
+  /* ---------- Final CTA + Footer (shared) ---------- */
+  .mesh-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; pointer-events: none; will-change: transform; }
+  .final-cta .mesh-blob-a { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #E3A548, transparent 70%); top: -120px; left: -80px; }
+  .final-cta .mesh-blob-b { width: 460px; height: 460px; background: radial-gradient(circle at 60% 40%, #6C5CE7, transparent 70%); bottom: -160px; right: -100px; }
+  .final-cta { background: #2B2644; border-radius: 28px; margin: 0 24px; padding: 80px 40px; text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
+  .final-cta h2 { color: #ffffff; font-size: 46px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 560px; position: relative; z-index: 1; }
+  .final-cta p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 420px; position: relative; z-index: 1; }
+  .final-cta .pill-btn.light { position: relative; z-index: 1; }
+  @media (max-width: 768px) {
+    .final-cta { padding: 56px 24px; margin: 0; border-radius: 0; }
+    .final-cta h2 { font-size: 32px; }
+    .final-cta-section { padding-left: 0; padding-right: 0; }
+  }
+
+  footer { background: #111111; padding: 72px 24px 32px; }
+  .footer-top { display: grid; grid-template-columns: 1.3fr 0.8fr 0.9fr 1.1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr; row-gap: 44px; } }
+  @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; } }
+  .footer-logo-placeholder { width: 100%; max-width: 220px; height: 72px; margin-bottom: 16px; overflow: hidden; }
+  .footer-logo-placeholder img { width: 100px; height: 100px; object-fit: contain; }
+  .footer-tag { color: rgba(255,255,255,0.5); font-size: 14px; max-width: 300px; line-height: 1.5; margin-bottom: 24px; }
+  .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14.5px; color: rgba(255,255,255,0.75); margin-bottom: 12px; transition: color 0.2s ease; }
+  .footer-col a:hover { color: #ffffff; }
+  .footer-address { font-style: normal; color: rgba(255,255,255,0.75); font-size: 14.5px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; align-items: center; gap: 12px; }
+  .footer-social a {
+    width: 38px; height: 38px; border-radius: 999px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .footer-social a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
+  .footer-social svg path, .footer-social svg rect, .footer-social svg line, .footer-social svg circle { stroke: rgba(255,255,255,0.85); }
+  .footer-social svg circle[r="0.9"] { fill: rgba(255,255,255,0.85); stroke: none; }
+  .footer-newsletter { margin-top: 4px; }
+  .footer-newsletter-form { display: flex; gap: 8px; max-width: 320px; }
+  .footer-newsletter-form input[type="email"] {
+    flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px; padding: 11px 16px; font-size: 14px; color: #ffffff; font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .footer-newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+  .footer-newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(227,165,72,0.6); background: rgba(255,255,255,0.1); }
+  .footer-newsletter-form button {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px; background: #E3A548;
+    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
+  }
+  .footer-newsletter-form button:hover { background: #f0b968; }
+  .footer-newsletter-note { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+  .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .footer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
+  }
+  .footer-badge svg { flex-shrink: 0; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 16px; }
+  .footer-bottom span { color: rgba(255,255,255,0.4); font-size: 13.5px; }
+  .footer-legal-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .footer-legal-links a { color: rgba(255,255,255,0.45); font-size: 13.5px; transition: color 0.2s ease; }
+  .footer-legal-links a:hover { color: #ffffff; }
+
+</style>
+</head>
+<body>
+
+  <div class="grain-overlay"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ============ NAVBAR + FAQ HERO ============ -->
+  <div class="faqhero-screen">
+    <nav>
+      <div class="nav-row wrap">
+        <div class="nav-left">
+          <div class="nav-logo">
+            <a href="index.html"><img src="./assets/stack4.webp" alt="Logo placeholder" onerror="this.style.display='none'"></a>
+          </div>
+        </div>
+        <div class="nav-right">
+          <div class="nav-center">
+            <a href="about.html">About</a>
+            <a href="courses.html">Courses</a>
+            <a href="app.html">App</a>
+            <a href="blog.html">Blog</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="faq.html" class="is-active">FAQ</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <a href="#" class="nav-cta magnetic">Start Learning</a>
+          <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-links">
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="app.html">App</a>
+        <a href="blog.html">Blog</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="#" class="nav-cta magnetic">Start Learning</a>
+    </div>
+
+    <!-- ============ 1. HERO SECTION (image 1) ============ -->
+    <section class="faqhero">
+      <div class="faqhero-media">
+        <img src="./assets/l55.webp" alt="Learner looking up an answer on a laptop while studying" fetchpriority="high" decoding="async">
+      </div>
+      <div class="faqhero-inner">
+        <div class="faqhero-eyebrow-row">
+          <span class="faqhero-eyebrow-item">Support</span>
+          <span class="faqhero-eyebrow-sep"></span>
+          <span class="faqhero-eyebrow-item">6 Categories</span>
+          <span class="faqhero-eyebrow-sep"></span>
+          <span class="faqhero-eyebrow-item">Answers in Minutes</span>
+        </div>
+        <h1 class="faqhero-title">Answers, sorted by <span class="grad-text">how you actually learn.</span></h1>
+        <p class="faqhero-lede">From your first placement check-in to canceling a plan, here's everything learners ask us most — grouped so you can find it fast.</p>
+        <form class="faqhero-search" onsubmit="window.location.href='404.html'; return false;">
+          <input type="text" placeholder="Search questions, e.g. “offline lessons”" aria-label="Search FAQs">
+          <button type="submit" aria-label="Search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#111111" stroke-width="2"/><path d="M21 21L16.65 16.65" stroke="#111111" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ 2. JUMP-LINK RAIL ============ -->
+  <section class="faq-jump-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span>Jump to a Topic</div>
+      <div class="faq-jump-rail">
+        <a href="#getting-started" class="faq-jump-pill magnetic"><span class="jp-num">01</span> Getting Started</a>
+        <a href="#lessons-modes" class="faq-jump-pill magnetic"><span class="jp-num">02</span> Lessons &amp; Modes</a>
+        <a href="#conversation-rooms" class="faq-jump-pill magnetic"><span class="jp-num">03</span> Conversation Rooms</a>
+        <a href="#billing-plans" class="faq-jump-pill magnetic"><span class="jp-num">04</span> Billing &amp; Plans</a>
+        <a href="#account-technical" class="faq-jump-pill magnetic"><span class="jp-num">05</span> Account &amp; Technical</a>
+        <a href="#help" class="faq-jump-pill magnetic"><span class="jp-num">06</span> Still Stuck?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. GETTING STARTED (image 2) ============ -->
+  <section class="faq-cat" id="getting-started" data-aos="fade-up">
+    <div class="wrap faq-cat-inner">
+      <div class="faq-cat-media" data-aos="fade-right">
+        <img src="./assets/l56.webp" alt="New learner setting up a course on a phone" loading="lazy" decoding="async">
+        <span class="faq-cat-tag">01 · Getting Started</span>
+      </div>
+      <div data-aos="fade-left">
+        <div class="faq-cat-head">
+          <h3>Getting started</h3>
+          <p>What to expect in your first week, from picking a language to setting a realistic goal.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Do I need any prior experience to start?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Not at all. Fluenta places you with a short placement check-in and builds a path from wherever you're starting, whether that's zero words or an old textbook's worth of rusty grammar.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How long does the placement check-in take?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">About five minutes. It's a quick mix of listening and reading prompts, and you can retake it later if your level changes.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I set my own daily goal?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Yes. Choose a casual, steady, or intensive pace during onboarding, and adjust it anytime from your profile settings.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What happens if I miss a day?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Nothing punitive — your streak pauses and lessons pick up right where you left off. Streak freezes are also available on Pro and Teams plans.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap faq-divider"></div>
+
+  <!-- ============ 4. LESSONS & MODES (image 3) ============ -->
+  <section class="faq-cat reverse" id="lessons-modes" data-aos="fade-up">
+    <div class="wrap faq-cat-inner">
+      <div class="faq-cat-media" data-aos="fade-left">
+        <img src="./assets/l57.webp" alt="Student completing a daily lesson at a desk" loading="lazy" decoding="async">
+        <span class="faq-cat-tag">02 · Lessons &amp; Modes</span>
+      </div>
+      <div data-aos="fade-right">
+        <div class="faq-cat-head">
+          <h3>Lessons &amp; learning modes</h3>
+          <p>How daily lessons adapt to you, and how Personal, Classroom, Teams, and Travel modes differ.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Can I switch or add languages later?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Yes. Free plan members can study one active language at a time, while Pro and Teams members can switch between or run multiple languages side by side with no extra cost.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How does Fluenta adapt lessons to my level?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Every answer you give — right, wrong, or hesitant — feeds a model of what you've mastered, so tomorrow's lesson leans harder on what still needs work.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What's the difference between Classroom and Teams mode?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Classroom is built for teachers pacing a curriculum with students; Teams is built for companies tracking fluency progress across employees with shared dashboards.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Is Travel mode a separate course?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">No — it's a focused lesson set layered on top of your existing course, prioritizing survival phrases and audio for an upcoming trip.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap faq-divider"></div>
+
+  <!-- ============ 5. CONVERSATION ROOMS (image 4) ============ -->
+  <section class="faq-cat" id="conversation-rooms" data-aos="fade-up">
+    <div class="wrap faq-cat-inner">
+      <div class="faq-cat-media" data-aos="fade-right">
+        <img src="./assets/l58.webp" alt="Small group practicing conversation together" loading="lazy" decoding="async">
+        <span class="faq-cat-tag">03 · Conversation Rooms</span>
+      </div>
+      <div data-aos="fade-left">
+        <div class="faq-cat-head">
+          <h3>Live conversation rooms</h3>
+          <p>Everything about speaking live with native speakers, from booking a room to what happens if you're nervous.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>How do the live conversation rooms work?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Rooms are small-group video sessions hosted by native speakers, matched to your level. You can join scheduled sessions or drop into an open room whenever one is running.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How many people are in a room at once?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Rooms are capped between four and six learners plus a host, so everyone gets real speaking time instead of watching from the sidelines.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What if I'm too nervous to speak?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Hosts are trained to ease first-timers in gently, and you can keep your camera off while you warm up. Most learners speak within the first ten minutes.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Are rooms included in the Free plan?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Free members can sit in on one room per month; Pro and Teams members get unlimited access to scheduled and open rooms.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap faq-divider"></div>
+
+  <!-- ============ 6. BILLING & PLANS (image 5) ============ -->
+  <section class="faq-cat reverse" id="billing-plans" data-aos="fade-up">
+    <div class="wrap faq-cat-inner">
+      <div class="faq-cat-media" data-aos="fade-left">
+        <img src="./assets/l59.webp" alt="Person reviewing a subscription plan on a laptop" loading="lazy" decoding="async">
+        <span class="faq-cat-tag">04 · Billing &amp; Plans</span>
+      </div>
+      <div data-aos="fade-right">
+        <div class="faq-cat-head">
+          <h3>Billing &amp; plans</h3>
+          <p>Trials, upgrades, downgrades, and what happens to your progress if your plan changes.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Is there a free trial for the Pro plan?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Every new account gets a 14-day free trial of Pro, no card required upfront. You can downgrade to the Free plan anytime before it ends.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I cancel anytime?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Yes, from your account settings with no phone call required. You'll keep Pro access until the end of your current billing period.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Do I lose my progress if I downgrade?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">No. Your streak, XP, and lesson history stay intact — you'll just be limited to one active language until you upgrade again.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How does Teams pricing work?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Teams is priced per seat with volume discounts at scale. Reach out to sales for a quote based on your headcount and rollout timeline.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap faq-divider"></div>
+
+  <!-- ============ 7. ACCOUNT & TECHNICAL (image 6) ============ -->
+  <section class="faq-cat" id="account-technical" data-aos="fade-up">
+    <div class="wrap faq-cat-inner">
+      <div class="faq-cat-media" data-aos="fade-right">
+        <img src="./assets/l60.webp" alt="Lesson syncing across a phone and laptop" loading="lazy" decoding="async">
+        <span class="faq-cat-tag">05 · Account &amp; Technical</span>
+      </div>
+      <div data-aos="fade-left">
+        <div class="faq-cat-head">
+          <h3>Account, privacy &amp; technical</h3>
+          <p>Syncing across devices, offline access, and how we handle your data.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Can I use Fluenta offline?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Pro and Teams members can download lessons for offline practice on mobile. Progress syncs automatically the next time you're back online.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Does my progress sync across devices?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Yes, instantly. Sign in with the same account on phone, tablet, or desktop and your streak, XP, and lesson position carry over.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Is my data GDPR compliant?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Yes. We follow GDPR data-handling standards, and you can request an export or deletion of your data from your account settings at any time.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How do I delete my account?<span class="faq-plus"></span></summary>
+            <div class="faq-answer">Go to Settings → Account → Delete account. This removes your profile and lesson history permanently, so we'll ask you to confirm once by email.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. STILL NEED HELP (image 7) + FINAL CTA + FOOTER ============ -->
+  <section class="faq-help-section" data-aos="fade-up" id="help-strip">
+    <div class="wrap">
+      <div class="faq-help-inner">
+        <div class="faq-help-copy">
+          <div class="eyebrow on-dark"><span class="dot"></span>Still Stuck?</div>
+          <h2>Talk to a real human, not a bot.</h2>
+          <p>Our support team answers within a day, and most questions get a reply in a few hours during the week.</p>
+          <div class="faq-help-channels">
+            <div class="faq-help-channel">
+              <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#ffffff" stroke-width="1.6"/><path d="M4 6.5L12 13L20 6.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="chan-text"><div class="chan-title">Email support</div><div class="chan-sub">hello@fluenta.com · replies within a day</div></div>
+            </div>
+            <div class="faq-help-channel">
+              <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4H20V16H7L4 19V4Z" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+              <div class="chan-text"><div class="chan-title">Live chat</div><div class="chan-sub">In-app, weekdays 9am–6pm</div></div>
+            </div>
+            <div class="faq-help-channel">
+              <div class="chan-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 15.5V19a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.4 19.4 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 2.2 1H5.7a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L6.4 8.9a16 16 0 0 0 6 6l1.5-1.5a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2v.0" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="chan-text"><div class="chan-title">Phone</div><div class="chan-sub">+91 40 1234 5678</div></div>
+            </div>
+          </div>
+          <a href="404.html" class="pill-btn light magnetic">
+            Contact support
+            <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+        <div class="faq-help-media">
+          <img src="./assets/l61.webp" alt="Support specialist assisting a learner" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta-section" style="padding-top: 40px;" data-aos="fade-up">
+    <div class="final-cta" data-aos="zoom-in">
+      <div class="mesh-blob mesh-blob-a" id="ctaBlobA" style="opacity:0.4;"></div>
+      <div class="mesh-blob mesh-blob-b" id="ctaBlobB" style="opacity:0.3;"></div>
+      <h2>Start speaking today.</h2>
+      <p>Join 12 million learners building real fluency, one daily lesson at a time.</p>
+      <a href="404.html" class="pill-btn light magnetic">
+        Create free account
+        <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div data-aos="fade-up">
+          <div class="footer-logo-placeholder">
+            <a href="index.html"><img src="./assets/stackly_logo.webp" alt="Your logo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></a>
+          </div>
+          <p class="footer-tag">An adaptive, reward-powered language platform built for real fluency. Learn 42 languages through daily lessons and live conversation with native speakers.</p>
+
+          <div class="footer-newsletter">
+            <form class="footer-newsletter-form" onsubmit="window.location.href='404.html'; return false;">
+              <input type="email" placeholder="Your email address" aria-label="Email address" required>
+              <button type="submit" aria-label="Subscribe to newsletter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </form>
+            <p class="footer-newsletter-note">One email a month with study tips and new language launches. Unsubscribe anytime.</p>
+          </div>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="80">
+          <h5>Quick Links</h5>
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html">App</a>
+          <a href="blog.html">Blog</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="140">
+          <h5>Resources</h5>
+          <a href="404.html">Help Center</a>
+          <a href="404.html">Community</a>
+          <a href="404.html">Learner Stories</a>
+          <a href="404.html">Careers</a>
+          <a href="404.html">Press Kit</a>
+          <a href="404.html">Partner With Us</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+          <h5>Contact</h5>
+          <address class="footer-address">
+            221B HITEX Avenue<br>
+            JUBILEE 400<br>
+            HYDERABAD<br>
+            <a href="mailto:hello@fluenta.com" style="display:inline; margin:0;">hello@fluenta.com</a><br>
+            <a href="tel:+914012345678" style="display:inline; margin:0;">+91 40 1234 5678</a>
+          </address>
+          <div class="footer-social">
+            <a href="404.html" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 8H13.5C12.6716 8 12 8.67157 12 9.5V11H15L14.5 14H12V21H9V14H7V11H9V9.5C9 7.01472 11.0147 5 13.5 5H15V8Z" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
+            </a>
+            <a href="404.html" aria-label="X / Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1"/><path d="M11.5 17V13.2C11.5 11.6 12.5 10.6 13.9 10.6C15.2 10.6 16 11.5 16 13.2V17" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <div class="footer-badges">
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12L11 14L15 10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              GDPR compliant
+            </span>
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/></svg>
+              Secure payments
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 STACKLY, Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Cookie Settings</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  function forceScrollTop() {
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }
+  forceScrollTop();
+  window.addEventListener('load', forceScrollTop);
+
+  if (typeof AOS !== 'undefined') {
+    AOS.init({ duration: 250, easing: 'ease-out-cubic', once: true, offset: 40 });
+  }
+  window.addEventListener('load', function () {
+    if (typeof AOS !== 'undefined') AOS.refresh();
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+  });
+  setTimeout(function () {
+    document.querySelectorAll('[data-aos]').forEach(function (el) {
+      if (!el.classList.contains('aos-animate')) el.classList.add('aos-animate');
+    });
+  }, 350);
+
+  // Sticky nav glass effect
+  var siteNav = document.querySelector('nav');
+  var navScrollTicking = false;
+  function updateNavScrolled() {
+    if (window.scrollY > 40) { siteNav.classList.add('nav-scrolled'); }
+    else { siteNav.classList.remove('nav-scrolled'); }
+    navScrollTicking = false;
+  }
+  updateNavScrolled();
+  window.addEventListener('scroll', function () {
+    if (!navScrollTicking) { requestAnimationFrame(updateNavScrolled); navScrollTicking = true; }
+  }, { passive: true });
+
+  // Mobile hamburger menu
+  (function () {
+    var hamburger = document.getElementById('navHamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!hamburger || !menu) return;
+    var savedScrollY = 0;
+    function openMenu() {
+      savedScrollY = window.scrollY || window.pageYOffset;
+      document.body.style.top = (-savedScrollY) + 'px';
+      menu.classList.add('is-open');
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Close menu');
+      document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+      menu.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      document.body.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollY);
+    }
+    hamburger.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (menu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); }
+    });
+    menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 860) closeMenu(); });
+  })();
+
+  /* GSAP enhancement layer */
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isCoarse = window.matchMedia('(hover: none)').matches || window.innerWidth < 860;
+
+    function forceRevealEverything() {
+      document.querySelectorAll('[data-aos]').forEach(function (el) {
+        el.style.opacity = ''; el.style.transform = ''; el.style.visibility = '';
+        el.classList.add('aos-animate');
+      });
+    }
+    window.addEventListener('load', function () { setTimeout(forceRevealEverything, 2500); });
+
+    if (typeof gsap === 'undefined') { forceRevealEverything(); return; }
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
+    } else { forceRevealEverything(); return; }
+    gsap.ticker.lagSmoothing(0);
+    if (reduceMotion) { forceRevealEverything(); return; }
+
+    try {
+      gsap.set('.mesh-blob', { opacity: 0 });
+      document.querySelectorAll('.final-cta .mesh-blob').forEach(function (blob, i) {
+        gsap.to(blob, {
+          opacity: 1,
+          x: (i % 2 === 0 ? 1 : -1) * gsap.utils.random(40, 90),
+          y: gsap.utils.random(-50, 50),
+          duration: gsap.utils.random(9, 14),
+          ease: 'sine.inOut', repeat: -1, yoyo: true, force3D: true
+        });
+      });
+
+      if (!isCoarse) {
+        document.querySelectorAll('.magnetic').forEach(function (el) {
+          var strength = 0.35;
+          var xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
+          var yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+          el.addEventListener('mousemove', function (e) {
+            var b = el.getBoundingClientRect();
+            xTo((e.clientX - b.left - b.width / 2) * strength);
+            yTo((e.clientY - b.top - b.height / 2) * strength);
+          });
+          el.addEventListener('mouseleave', function () { xTo(0); yTo(0); });
+        });
+      }
+
+      var dot = document.getElementById('cursorDot');
+      var ring = document.getElementById('cursorRing');
+      if (dot && ring && !isCoarse) {
+        var dotX = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3.out' });
+        var dotY = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3.out' });
+        var ringX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
+        var ringY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
+        window.addEventListener('mousemove', function (e) {
+          dotX(e.clientX); dotY(e.clientY); ringX(e.clientX); ringY(e.clientY);
+        }, { passive: true });
+        document.querySelectorAll('a, button, summary, .faq-jump-pill, .faq-cat-media').forEach(function (el) {
+          el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); });
+          el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); });
+        });
+      } else if (dot && ring) { dot.style.display = 'none'; ring.style.display = 'none'; }
+
+      gsap.utils.toArray('h2, .faq-cat-head h3').forEach(function (h) {
+        gsap.fromTo(h, { letterSpacing: '0.01em' }, {
+          letterSpacing: '-0.02em', duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: h, start: 'top 90%' }
+        });
+      });
+
+      (function revealAllSections() {
+        var DIST = 36;
+        function fromVars(type) {
+          switch (type) {
+            case 'fade-down': return { y: -DIST, opacity: 0 };
+            case 'fade-left': return { x: DIST, opacity: 0 };
+            case 'fade-right': return { x: -DIST, opacity: 0 };
+            case 'zoom-in': return { scale: 0.86, opacity: 0 };
+            default: return { y: DIST, opacity: 0 };
+          }
+        }
+        var groups = new Map();
+        document.querySelectorAll('[data-aos]').forEach(function (el) {
+          if (el.closest('.faqhero-screen')) return;
+          var parent = el.parentElement;
+          var type = el.getAttribute('data-aos') || 'fade-up';
+          var groupKey = parent.__gsGroupId || (parent.__gsGroupId = Math.random().toString(36).slice(2));
+          var fullKey = groupKey + '|' + type;
+          if (!groups.has(fullKey)) groups.set(fullKey, []);
+          groups.get(fullKey).push(el);
+        });
+        groups.forEach(function (els) {
+          if (!els.length) return;
+          var type = els[0].getAttribute('data-aos') || 'fade-up';
+          var from = fromVars(type);
+          var isStagger = els.length > 1;
+          gsap.set(els, from);
+          ScrollTrigger.batch(els, {
+            start: 'top 92%', once: true,
+            onEnter: function (batch) {
+              gsap.to(batch, { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out', stagger: isStagger ? 0.04 : 0, clearProps: 'willChange' });
+            }
+          });
+        });
+        ScrollTrigger.refresh();
+      })();
+
+    } catch (err) {
+      console.error('Animation setup failed, revealing all content instead:', err);
+      forceRevealEverything();
+    }
+  })();
+</script>
+
+</body>
+</html>

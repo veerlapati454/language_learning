@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fluenta — Your Words Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+<style>
+
+  /* ---------- Reset & Base ---------- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+
+  .wrap { max-width: 88rem; margin: 0 auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
+  }
+
+  /* ---------- Buttons ---------- */
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 8px 8px 28px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+  }
+  .pill-btn:hover { background: #333333; }
+  .pill-btn .arrow-circle {
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border-radius: 999px; padding: 10px; width: 20px; height: 20px;
+  }
+  .pill-btn.small { font-size: 15px; padding: 6px 6px 6px 22px; }
+  .pill-btn.small .arrow-circle { width: 16px; height: 16px; padding: 8px; }
+  .pill-btn.light { background: #ffffff; color: #111111; }
+  .pill-btn.light .arrow-circle { background: #111111; }
+  .pill-btn.light .arrow-circle svg path { stroke: #ffffff; }
+  .pill-btn.light:hover { background: #ececec; }
+
+  .nav-cta {
+    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+    padding: 10px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+  }
+  .nav-cta:hover { background: #333333; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(17,17,17,0.6);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: #E3A548; }
+
+  /* ---------- Navbar ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 70;
+    padding: 16px 24px;
+    background: rgba(245, 245, 245, 0.85);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    transform: translateZ(0);
+  }
+  nav.nav-scrolled {
+    background: rgba(245, 245, 245, 0.92);
+    border-bottom-color: rgba(17, 17, 17, 0.06);
+    box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
+    padding: 12px 24px;
+  }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; }
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .nav-logo {
+    width: clamp(48px, 8vw, 100px); height: clamp(28px, 4.4vw, 54px); flex-shrink: 0;
+    border-radius: 80px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
+  @media (max-width: 860px) {
+    .nav-logo { width: 90px; height: 50px; }
+  }
+  @media (max-width: 480px) {
+    .nav-logo { width: 80px; height: 46px; }
+  }
+  .nav-right { display: flex; align-items: center; gap: 32px; margin-left: auto; }
+  .nav-center { display: flex; gap: 32px; }
+  .nav-center a { font-size: 15px; font-weight: 500; color: #4b4b4b; transition: color 0.2s ease; position: relative; }
+  .nav-center a::after {
+    content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1.5px;
+    background: linear-gradient(90deg, #E3A548, #2B2644);
+    transition: width 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-center a:hover { color: #111111; }
+  .nav-center a:hover::after { width: 100%; }
+  @media (max-width: 860px) { .nav-center { display: none; } }
+  @media (max-width: 860px) { .nav-right .nav-cta { display: none; } }
+
+  /* ---------- Hamburger ---------- */
+  .nav-hamburger {
+    display: none;
+    align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: #111111; flex-shrink: 0;
+    position: relative; z-index: 60;
+  }
+  @media (max-width: 860px) { .nav-hamburger { display: flex; } }
+  .nav-hamburger .burger-line {
+    position: absolute; width: 18px; height: 1.6px; background: #ffffff; border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), opacity 0.2s ease, top 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-hamburger .burger-line:nth-child(1) { top: 16px; }
+  .nav-hamburger .burger-line:nth-child(2) { top: 22px; }
+  .nav-hamburger .burger-line:nth-child(3) { top: 28px; }
+  .nav-hamburger.is-open .burger-line:nth-child(1) { top: 22px; transform: rotate(45deg); }
+  .nav-hamburger.is-open .burger-line:nth-child(2) { opacity: 0; }
+  .nav-hamburger.is-open .burger-line:nth-child(3) { top: 22px; transform: rotate(-45deg); }
+
+  /* ---------- Mobile menu panel ---------- */
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 55;
+    padding: 88px 24px 28px;
+    background: rgba(245, 245, 245, 0.99);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 24px 48px rgba(17,17,17,0.14);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.65,0,0.35,1), visibility 0.35s;
+    height: 100vh;
+    height: 100svh;
+    overflow-y: auto;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (max-width: 860px) { .mobile-menu { display: flex; } }
+  .mobile-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
+  .mobile-menu-links { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; margin-bottom: 20px; flex: 1; }
+  .mobile-menu-links a {
+    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+    padding: 10px 4px; border-bottom: 1px solid rgba(17,17,17,0.08);
+    color: #111111;
+    text-align: center;
+    width: 100%;
+  }
+  .mobile-menu-links a:last-child { border-bottom: none; }
+  .mobile-menu .nav-cta { display: flex; justify-content: center; width: 100%; text-align: center; }
+  body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
+
+  /* ---------- 1. Hero (full-bleed, editorial) ---------- */
+  .hero-screen { position: relative; }
+  .hero {
+    position: relative;
+    min-height: 78svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    isolation: isolate;
+  }
+  .hero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #0c0a10; }
+  .hero-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    transform: scale(1.06) translateZ(0);
+    animation: heroSlowZoom 32s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes heroSlowZoom { 0% { transform: scale(1.06) translateZ(0); } 100% { transform: scale(1.15) translateZ(0); } }
+  .hero-media::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(9,8,14,0.78) 0%, rgba(9,8,14,0.32) 28%, rgba(9,8,14,0.28) 52%, rgba(9,8,14,0.92) 100%);
+  }
+  .hero-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(120% 90% at 12% 105%, rgba(227,165,72,0.28), transparent 58%);
+  }
+
+  .hero-inner { position: relative; z-index: 2; width: 100%; max-width: 88rem; margin: 0 auto; padding: 48px 48px 40px; }
+  .hero-eyebrow-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; overflow: hidden; }
+  .hero-eyebrow-item { font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.78); }
+  .hero-eyebrow-sep { width: 3px; height: 3px; border-radius: 999px; background: #E3A548; flex-shrink: 0; }
+
+  .hero-title { color: #ffffff; font-size: clamp(32px, 4.6vw, 60px); font-weight: 600; line-height: 1.04; letter-spacing: -0.04em; max-width: 860px; margin-bottom: 20px; }
+  .hero-title .htl { display: block; overflow: hidden; }
+  .hero-title .htl .reveal { display: inline-block; will-change: transform; }
+  .hero-rotator-wrap { display: inline-flex; overflow: hidden; vertical-align: bottom; }
+  #heroRotator {
+    display: inline-block; will-change: transform, opacity;
+    background: linear-gradient(100deg, #E3A548 0%, #f4d08c 55%, #E3A548 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  .hero-lede { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; color: rgba(255,255,255,0.82); font-size: 16.5px; line-height: 1.6; max-width: 440px; margin-bottom: 32px; }
+
+  .hero-cta-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-bottom: 44px; }
+  .hero-ghost-btn { display: inline-flex; align-items: center; gap: 12px; color: #ffffff; font-size: 15px; font-weight: 500; }
+  .hero-ghost-btn .play-circle {
+    width: 38px; height: 38px; border-radius: 999px; flex-shrink: 0;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.32);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .hero-ghost-btn:hover .play-circle { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.55); }
+
+  .hero-stat-rail { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(255,255,255,0.14); }
+  .hero-stat-cell {
+    padding: 18px 24px;
+    background: rgba(10,9,14,0.62);
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .hero-stat-cell:last-child { border-right: none; }
+  .hero-stat-cell .stat-num { color: #ffffff; font-size: 24px; margin-bottom: 2px; }
+  .hero-stat-cell .stat-label { color: rgba(255,255,255,0.55); font-size: 12px; }
+
+  .hero-scroll-cue {
+    position: absolute; right: 44px; bottom: 108px; z-index: 3;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.68); font-family: 'Inter', sans-serif; font-size: 10.5px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .hero-scroll-cue .cue-line { width: 1px; height: 38px; background: linear-gradient(180deg, rgba(255,255,255,0.85), transparent); overflow: hidden; }
+  .hero-scroll-cue .cue-line span { display: block; width: 100%; height: 12px; background: #E3A548; animation: cueDrop 1.8s ease-in-out infinite; }
+  @keyframes cueDrop { 0% { transform: translateY(-14px); } 100% { transform: translateY(38px); } }
+
+  @media (max-width: 860px) { .hero-scroll-cue { display: none; } }
+  @media (max-width: 768px) {
+    .hero-inner { padding: 78px 24px 32px; }
+    .hero-cta-row { margin-bottom: 32px; gap: 16px; }
+    .hero-stat-cell { padding: 16px 14px; }
+    .hero-stat-cell .stat-num { font-size: 20px; }
+    .hero-stat-cell .stat-label { font-size: 11px; }
+  }
+
+  /* ---------- Ambient mesh blobs (final CTA accent) ---------- */
+  .mesh-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; pointer-events: none; will-change: transform; }
+  .final-cta .mesh-blob-a { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #E3A548, transparent 70%); top: -120px; left: -80px; }
+  .final-cta .mesh-blob-b { width: 460px; height: 460px; background: radial-gradient(circle at 60% 40%, #6C5CE7, transparent 70%); bottom: -160px; right: -100px; }
+
+  /* ---------- Generic section spacing ---------- */
+  section { background: #F5F5F5; padding: 96px 24px; }
+  @media (max-width: 768px) { section { padding: 64px 20px; } }
+
+  /* ---------- Gradient heading accent ---------- */
+  .grad-text {
+    background: linear-gradient(100deg, #111111 40%, #E3A548 65%, #2B2644 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 220% 100%;
+  }
+
+  /* ---------- 2. Info / Meet Fluenta ---------- */
+  .info-row1 { display: grid; grid-template-columns: 1fr; gap: 48px; margin-bottom: 64px; align-items: start; }
+  .info-row1 h2 { font-size: 44px; font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 32px; }
+  .info-row1 .body-copy { color: rgba(17,17,17,0.7); font-size: 26px; line-height: 1.5; }
+  @media (min-width: 860px) { .info-row1 { grid-template-columns: 1fr 1fr; } }
+
+  .card-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 640px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(4, 1fr); } .card-grid .card-span2 { grid-column: span 2; } }
+
+  .card { border-radius: 20px; padding: 28px; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; position: relative; transition: box-shadow 0.3s ease; }
+  .card:hover { box-shadow: 0 24px 48px rgba(17,17,17,0.16); }
+  .card-image { background-image: url('./assets/l2.webp'); background-size: cover; background-position: center; }
+  .card-image::before { content: ""; position: absolute; inset: 0; border-radius: 20px; background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%); }
+  .card-image h3, .card-image p { position: relative; z-index: 1; }
+  .card-dark { background: #2B2644; }
+  .card h3 { font-size: 24px; font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; white-space: pre-line; }
+  .card-image h3, .card-image p { color: #ffffff; }
+  .card-dark h3 { color: #ffffff; }
+  .card p { font-size: 16px; max-width: 280px; }
+  .card-image p { color: rgba(255,255,255,0.85); }
+  .card-dark p { color: rgba(255,255,255,0.6); }
+
+  /* ---------- 3. Stats band ---------- */
+  .stats-section { background: #111111; padding: 80px 24px; position: relative; overflow: hidden; }
+  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; text-align: left; position: relative; z-index: 1; }
+  @media (min-width: 860px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat-num { color: #ffffff; font-size: 48px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+  .stat-label { color: rgba(255,255,255,0.55); font-size: 15px; }
+
+  /* ---------- 4. How it works ---------- */
+  .steps-head { max-width: 640px; margin-bottom: 56px; }
+  .steps-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+  .steps-head p { color: rgba(17,17,17,0.6); font-size: 17px; line-height: 1.6; max-width: 480px; }
+  .steps-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media (min-width: 700px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .steps-grid { grid-template-columns: repeat(4, 1fr); } }
+  .step-card { background: #ffffff; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.35s ease; }
+  .step-card:hover { box-shadow: 0 26px 50px rgba(17,17,17,0.14); }
+  .step-card .step-img { width: 100%; height: 160px; object-fit: cover; }
+  .step-card .step-body { padding: 24px; }
+  .step-num { color: #E3A548; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .step-card h4 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .step-card p { color: rgba(17,17,17,0.6); font-size: 14.5px; line-height: 1.55; }
+
+  /* ---------- 5. Backed By ---------- */
+  .backed-inner { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
+  @media (min-width: 860px) { .backed-inner { grid-template-columns: 1fr 3fr; } }
+  .backed-inner .label { color: rgba(17,17,17,0.7); font-size: 16px; line-height: 1.5; white-space: pre-line; }
+  .backers-box { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .backers-track { display: flex; width: max-content; animation: backers-marquee 30s linear infinite; }
+  @keyframes backers-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .backers-track span { margin: 0 40px; flex-shrink: 0; color: rgba(17,17,17,0.5); white-space: nowrap; }
+
+  /* ---------- 6. Use cases ---------- */
+  .usecases-inner { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: stretch; }
+  @media (min-width: 860px) { .usecases-inner { grid-template-columns: 1fr 1fr; } }
+  .uc-left { padding-top: 8px; display: flex; flex-direction: column; }
+  .uc-left h2 { font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; margin-bottom: 24px; }
+  .uc-left p { color: rgba(17,17,17,0.6); font-size: 16px; line-height: 1.6; max-width: 380px; margin-bottom: 40px; }
+  @media (min-width: 860px) { .uc-left { padding-right: 48px; } }
+
+  .modes-list { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+  .mode-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 18px 20px; border-radius: 16px;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+  }
+  .mode-row:hover { transform: translateX(4px); }
+  .mode-row.active { background: #111111; border-color: #111111; }
+  .mode-icon {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    background: #F5F5F5; font-size: 18px;
+  }
+  .mode-row.active .mode-icon { background: rgba(255,255,255,0.12); }
+  .mode-text { flex: 1; min-width: 0; }
+  .mode-text .mode-title { font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; color: #111111; }
+  .mode-row.active .mode-text .mode-title { color: #ffffff; }
+  .mode-text .mode-desc { font-size: 13.5px; color: rgba(17,17,17,0.55); margin-top: 2px; }
+  .mode-row.active .mode-text .mode-desc { color: rgba(255,255,255,0.6); }
+  .mode-row .mode-chevron { flex-shrink: 0; opacity: 0.35; }
+  .mode-row.active .mode-chevron { opacity: 0.9; }
+  .mode-row.active .mode-chevron path { stroke: #ffffff; }
+
+  .uc-media-box { position: relative; border-radius: 28px; overflow: hidden; min-height: 620px; background: #1b1b1b; }
+  .uc-media-box .bg-media { position: absolute; inset: -6% 0; width: 100%; height: 112%; object-fit: cover; will-change: transform; }
+  .uc-media-box::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 45%, rgba(0,0,0,0) 70%); z-index: 1; }
+  .uc-overlay { position: relative; z-index: 2; padding: 44px; }
+  .uc-overlay h3 { color: #ffffff; font-size: 38px; font-weight: 600; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 20px; }
+  .uc-overlay p { color: rgba(255,255,255,0.75); font-size: 16px; line-height: 1.6; max-width: 440px; margin-bottom: 32px; }
+  .uc-link { display: inline-flex; align-items: center; gap: 12px; color: #ffffff; font-size: 15px; font-weight: 500; }
+  .uc-link .icon-circle { width: 36px; height: 36px; border-radius: 999px; background: rgba(255,255,255,0.8); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease; }
+  .uc-link:hover .icon-circle { background: #ffffff; }
+  @media (max-width: 768px) { .uc-media-box { min-height: 460px; } .uc-overlay h3 { font-size: 30px; } .uc-left h2 { font-size: 40px; } .modes-list { margin-top: 8px; } }
+
+  /* ---------- 7. Courses grid ---------- */
+  .courses-head { display: flex; flex-direction: column; margin-bottom: 48px; max-width: 640px; }
+  .courses-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+  .courses-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 640px) { .courses-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .courses-grid { grid-template-columns: repeat(3, 1fr); } }
+  .course-card { position: relative; border-radius: 18px; overflow: hidden; height: 220px; }
+  .course-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .course-card:hover img { transform: scale(1.06); }
+  .course-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.05) 55%); }
+  .course-card .course-info { position: absolute; left: 20px; bottom: 16px; z-index: 2; color: #ffffff; }
+  .course-card .course-info .flag { font-size: 22px; margin-bottom: 4px; }
+  .course-card .course-info h4 { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  .course-card .course-info span { font-size: 13px; color: rgba(255,255,255,0.75); }
+
+  /* ---------- 8. Testimonials ---------- */
+  .testi-head { max-width: 620px; margin-bottom: 48px; }
+  .testi-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+  .testi-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media (min-width: 860px) { .testi-grid { grid-template-columns: repeat(3, 1fr); } }
+  .testi-card { background: #ffffff; border-radius: 20px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; min-height: 260px; }
+  .testi-quote { font-size: 16.5px; line-height: 1.6; color: #111111; margin-bottom: 28px; }
+  .testi-person { display: flex; align-items: center; gap: 12px; }
+  .testi-person img { width: 44px; height: 44px; border-radius: 999px; object-fit: cover; }
+  .testi-person .name { font-size: 14.5px; font-weight: 600; }
+  .testi-person .role { font-size: 13px; color: rgba(17,17,17,0.55); }
+
+  /* ---------- 9. Pricing ---------- */
+  .pricing-head { text-align: center; max-width: 560px; margin: 0 auto 56px; }
+  .pricing-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px; }
+  .pricing-head p { color: rgba(17,17,17,0.6); font-size: 16px; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1000px; margin: 0 auto; }
+  @media (min-width: 860px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+  .plan-card { background: #ffffff; border-radius: 22px; padding: 32px; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .plan-card:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(17,17,17,0.1); }
+  .plan-card.featured { background: #111111; color: #ffffff; transform: translateY(-8px); }
+  .plan-card.featured:hover { transform: translateY(-14px); }
+  .plan-badge { display: inline-block; background: #E3A548; color: #111111; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; padding: 4px 12px; border-radius: 999px; margin-bottom: 16px; width: fit-content; }
+  .plan-name { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .plan-price { font-size: 38px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .plan-price span { font-size: 15px; font-weight: 400; opacity: 0.6; }
+  .plan-desc { font-size: 14.5px; opacity: 0.65; margin-bottom: 24px; line-height: 1.5; }
+  .plan-features { list-style: none; margin-bottom: 28px; }
+  .plan-features li { font-size: 14.5px; padding: 8px 0; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(0,0,0,0.06); }
+  .plan-card.featured .plan-features li { border-top: 1px solid rgba(255,255,255,0.12); }
+  .plan-features li:first-child { border-top: none; }
+  .plan-cta { text-align: center; padding: 12px; border-radius: 999px; background: #111111; color: #ffffff; font-size: 15px; font-weight: 500; transition: background-color 0.2s ease; }
+  .plan-cta:hover { background: #333333; }
+  .plan-card.featured .plan-cta { background: #ffffff; color: #111111; }
+  .plan-card.featured .plan-cta:hover { background: #ececec; }
+
+  /* ---------- 10. App Download ---------- */
+  .app-section { background: #111111; }
+  .app-inner { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+  @media (min-width: 860px) { .app-inner { grid-template-columns: 1fr 1fr; } }
+  .app-copy .eyebrow { color: rgba(255,255,255,0.55); }
+  .app-copy h2 { color: #ffffff; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+  .app-copy p { color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.6; max-width: 420px; margin-bottom: 32px; }
+  .app-badges { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+  .app-badge {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 14px; padding: 10px 18px; transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .app-badge:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.24); }
+  .app-badge .badge-icon { width: 22px; height: 22px; flex-shrink: 0; }
+  .app-badge .badge-text { display: flex; flex-direction: column; line-height: 1.2; }
+  .app-badge .badge-text small { color: rgba(255,255,255,0.5); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .app-badge .badge-text span { color: #ffffff; font-size: 15px; font-weight: 600; }
+  .app-stats { display: flex; gap: 32px; }
+  .app-stat .stat-num { font-size: 28px; }
+  .app-stat .stat-label { font-size: 13px; }
+  .app-media { position: relative; border-radius: 28px; overflow: hidden; min-height: 420px; }
+  .app-media img { width: 100%; height: 100%; object-fit: cover; min-height: 420px; }
+  .app-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 55%); }
+  @media (max-width: 768px) { .app-copy h2 { font-size: 34px; } .app-media { min-height: 300px; } .app-media img { min-height: 300px; } }
+
+  /* ---------- 11. Blog / Resources ---------- */
+  .blog-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+  .blog-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; max-width: 560px; }
+  .blog-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media (min-width: 700px) { .blog-grid { grid-template-columns: repeat(3, 1fr); } }
+  .blog-card { background: #ffffff; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(17,17,17,0.08); }
+  .blog-card img { width: 100%; height: 190px; object-fit: cover; }
+  .blog-card-body { padding: 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .blog-tag { color: #E3A548; font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .blog-card h4 { font-size: 18.5px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
+  .blog-card p { color: rgba(17,17,17,0.6); font-size: 14px; line-height: 1.55; }
+  .blog-meta { margin-top: auto; padding-top: 8px; color: rgba(17,17,17,0.45); font-size: 12.5px; }
+
+  /* ---------- 12. FAQ ---------- */
+  .faq-inner { display: grid; grid-template-columns: 1fr; gap: 48px; }
+  @media (min-width: 860px) { .faq-inner { grid-template-columns: 1fr 1.4fr; } }
+  .faq-head h2 { font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+  .faq-head p { color: rgba(17,17,17,0.6); font-size: 16px; line-height: 1.6; max-width: 380px; margin-bottom: 28px; }
+  .faq-list { display: flex; flex-direction: column; gap: 12px; }
+  .faq-item { background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; overflow: hidden; }
+  .faq-item summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 22px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item .faq-plus { flex-shrink: 0; width: 22px; height: 22px; border-radius: 999px; background: #F5F5F5; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.25s ease; }
+  .faq-item .faq-plus::before, .faq-item .faq-plus::after { content: ""; position: absolute; background: #111111; border-radius: 2px; }
+  .faq-item .faq-plus::before { width: 10px; height: 1.6px; }
+  .faq-item .faq-plus::after { width: 1.6px; height: 10px; transition: opacity 0.2s ease; }
+  .faq-item[open] .faq-plus { transform: rotate(45deg); background: #111111; }
+  .faq-item[open] .faq-plus::before, .faq-item[open] .faq-plus::after { background: #ffffff; }
+  .faq-item .faq-answer { padding: 0 22px 20px; color: rgba(17,17,17,0.6); font-size: 14.5px; line-height: 1.6; max-width: 560px; }
+
+  /* ---------- 13. Final CTA + Footer ---------- */
+  .final-cta { background: #2B2644; border-radius: 28px; margin: 0 24px; padding: 80px 40px; text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
+  .final-cta h2 { color: #ffffff; font-size: 46px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 560px; position: relative; z-index: 1; }
+  .final-cta p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 420px; position: relative; z-index: 1; }
+  .final-cta .pill-btn.light { position: relative; z-index: 1; }
+  @media (max-width: 768px) {
+    .final-cta { padding: 56px 24px; margin: 0; border-radius: 0; }
+    .final-cta h2 { font-size: 32px; }
+    .final-cta-section { padding-left: 0; padding-right: 0; }
+  }
+
+  footer { background: #111111; padding: 72px 24px 32px; }
+  .footer-top { display: grid; grid-template-columns: 1.3fr 0.8fr 0.9fr 1.1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr; row-gap: 44px; } }
+  @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; } }
+  .footer-logo-placeholder {
+    width: 100%; max-width: 220px; height: 72px;
+   
+   
+    margin-bottom: 16px; overflow: hidden;
+  }
+  .footer-logo-placeholder img { width: 100px; height: 100px; object-fit: contain; }
+  .footer-logo-placeholder span {  font-size: 13px; font-weight: 500; letter-spacing: 0.02em; }
+  .footer-tag { color: rgba(255,255,255,0.5); font-size: 14px; max-width: 300px; line-height: 1.5; margin-bottom: 24px; }
+  .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14.5px; color: rgba(255,255,255,0.75); margin-bottom: 12px; transition: color 0.2s ease; }
+  .footer-col a:hover { color: #ffffff; }
+  .footer-address { font-style: normal; color: rgba(255,255,255,0.75); font-size: 14.5px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; align-items: center; gap: 12px; }
+  .footer-social a {
+    width: 38px; height: 38px; border-radius: 999px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .footer-social a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
+  .footer-social svg path,
+  .footer-social svg rect,
+  .footer-social svg line,
+  .footer-social svg circle { stroke: rgba(255,255,255,0.85); }
+  .footer-social svg circle[r="0.9"] { fill: rgba(255,255,255,0.85); stroke: none; }
+
+  /* Newsletter signup */
+  .footer-newsletter { margin-top: 4px; }
+  .footer-newsletter-form { display: flex; gap: 8px; max-width: 320px; }
+  .footer-newsletter-form input[type="email"] {
+    flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px; padding: 11px 16px; font-size: 14px; color: #ffffff; font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .footer-newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+  .footer-newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(227,165,72,0.6); background: rgba(255,255,255,0.1); }
+  .footer-newsletter-form button {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px; background: #E3A548;
+    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
+  }
+  .footer-newsletter-form button:hover { background: #f0b968; }
+  .footer-newsletter-note { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+
+  /* Trust badges row */
+  .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .footer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
+  }
+  .footer-badge svg { flex-shrink: 0; }
+
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 16px; }
+  .footer-bottom span { color: rgba(255,255,255,0.4); font-size: 13.5px; }
+  .footer-legal-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .footer-legal-links a { color: rgba(255,255,255,0.45); font-size: 13.5px; transition: color 0.2s ease; }
+  .footer-legal-links a:hover { color: #ffffff; }
+
+  /* ---------- Grain overlay (ambient texture) ---------- */
+  .grain-overlay {
+    position: fixed; inset: 0; z-index: 999; pointer-events: none;
+    opacity: 0.02;
+   
+  }
+
+  /* ---------- Custom cursor ---------- */
+  .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 998; pointer-events: none; border-radius: 999px; transform: translate(-50%, -50%); }
+  .cursor-dot { width: 6px; height: 6px; background: #111111; }
+  .cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(17,17,17,0.35); transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease; }
+  .cursor-ring.is-active { width: 54px; height: 54px; border-color: #E3A548; background: rgba(227,165,72,0.08); }
+  @media (max-width: 860px), (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+  /* ---------- Magnetic targets ---------- */
+  .magnetic { display: inline-flex; }
+
+</style>
+</head>
+<body>
+
+  <div class="grain-overlay"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ============ 1. HERO SCREEN (Navbar + Hero) ============ -->
+  <div class="hero-screen">
+    <nav>
+      <div class="nav-row wrap">
+        <div class="nav-left">
+          <div class="nav-logo">
+           <a href="index.html"> <img src="./assets/stack4.webp" alt="Logo placeholder" onerror="this.style.display='none'"></a>
+          </div>
+        </div>
+        <div class="nav-right">
+          <div class="nav-center">
+            <a href="about.html">About</a>
+            <a href="courses.html">Courses</a>
+            <a href="app.html">App</a>
+            <a href="blog.html">Blog</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <a href="#" class="nav-cta magnetic">  Start Learning</a>
+          <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-links">
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="app.html">App</a>
+        <a href="blog.html">Blog</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="login.html" class="nav-cta magnetic">Start Learning</a>
+    </div>
+
+    <section class="hero">
+      <div class="hero-media">
+        <img src="./assets/l1.webp" alt="A small group of learners in a live Fluenta conversation session" fetchpriority="high" decoding="async">
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-eyebrow-row">
+          <span class="hero-eyebrow-item">42 Languages</span>
+          <span class="hero-eyebrow-sep"></span>
+          <span class="hero-eyebrow-item">Live Conversation Rooms</span>
+          <span class="hero-eyebrow-sep"></span>
+          <span class="hero-eyebrow-item">12M Learners</span>
+        </div>
+
+        <h1 class="hero-title" id="heroHeading">
+          <span class="htl"><span class="reveal">Speak fluent</span></span>
+          <span class="htl"><span class="reveal hero-rotator-wrap">&nbsp;<span id="heroRotator">Spanish</span>.</span></span>
+          <span class="htl"><span class="reveal">Sooner than you think.</span></span>
+        </h1>
+        <p class="hero-lede">Fluenta pairs adaptive daily lessons with real conversation practice, so progress compounds instead of resetting every Monday.</p>
+
+        <div class="hero-cta-row">
+          <a href="404.html" class="pill-btn magnetic">
+            Start learning free
+            <span class="arrow-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a href="404.html" class="hero-ghost-btn magnetic">
+            <span class="play-circle">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 5.5V18.5L18 12L7 5.5Z" fill="#ffffff"/></svg>
+            </span>
+            See how it works
+          </a>
+        </div>
+      </div>
+
+      <a href="#about" class="hero-scroll-cue">
+        <span>Scroll</span>
+        <span class="cue-line"><span></span></span>
+      </a>
+
+      <div class="hero-stat-rail">
+        <div class="hero-stat-cell">
+          <div class="stat-num" data-count="12" data-suffix="M+">0</div>
+          <div class="stat-label">Learners worldwide</div>
+        </div>
+        <div class="hero-stat-cell">
+          <div class="stat-num" data-count="42" data-suffix="">0</div>
+          <div class="stat-label">Languages taught</div>
+        </div>
+        <div class="hero-stat-cell">
+          <div class="stat-num" data-count="4.9" data-decimal="1" data-suffix="★">0</div>
+          <div class="stat-label">Average app rating</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ 2. MEET FLUENTA ============ -->
+  <section id="about" data-aos="fade-up">
+    <div class="wrap">
+      <div class="info-row1">
+        <div data-aos="fade-right">
+          <h2>Meet <span class="grad-text">Fluenta</span>.</h2>
+          <a href="404.html" class="pill-btn small magnetic">
+            Discover it
+            <span class="arrow-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+        <p class="body-copy" data-aos="fade-left">Fluenta is a reward-earning language companion that helps your vocabulary grow while keeping every lesson tied to real, spoken fluency.</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="card card-image card-span2 tilt-card" data-aos="fade-up">
+          <h3>Fluency that&nbsp;compounds</h3>
+          <p>Build steady progress as your daily practice streaks convert into real conversational skill.</p>
+        </div>
+        <div class="card card-dark tilt-card" data-aos="fade-up" data-aos-delay="100">
+          <h3>Always adaptive,
+always personal.</h3>
+          <p>Stay perfectly matched to your level with lessons that adjust in real time — no plateaus, no guesswork.</p>
+        </div>
+        <div class="card card-dark tilt-card" data-aos="fade-up" data-aos-delay="200">
+          <h3>Fully
+immersive</h3>
+          <p>Skip the grind of rote memorization. Fluenta builds real-world context into every lesson.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. STATS BAND ============ -->
+  <section class="stats-section" data-aos="fade-up">
+    <div class="wrap stats-grid">
+      <div data-aos="fade-up">
+        <div class="stat-num" data-count="12" data-suffix="M+">0</div>
+        <div class="stat-label">Learners worldwide</div>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-num" data-count="42" data-suffix="">0</div>
+        <div class="stat-label">Languages taught</div>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-num" data-count="98" data-suffix="%">0</div>
+        <div class="stat-label">Lesson completion rate</div>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="300">
+        <div class="stat-num" data-count="4.9" data-decimal="1" data-suffix="★">0</div>
+        <div class="stat-label">Average app rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. HOW IT WORKS ============ -->
+  <section id="how" data-aos="fade-up">
+    <div class="wrap">
+      <div class="steps-head" data-aos="fade-up">
+        <h2>Four steps to fluency</h2>
+        <p>No cramming, no guesswork. Fluenta breaks language learning into a simple daily loop that compounds over time.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card tilt-card" data-aos="fade-up" data-aos-delay="0">
+          <img class="step-img" src="./assets/l3.webp" alt="Choosing a language on a phone" loading="lazy" decoding="async">
+          <div class="step-body">
+            <div class="step-num">STEP 01</div>
+            <h4>Pick your language</h4>
+            <p>Choose from 42 languages and set a fluency goal that fits your life and schedule.</p>
+          </div>
+        </div>
+        <div class="step-card tilt-card" data-aos="fade-up" data-aos-delay="100">
+          <img class="step-img" src="./assets/l4.webp" alt="Practicing a lesson" loading="lazy" decoding="async">
+          <div class="step-body">
+            <div class="step-num">STEP 02</div>
+            <h4>Practice in minutes</h4>
+            <p>Short, adaptive lessons meet you where you are — no filler, just steady daily reps.</p>
+          </div>
+        </div>
+        <div class="step-card tilt-card" data-aos="fade-up" data-aos-delay="200">
+          <img class="step-img" src="./assets/l5.webp" alt="Conversation practice" loading="lazy" decoding="async">
+          <div class="step-body">
+            <div class="step-num">STEP 03</div>
+            <h4>Speak with real people</h4>
+            <p>Join live conversation rooms and get natural feedback from native speakers.</p>
+          </div>
+        </div>
+        <div class="step-card tilt-card" data-aos="fade-up" data-aos-delay="300">
+          <img class="step-img" src="./assets/l6.webp" alt="Tracking learning progress" loading="lazy" decoding="async">
+          <div class="step-body">
+            <div class="step-num">STEP 04</div>
+            <h4>Track your streak</h4>
+            <p>Watch progress compound with streaks, XP, and milestones that keep you coming back.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. APP DOWNLOAD ============ -->
+  <section id="app" class="app-section" data-aos="fade-up">
+    <div class="wrap app-inner">
+      <div class="app-copy" data-aos="fade-right">
+        <div class="eyebrow"><span class="dot"></span>Take It Anywhere</div>
+        <h2>Fluenta in your pocket</h2>
+        <p>Every lesson, streak, and conversation room syncs instantly across devices. Practice on the train, in line, or on the couch — pick up exactly where you left off.</p>
+        <div class="app-badges">
+          <a href="404.html" class="app-badge magnetic" aria-label="Download on the App Store">
+            <svg class="badge-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.7 12.4c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.8-3.1.8-.6 0-1.6-.7-2.7-.7-1.4 0-2.6.8-3.3 2-1.4 2.5-.4 6.1 1 8.1.7 1 1.5 2.1 2.6 2 1-.1 1.4-.7 2.7-.7s1.6.7 2.7.6c1.1 0 1.8-1 2.5-2 .8-1.1 1.1-2.2 1.1-2.3-.1 0-2.3-.9-2.3-3.5zM14.4 6.1c.6-.7 1-1.7.9-2.6-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.5 1 .1 1.9-.5 2.5-1.2z" fill="#ffffff"/></svg>
+            <div class="badge-text"><small>Download on the</small><span>App Store</span></div>
+          </a>
+          <a href="404.html" class="app-badge magnetic" aria-label="Get it on Google Play">
+            <svg class="badge-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 3.5L14.5 12L4.5 20.5V3.5Z" fill="#ffffff"/><path d="M14.5 12L17.8 9.8L20.5 11.4C21.2 11.8 21.2 12.2 20.5 12.6L17.8 14.2L14.5 12Z" fill="#ffffff" opacity="0.7"/></svg>
+            <div class="badge-text"><small>Get it on</small><span>Google Play</span></div>
+          </a>
+        </div>
+        <div class="app-stats">
+          <div class="app-stat"><div class="stat-num" data-count="4.9" data-decimal="1" data-suffix="★">0</div><div class="stat-label">App Store rating</div></div>
+          <div class="app-stat"><div class="stat-num" data-count="8" data-suffix="M+">0</div><div class="stat-label">Downloads</div></div>
+        </div>
+      </div>
+      <div class="app-media" data-aos="fade-left">
+        <img src="./assets/l8.webp" alt="Person practicing a language lesson on a phone" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. USE CASES ============ -->
+  <section data-aos="fade-up">
+    <div class="wrap usecases-inner">
+      <div class="uc-left" data-aos="fade-right">
+        <div class="eyebrow"><span class="dot"></span>Fluenta in Practice</div>
+        <h2>Learning modes</h2>
+        <p>Fluenta powers a wide range of modes for learners, classrooms and teams wanting effective and rewarding language mastery.</p>
+
+        <div class="modes-list">
+          <div class="mode-row" data-aos="fade-up" data-aos-delay="0">
+            <div class="mode-icon">🙋</div>
+            <div class="mode-text">
+              <div class="mode-title">Personal</div>
+              <div class="mode-desc">Self-paced lessons that adapt to your daily goals.</div>
+            </div>
+            <svg class="mode-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="mode-row active" data-aos="fade-up" data-aos-delay="80">
+            <div class="mode-icon">🏫</div>
+            <div class="mode-text">
+              <div class="mode-title">Classroom</div>
+              <div class="mode-desc">Curriculum-ready tools for teachers and students.</div>
+            </div>
+            <svg class="mode-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="mode-row" data-aos="fade-up" data-aos-delay="160">
+            <div class="mode-icon">💼</div>
+            <div class="mode-text">
+              <div class="mode-title">Teams</div>
+              <div class="mode-desc">Company-wide fluency tracking with shared dashboards.</div>
+            </div>
+            <svg class="mode-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="mode-row" data-aos="fade-up" data-aos-delay="240">
+            <div class="mode-icon">✈️</div>
+            <div class="mode-text">
+              <div class="mode-title">Travel</div>
+              <div class="mode-desc">Quick survival phrases and audio for your next trip.</div>
+            </div>
+            <svg class="mode-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="uc-media-box parallax-media" data-aos="fade-left">
+        <img class="bg-media" src="./assets/l7.webp" alt="Classroom of students learning a new language together" loading="lazy" decoding="async">
+        <div class="uc-overlay">
+          <h3>Classroom</h3>
+          <p>Boost student engagement by offering Fluenta, a trusted adaptive language companion with proven results, letting your students learn with zero friction in your curriculum.</p>
+          <a href="#" class="uc-link magnetic">
+            <span class="icon-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Know more
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. COURSES / LANGUAGES ============ -->
+  <section id="courses" data-aos="fade-up">
+    <div class="wrap">
+      <div class="courses-head" data-aos="fade-up">
+        <div class="eyebrow"><span class="dot"></span>Explore Courses</div>
+        <h2>Languages worth learning</h2>
+      </div>
+      <div class="courses-grid">
+        <div class="course-card" data-aos="zoom-in" data-aos-delay="0">
+          <img src="./assets/l9.webp" alt="Barcelona, Spain" loading="lazy" decoding="async">
+          <div class="course-info"><div class="flag">🇪🇸</div><h4>Spanish</h4><span>3.2M learners</span></div>
+        </div>
+        <div class="course-card" data-aos="zoom-in" data-aos-delay="100">
+          <img src="./assets/l10.webp" alt="Paris, France" loading="lazy" decoding="async">
+          <div class="course-info"><div class="flag">🇫🇷</div><h4>French</h4><span>1.8M learners</span></div>
+        </div>
+        <div class="course-card" data-aos="zoom-in" data-aos-delay="200">
+          <img src="./assets/l11.webp" alt="Tokyo, Japan" loading="lazy" decoding="async">
+          <div class="course-info"><div class="flag">🇯🇵</div><h4>Japanese</h4><span>2.1M learners</span></div>
+        </div>
+        <div class="course-card" data-aos="zoom-in" data-aos-delay="0">
+          <img src="./assets/l2.webp" alt="Berlin, Germany" loading="lazy" decoding="async">
+          <div class="course-info"><div class="flag">🇩🇪</div><h4>German</h4><span>950K learners</span></div>
+        </div>
+        <div class="course-card" data-aos="zoom-in" data-aos-delay="100">
+          <img src="./assets/l13.webp" alt="Venice, Italy" loading="lazy" decoding="async">
+          <div class="course-info"><div class="flag">🇮🇹</div><h4>Italian</h4><span>720K learners</span></div>
+        </div>
+        <div class="course-card" data-aos="zoom-in" data-aos-delay="200">
+          <img src="./assets/l14.webp" alt="Seoul, South Korea" loading="lazy" decoding="async">
+          <div class="course-info"><div class="flag">🇰🇷</div><h4>Korean</h4><span>1.4M learners</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. BLOG / RESOURCES ============ -->
+  <section id="blog" data-aos="fade-up">
+    <div class="wrap">
+      <div class="blog-head" data-aos="fade-up">
+        <h2>From the Fluenta journal</h2>
+        <a href="404.html" class="pill-btn small magnetic">
+          View all posts
+          <span class="arrow-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+      <div class="blog-grid">
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="0">
+          <img src="./assets/l15.webp" alt="Person journaling in a language notebook" loading="lazy" decoding="async">
+          <div class="blog-card-body">
+            <div class="blog-tag">Study Tips</div>
+            <h4>Why five minutes a day beats one hour on Sunday</h4>
+            <p>The science behind spaced repetition and why consistency quietly outperforms cramming.</p>
+            <div class="blog-meta">6 min read</div>
+          </div>
+        </a>
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="100">
+          <img src="./assets/l16.webp" alt="Friends talking at a cafe table" loading="lazy" decoding="async">
+          <div class="blog-card-body">
+            <div class="blog-tag">Speaking</div>
+            <h4>How to survive your first live conversation room</h4>
+            <p>A practical warm-up routine to calm nerves before speaking with a native speaker for the first time.</p>
+            <div class="blog-meta">4 min read</div>
+          </div>
+        </a>
+        <a href="#" class="blog-card" data-aos="fade-up" data-aos-delay="200">
+          <img src="./assets/l17.webp" alt="Traveler looking at a map in a foreign city" loading="lazy" decoding="async">
+          <div class="blog-card-body">
+            <div class="blog-tag">Travel</div>
+            <h4>20 phrases that get you further than "hello"</h4>
+            <p>The small-talk shortcuts locals actually use, pulled straight from our travel mode lessons.</p>
+            <div class="blog-meta">5 min read</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. TESTIMONIALS ============ -->
+  <section id="stories" data-aos="fade-up">
+    <div class="wrap">
+      <div class="testi-head" data-aos="fade-up">
+        <div class="eyebrow"><span class="dot"></span>Learner Stories</div>
+        <h2>Real people, real fluency</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card float-card" data-aos="fade-up" data-aos-delay="0">
+          <p class="testi-quote">"Fluenta turned my commute into Spanish practice. Six months in, I ordered dinner in Madrid without switching to English."</p>
+          <div class="testi-person">
+            <img src="./assets/l18.webp" alt="Priya N." loading="lazy" decoding="async">
+            <div><div class="name">Priya N.</div><div class="role">Marketing Manager</div></div>
+          </div>
+        </div>
+        <div class="testi-card float-card" data-aos="fade-up" data-aos-delay="100">
+          <p class="testi-quote">"The live conversation rooms are what finally got me speaking French out loud, not just recognizing it on a screen."</p>
+          <div class="testi-person">
+            <img src="./assets/l19.webp" alt="Marcus T." loading="lazy" decoding="async">
+            <div><div class="name">Marcus T.</div><div class="role">Software Engineer</div></div>
+          </div>
+        </div>
+        <div class="testi-card float-card" data-aos="fade-up" data-aos-delay="200">
+          <p class="testi-quote">"I've tried four apps. Fluenta is the only one where my streak actually turned into real conversations."</p>
+          <div class="testi-person">
+            <img src="./assets/l20.webp" alt="Elena R." loading="lazy" decoding="async">
+            <div><div class="name">Elena R.</div><div class="role">Graduate Student</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. PRICING ============ -->
+  <section id="pricing" data-aos="fade-up">
+    <div class="wrap">
+      <div class="pricing-head" data-aos="fade-up">
+        <h2>Choose your pace</h2>
+        <p>Start for free, or go all-in with a plan built for daily fluency.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="plan-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">$0</div>
+          <div class="plan-desc">Get started with core lessons and one active language.</div>
+          <ul class="plan-features">
+            <li>Daily lessons</li>
+            <li>1 active language</li>
+            <li>Basic progress tracking</li>
+          </ul>
+          <a href="404.html" class="plan-cta magnetic">Get started</a>
+        </div>
+        <div class="plan-card featured" data-aos="fade-up" data-aos-delay="100">
+          <div class="plan-badge">Most popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">$12.99 <span>/ month</span></div>
+          <div class="plan-desc">Full access built for consistent, faster fluency.</div>
+          <ul class="plan-features">
+            <li>Unlimited languages</li>
+            <li>Live conversation rooms</li>
+            <li>Offline lessons</li>
+            <li>Advanced analytics</li>
+          </ul>
+          <a href="404.html" class="plan-cta magnetic">Start free trial</a>
+        </div>
+        <div class="plan-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="plan-name">Teams</div>
+          <div class="plan-price">Custom</div>
+          <div class="plan-desc">Built for classrooms and companies teaching at scale.</div>
+          <ul class="plan-features">
+            <li>Admin dashboard</li>
+            <li>Bulk seats</li>
+            <li>Dedicated support</li>
+          </ul>
+          <a href="404.html" class="plan-cta magnetic">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. FAQ ============ -->
+  <section id="faq" data-aos="fade-up">
+    <div class="wrap faq-inner">
+      <div class="faq-head" data-aos="fade-right">
+        <div class="eyebrow"><span class="dot"></span>Good to Know</div>
+        <h2>Frequently asked questions</h2>
+        <p>Can't find what you're looking for? Reach out to our support team and we'll get back to you within a day.</p>
+        <a href="404.html" class="pill-btn small magnetic">
+          Contact support
+          <span class="arrow-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+      <div class="faq-list" data-aos="fade-left">
+        <details class="faq-item" open>
+          <summary>Do I need any prior experience to start?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Not at all. Fluenta places you with a short placement check-in and builds a path from wherever you're starting, whether that's zero words or an old textbook's worth of rusty grammar.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I switch or add languages later?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Yes. Free plan members can study one active language at a time, while Pro and Teams members can switch between or run multiple languages side by side with no extra cost.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How do the live conversation rooms work?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Rooms are small-group video sessions hosted by native speakers, matched to your level. You can join scheduled sessions or drop into an open room whenever one is running.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Is there a free trial for the Pro plan?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Every new account gets a 14-day free trial of Pro, no card required upfront. You can downgrade to the Free plan anytime before it ends.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I use Fluenta offline?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Pro and Teams members can download lessons for offline practice on mobile. Progress syncs automatically the next time you're back online.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12. FINAL CTA + FOOTER ============ -->
+  <section class="final-cta-section" style="padding-top: 0;" data-aos="fade-up">
+    <div class="final-cta" data-aos="zoom-in">
+      <div class="mesh-blob mesh-blob-a" id="ctaBlobA" style="opacity:0.4;"></div>
+      <div class="mesh-blob mesh-blob-b" id="ctaBlobB" style="opacity:0.3;"></div>
+      <h2>Start speaking today.</h2>
+      <p>Join 12 million learners building real fluency, one daily lesson at a time.</p>
+      <a href="404.html" class="pill-btn light magnetic">
+        Create free account
+        <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <footer id="help" data-aos="fade-up">
+    <div class="wrap">
+      <div class="footer-top">
+        <div data-aos="fade-up">
+          <div class="footer-logo-placeholder">
+            <a href="index.html"><img src="./assets/stackly_logo.webp" alt="Your logo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></a>
+          </div>
+          <p class="footer-tag">An adaptive, reward-powered language platform built for real fluency. Learn 42 languages through daily lessons and live conversation with native speakers.</p>
+
+          <div class="footer-newsletter">
+            <form class="footer-newsletter-form" onsubmit="window.location.href='404.html'; return false;">
+              <input type="email" placeholder="Your email address" aria-label="Email address" required>
+              <button type="submit" aria-label="Subscribe to newsletter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </form>
+            <p class="footer-newsletter-note">One email a month with study tips and new language launches. Unsubscribe anytime.</p>
+          </div>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="80">
+          <h5>Quick Links</h5>
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html">App</a>
+          <a href="blog.html">Blog</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="140">
+          <h5>Resources</h5>
+          <a href="404.html">Help Center</a>
+          <a href="404.html">Community</a>
+          <a href="404.html">Learner Stories</a>
+          <a href="404.html">Careers</a>
+          <a href="404.html">Press Kit</a>
+          <a href="404.html">Partner With Us</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+          <h5>Contact</h5>
+          <address class="footer-address">
+            221B HITEX Avenue<br>
+            JUBILEE 400<br>
+            HYDERABAD<br>
+            <a href="mailto:hello@fluenta.com" style="display:inline; margin:0;">hello@fluenta.com</a><br>
+            <a href="tel:+914012345678" style="display:inline; margin:0;">+91 40 1234 5678</a>
+          </address>
+          <div class="footer-social">
+            <a href="404.html" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 8H13.5C12.6716 8 12 8.67157 12 9.5V11H15L14.5 14H12V21H9V14H7V11H9V9.5C9 7.01472 11.0147 5 13.5 5H15V8Z" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
+            </a>
+            <a href="404.html" aria-label="X / Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1"/><path d="M11.5 17V13.2C11.5 11.6 12.5 10.6 13.9 10.6C15.2 10.6 16 11.5 16 13.2V17" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <div class="footer-badges">
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12L11 14L15 10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              GDPR compliant
+            </span>
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/></svg>
+              Secure payments
+            </span>
+          </div>
+        </div>
+      </div>
+     <div class="footer-bottom">
+  <span>© 2026 STACKLY, Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Cookie Settings</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  // Force every refresh/reload to start at the top of the page instead
+  // of the browser restoring the last scroll position. Covers the normal
+  // load path AND the bfcache "pageshow" path (which fires *after* load
+  // and is what usually wins the fight against a single scrollTo(0,0)).
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  function forceScrollTop() {
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+  forceScrollTop();
+  window.addEventListener('DOMContentLoaded', forceScrollTop);
+  window.addEventListener('load', forceScrollTop);
+  window.addEventListener('pageshow', forceScrollTop); // catches back/forward-cache restores
+  setTimeout(forceScrollTop, 0);
+  setTimeout(forceScrollTop, 300);
+
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      duration: 250,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 40
+    });
+  }
+
+  window.addEventListener('load', function () {
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.refresh();
+    }
+  });
+
+  setTimeout(function () {
+    document.querySelectorAll('[data-aos]').forEach(function (el) {
+      if (!el.classList.contains('aos-animate')) {
+        el.classList.add('aos-animate');
+      }
+    });
+  }, 350);
+
+  // Sticky nav glass effect toggle — rAF-throttled so the class toggle
+  // never runs more than once per animation frame while scrolling.
+  var siteNav = document.querySelector('nav');
+  var navScrollTicking = false;
+  function updateNavScrolled() {
+    if (window.scrollY > 40) {
+      siteNav.classList.add('nav-scrolled');
+    } else {
+      siteNav.classList.remove('nav-scrolled');
+    }
+    navScrollTicking = false;
+  }
+  updateNavScrolled();
+  window.addEventListener('scroll', function () {
+    if (!navScrollTicking) {
+      requestAnimationFrame(updateNavScrolled);
+      navScrollTicking = true;
+    }
+  }, { passive: true });
+
+  // Mobile hamburger menu
+  (function () {
+    var hamburger = document.getElementById('navHamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!hamburger || !menu) return;
+
+    var savedScrollY = 0;
+
+    function openMenu() {
+      savedScrollY = window.scrollY || window.pageYOffset;
+      document.body.style.top = (-savedScrollY) + 'px';
+      menu.classList.add('is-open');
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Close menu');
+      document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+      menu.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      document.body.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollY);
+    }
+
+    hamburger.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (menu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); }
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 860) closeMenu();
+    });
+  })();
+
+  /* =====================================================================
+     GSAP ENHANCEMENT LAYER
+  ===================================================================== */
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isCoarse = window.matchMedia('(hover: none)').matches || window.innerWidth < 860;
+
+    // Safety net: no matter what happens below, guarantee every section
+    // becomes visible. If GSAP/ScrollTrigger fail to load, throw partway
+    // through, or a batch never fires its onEnter callback, this removes
+    // any inline hiding styles so the page can never get stuck blank.
+    function forceRevealEverything() {
+      document.querySelectorAll('[data-aos], .hero-title .reveal, .hero-eyebrow-row, .hero-lede, .hero-cta-row, .hero-stat-cell, .hero-scroll-cue').forEach(function (el) {
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.style.visibility = '';
+        el.classList.add('aos-animate');
+      });
+    }
+    window.addEventListener('load', function () {
+      setTimeout(forceRevealEverything, 2500);
+    });
+
+    if (typeof gsap === 'undefined') { forceRevealEverything(); return; }
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
+    } else {
+      // GSAP loaded but ScrollTrigger didn't — anything below that
+      // references ScrollTrigger would throw and abort the whole IIFE,
+      // silently leaving later sections hidden. Bail out safely instead.
+      forceRevealEverything();
+      return;
+    }
+    gsap.ticker.lagSmoothing(0);
+
+    if (reduceMotion) { forceRevealEverything(); return; }
+
+    try {
+
+    /* ---------- 1. Hero load-in ---------- */
+    var heroTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    heroTl
+      .set('.hero-title .reveal', { yPercent: 120 })
+      .set('.hero-eyebrow-row, .hero-lede, .hero-cta-row, .hero-stat-cell, .hero-scroll-cue', { opacity: 0, y: 16 })
+      .to('.hero-eyebrow-row', { opacity: 1, y: 0, duration: 0.22 }, 0)
+      .to('.hero-title .reveal', { yPercent: 0, duration: 0.32, stagger: 0.05 }, 0.06)
+      .to('.hero-lede', { opacity: 1, y: 0, duration: 0.22 }, 0.24)
+      .to('.hero-cta-row', { opacity: 1, y: 0, duration: 0.22 }, 0.3)
+      .to('.hero-stat-cell', { opacity: 1, y: 0, duration: 0.22, stagger: 0.04 }, 0.34)
+      .to('.hero-scroll-cue', { opacity: 1, y: 0, duration: 0.22 }, 0.4);
+
+    /* ---------- 2. Drifting ambient blobs (final CTA accent) ---------- */
+    gsap.set('.mesh-blob', { opacity: 0 });
+    document.querySelectorAll('.final-cta .mesh-blob').forEach(function (blob, i) {
+      gsap.to(blob, {
+        opacity: 1,
+        x: (i % 2 === 0 ? 1 : -1) * gsap.utils.random(40, 90),
+        y: gsap.utils.random(-50, 50),
+        duration: gsap.utils.random(9, 14),
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        force3D: true
+      });
+    });
+
+    /* ---------- 3. Headline language rotator ---------- */
+    var rotatorLanguages = ['Spanish', 'French', 'Japanese', 'Korean', 'Italian', 'German', 'Portuguese'];
+    var rotatorEl = document.getElementById('heroRotator');
+    if (rotatorEl) {
+      var ri = 0;
+      function cycleRotator() {
+        ri = (ri + 1) % rotatorLanguages.length;
+        gsap.to(rotatorEl, {
+          yPercent: -120, opacity: 0, duration: 0.3, ease: 'power2.in',
+          onComplete: function () {
+            rotatorEl.textContent = rotatorLanguages[ri];
+            gsap.fromTo(rotatorEl, { yPercent: 120, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+          }
+        });
+      }
+      setInterval(cycleRotator, 2400);
+    }
+
+    /* ---------- 4. Magnetic buttons ---------- */
+    if (!isCoarse) {
+      document.querySelectorAll('.magnetic').forEach(function (el) {
+        var strength = 0.35;
+        var xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
+        var yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+        el.addEventListener('mousemove', function (e) {
+          var b = el.getBoundingClientRect();
+          xTo((e.clientX - b.left - b.width / 2) * strength);
+          yTo((e.clientY - b.top - b.height / 2) * strength);
+        });
+        el.addEventListener('mouseleave', function () { xTo(0); yTo(0); });
+      });
+    }
+
+    /* ---------- 5. Custom cursor ---------- */
+    var dot = document.getElementById('cursorDot');
+    var ring = document.getElementById('cursorRing');
+    if (dot && ring && !isCoarse) {
+      var dotX = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3.out' });
+      var dotY = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3.out' });
+      var ringX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
+      var ringY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
+      window.addEventListener('mousemove', function (e) {
+        dotX(e.clientX); dotY(e.clientY);
+        ringX(e.clientX); ringY(e.clientY);
+      }, { passive: true });
+      document.querySelectorAll('a, button, summary, .mode-row, .card, .step-card, .course-card').forEach(function (el) {
+        el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); });
+        el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); });
+      });
+    } else if (dot && ring) {
+      dot.style.display = 'none'; ring.style.display = 'none';
+    }
+
+    /* ---------- 6. Stat count-up ---------- */
+    document.querySelectorAll('.stat-num[data-count]').forEach(function (el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      var decimals = parseInt(el.getAttribute('data-decimal') || '0', 10);
+      var proxy = { val: 0 };
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 88%',
+        once: true,
+        onEnter: function () {
+          gsap.to(proxy, {
+            val: target,
+            duration: 1,
+            ease: 'power2.out',
+            onUpdate: function () {
+              el.textContent = proxy.val.toFixed(decimals) + suffix;
+            }
+          });
+        }
+      });
+    });
+
+    /* ---------- 7. 3D tilt on cards ---------- */
+    if (!isCoarse) {
+      document.querySelectorAll('.tilt-card').forEach(function (card) {
+        var rotX = gsap.quickTo(card, 'rotationX', { duration: 0.4, ease: 'power3.out' });
+        var rotY = gsap.quickTo(card, 'rotationY', { duration: 0.4, ease: 'power3.out' });
+        var liftY = gsap.quickTo(card, 'y', { duration: 0.4, ease: 'power3.out' });
+        card.style.transformStyle = 'preserve-3d';
+        card.addEventListener('mouseenter', function () { card.style.willChange = 'transform'; });
+        card.addEventListener('mousemove', function (e) {
+          var b = card.getBoundingClientRect();
+          var px = (e.clientX - b.left) / b.width - 0.5;
+          var py = (e.clientY - b.top) / b.height - 0.5;
+          rotX(py * -8);
+          rotY(px * 8);
+          liftY(-4);
+        });
+        card.addEventListener('mouseleave', function () {
+          rotX(0); rotY(0); liftY(0);
+          card.style.willChange = 'auto';
+        });
+      });
+    }
+
+    /* ---------- 8. Gentle float loop for testimonial cards ---------- */
+    document.querySelectorAll('.float-card').forEach(function (card, i) {
+      gsap.to(card, {
+        y: -6,
+        duration: 2.6 + (i * 0.3),
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: i * 0.2,
+        force3D: true
+      });
+    });
+
+    /* ---------- 9. Scroll-scrubbed parallax on the classroom image ---------- */
+    var parallaxImg = document.querySelector('.parallax-media .bg-media');
+    if (parallaxImg) {
+      gsap.to(parallaxImg, {
+        yPercent: 8,
+        ease: 'none',
+        force3D: true,
+        scrollTrigger: {
+          trigger: parallaxImg.closest('.parallax-media'),
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.6
+        }
+      });
+    }
+
+    /* ---------- 10. Section heading nudge-in ---------- */
+    gsap.utils.toArray('h2').forEach(function (h) {
+      if (h.closest('.hero-content')) return;
+      gsap.fromTo(h, { letterSpacing: '0.01em' }, {
+        letterSpacing: '-0.03em',
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: h, start: 'top 90%' }
+      });
+    });
+
+    /* =====================================================================
+       11. UNIVERSAL SECTION SLIDE-IN REVEAL (fade + slide, every section)
+    ===================================================================== */
+    (function revealAllSections() {
+      var DIST = 36;
+
+      function fromVars(type) {
+        switch (type) {
+          case 'fade-down':  return { y: -DIST, opacity: 0 };
+          case 'fade-left':  return { x: DIST,  opacity: 0 };
+          case 'fade-right': return { x: -DIST, opacity: 0 };
+          case 'zoom-in':    return { scale: 0.86, opacity: 0 };
+          case 'fade-up':
+          default:           return { y: DIST, opacity: 0 };
+        }
+      }
+
+      var groups = new Map();
+      document.querySelectorAll('[data-aos]').forEach(function (el) {
+        if (el.closest('.hero-screen')) return;
+
+        var parent = el.parentElement;
+        var type = el.getAttribute('data-aos') || 'fade-up';
+        var groupKey = parent.__gsGroupId || (parent.__gsGroupId = Math.random().toString(36).slice(2));
+        var fullKey = groupKey + '|' + type;
+        if (!groups.has(fullKey)) groups.set(fullKey, []);
+        groups.get(fullKey).push(el);
+      });
+
+      groups.forEach(function (els) {
+        if (!els.length) return;
+        var type = els[0].getAttribute('data-aos') || 'fade-up';
+        var from = fromVars(type);
+        var isStagger = els.length > 1;
+
+        gsap.set(els, from);
+
+        ScrollTrigger.batch(els, {
+          start: 'top 92%',
+          once: true,
+          onEnter: function (batch) {
+            gsap.to(batch, {
+              x: 0, y: 0, scale: 1, opacity: 1,
+              duration: 0.35,
+              ease: 'power3.out',
+              stagger: isStagger ? 0.04 : 0,
+              clearProps: 'willChange'
+            });
+          }
+        });
+      });
+
+      ScrollTrigger.refresh();
+    })();
+
+    } catch (err) {
+      console.error('Animation setup failed, revealing all content instead:', err);
+      forceRevealEverything();
+    }
+  })();
+</script>
+
+</body>
+</html>

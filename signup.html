@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Wordtrail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #F1E8D3;
+      --paper-panel: #E9DFC4;
+      --card: #FBF6EA;
+      --ink: #26332B;
+      --ink-dim: #756C58;
+      --teal: #1F6F64;
+      --teal-bright: #2C9184;
+      --mustard: #D6A335;
+      --mustard-bright: #E8B84B;
+      --stamp: #A6403A;
+      --line: rgba(38,51,43,0.14);
+      --line-bright: rgba(38,51,43,0.24);
+      --display: 'Fraunces', serif;
+      --body: 'Nunito Sans', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      font-family: var(--body);
+      color: var(--ink);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: inherit; }
+
+    /* ---------- Streak banner ---------- */
+    .streak-bar {
+      background: var(--ink);
+      color: var(--mustard-bright);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 7px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .streak-bar i { color: var(--stamp); }
+
+    /* ---------- Background field ---------- */
+    /* contain limits how much of the page a repaint inside this
+       layer forces the browser to recalculate — cheaper animation frames */
+    .field-layer {
+      position: absolute;
+      inset: 0;
+    }
+    .field-dots {
+      position: absolute;
+      inset: -2px;
+      background-image: radial-gradient(rgba(38,51,43,0.14) 1px, transparent 1.4px);
+      background-size: 26px 26px;
+    }
+    .field-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 26% 18%, rgba(31,111,100,0.10), transparent 55%),
+                  radial-gradient(ellipse at 82% 88%, rgba(214,163,53,0.14), transparent 55%);
+    }
+    .postmark {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px dashed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      mix-blend-mode: multiply;
+      opacity: 0.16;
+      /* promote to its own GPU layer so nothing here forces a
+         full-layer repaint while the form is being typed into */
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    .postmark.p1 { top: 8%; left: 6%; width: 150px; height: 150px; border-color: var(--teal); color: var(--teal); font-size: 0.62rem; transform: rotate(-14deg); }
+    .postmark.p2 { top: 64%; left: 10%; width: 110px; height: 110px; border-color: var(--stamp); color: var(--stamp); font-size: 0.56rem; transform: rotate(9deg); }
+    .postmark.p3 { top: 14%; left: 80%; width: 130px; height: 130px; border-color: var(--mustard); color: #7A5A12; font-size: 0.6rem; transform: rotate(6deg); }
+    .postmark.p4 { top: 80%; left: 70%; width: 96px; height: 96px; border-color: var(--teal); color: var(--teal); font-size: 0.5rem; transform: rotate(-8deg); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .compass .needle, .unit-tag::before { animation: none !important; }
+    }
+
+    /* on small screens, drop the decorative postmarks entirely —
+       they add paint cost while the form is being typed into and
+       aren't worth it on a cramped viewport */
+    @media (max-width: 980px) {
+      .postmark { display: none; }
+      .compass .needle { animation-duration: 16s; }
+    }
+
+    /* ---------- Layout ---------- */
+    .stage {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+      min-height: calc(var(--vh, 1vh) * 100 - 32px);
+    }
+
+    .info-panel {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 64px;
+      border-right: 1px solid var(--line);
+      position: relative;
+    }
+    .info-panel .unit-tag {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+    .info-panel .unit-tag::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--stamp);
+      border-radius: 50%;
+    }
+
+    .info-panel h1 {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 4.4vw, 3.3rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      max-width: 560px;
+    }
+    .info-panel h1 em { font-style: italic; color: var(--stamp); }
+
+    .info-panel p.lede {
+      color: var(--ink-dim);
+      font-size: 1rem;
+      max-width: 460px;
+      margin-top: 18px;
+      line-height: 1.6;
+    }
+
+    .clearance-list {
+      margin-top: 38px;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .clearance-list .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.88rem;
+      color: var(--ink-dim);
+    }
+    .clearance-list .item i {
+      color: var(--teal);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .clearance-list .item strong { color: var(--ink); font-weight: 700; }
+
+    .compass-wrap {
+      margin-top: 38px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .compass {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      border: 1px solid var(--line-bright);
+      position: relative;
+      flex-shrink: 0;
+      background: var(--card);
+    }
+    .compass::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      border: 1px dashed var(--line-bright);
+    }
+    .compass .needle {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 2px; height: 22px;
+      background: var(--stamp);
+      transform-origin: bottom center;
+      transform: translate(-50%, -100%) rotate(0deg);
+      animation: spin 10s linear infinite;
+      border-radius: 2px;
+      will-change: transform;
+    }
+    @keyframes spin { 100% { transform: translate(-50%, -100%) rotate(360deg); } }
+
+    .coord-strip {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.03em;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .coord-strip span strong { color: var(--ink); }
+
+    /* ---------- Signup panel ---------- */
+    .signup-panel {
+      flex: 0 0 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 40px;
+    }
+
+    .back-home {
+      position: absolute;
+      top: 48px;
+      left: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-dim);
+      font-size: 0.8rem;
+      font-family: var(--mono);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      z-index: 2;
+    }
+    .back-home:hover { color: var(--stamp); }
+
+    .signup-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--card);
+      border: 1px solid var(--line-bright);
+      border-radius: 10px;
+      padding: 36px 32px 30px;
+      position: relative;
+      max-height: none;
+      overflow: visible;
+      box-shadow: 0 20px 40px -24px rgba(38,51,43,0.25);
+    }
+
+    .signup-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 10px 10px 0 0;
+      background: linear-gradient(90deg, var(--teal), var(--mustard));
+    }
+    .stamp-seal {
+      position: absolute;
+      top: -18px; right: 22px;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 2px dashed var(--stamp);
+      color: var(--stamp);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.2;
+      transform: rotate(-10deg);
+    }
+
+    .signup-logo { text-align: center; margin-bottom: 22px; }
+    .signup-logo .logo-placeholder { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .signup-logo .logo-placeholder img { max-width: 140px; height: auto; display: block; }
+    .signup-logo .logo-placeholder .logo-fallback {
+      display: flex; align-items: center; justify-content: center;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(31,111,100,0.08); border: 1px solid var(--teal);
+      color: var(--teal); font-size: 11px; font-family: var(--display); font-weight: 700;
+      text-align: center; line-height: 1.3; padding: 6px;
+    }
+    .signup-logo .eyebrow { color: var(--teal); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; }
+    .signup-logo p { color: var(--ink-dim); font-size: 0.86rem; margin-top: 8px; font-family: var(--body); }
+
+    .form-group { margin-bottom: 16px; position: relative; }
+    .form-group label {
+      display: block; font-size: 0.7rem; font-weight: 700; color: var(--ink-dim);
+      margin-bottom: 8px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .form-group label span { color: var(--stamp); }
+    .form-group .input-wrapper {
+      position: relative; display: flex; align-items: center;
+      background: var(--paper); border: 1px solid var(--line-bright); border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .form-group .input-wrapper:focus-within {
+      border-color: var(--teal); box-shadow: 0 0 0 3px rgba(31,111,100,0.14);
+    }
+    .form-group .input-wrapper.error {
+      border-color: var(--stamp); box-shadow: 0 0 0 3px rgba(166,64,58,0.14);
+    }
+    .form-group .input-wrapper .input-icon { padding: 0 0 0 14px; color: var(--ink-dim); font-size: 0.85rem; flex-shrink: 0; }
+    .form-group .input-wrapper input {
+      width: 100%; padding: 13px 14px 13px 12px; background: transparent; border: none;
+      outline: none; color: var(--ink); font-size: 0.92rem; font-family: var(--body); font-weight: 600;
+    }
+    .form-group .input-wrapper input::placeholder { color: var(--ink-dim); opacity: 0.7; font-weight: 400; }
+    .form-group .input-wrapper .toggle-password {
+      padding: 0 14px 0 0; color: var(--ink-dim); cursor: pointer; transition: color 0.2s ease;
+      flex-shrink: 0; background: transparent; border: none; font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 44px; min-width: 40px;
+    }
+    .form-group .input-wrapper .toggle-password:hover { color: var(--teal); }
+    .form-group .input-wrapper .toggle-password:focus-visible { outline: 2px solid var(--teal); border-radius: 4px; }
+    .form-group .input-wrapper .toggle-password i { pointer-events: none; }
+
+    .validation-msg { font-size: 0.74rem; color: var(--stamp); margin-top: 6px; display: none; font-family: var(--body); }
+    .validation-msg.show { display: block; }
+
+    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin: 16px 0 14px; padding: 4px 0; }
+    .checkbox-group input[type="checkbox"] {
+      width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px;
+      accent-color: var(--teal); cursor: pointer;
+      background: var(--paper); border: 1px solid var(--line-bright); border-radius: 4px;
+      appearance: none; -webkit-appearance: none; transition: all 0.2s ease; position: relative;
+    }
+    .checkbox-group input[type="checkbox"]:checked { background: var(--teal); border-color: var(--teal); }
+    .checkbox-group input[type="checkbox"]:checked::after {
+      content: "✓"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      color: var(--card); font-weight: 700; font-size: 11px;
+    }
+    .checkbox-group input[type="checkbox"]:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .checkbox-group label { font-size: 0.82rem; color: var(--ink-dim); line-height: 1.4; cursor: pointer; font-family: var(--body); text-transform: none; letter-spacing: 0; font-weight: 400; }
+    .checkbox-group label a { color: var(--stamp); text-decoration: none; font-weight: 700; }
+    .checkbox-group label a:hover { color: var(--ink); text-decoration: underline; }
+    .checkbox-error {
+      font-size: 0.74rem; color: var(--stamp); margin-top: -6px; margin-bottom: 10px;
+      display: none; font-weight: 600; font-family: var(--body);
+    }
+    .checkbox-error.visible { display: block; }
+
+    .signup-btn {
+      width: 100%; padding: 14px; border: none; border-radius: 8px;
+      background: var(--teal); color: var(--card); font-size: 0.94rem; font-weight: 800;
+      font-family: var(--body); letter-spacing: 0.01em;
+      cursor: pointer; transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .signup-btn:hover { background: var(--teal-bright); box-shadow: 0 8px 24px -8px rgba(31,111,100,0.5); }
+    .signup-btn:active { transform: translateY(1px); }
+    .signup-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .divider { display: flex; align-items: center; gap: 16px; margin: 20px 0; color: var(--ink-dim); font-size: 0.7rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    .social-buttons { display: flex; gap: 10px; }
+    .social-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px; background: var(--paper); border: 1px solid var(--line-bright); border-radius: 8px;
+      color: var(--ink); font-size: 0.82rem; font-weight: 700; font-family: var(--body);
+      cursor: pointer; transition: all 0.2s ease; text-decoration: none;
+    }
+    .social-btn:hover { border-color: var(--teal); background: rgba(31,111,100,0.06); }
+    .social-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .signin-link { text-align: center; margin-top: 18px; }
+    .signin-link p { color: var(--ink-dim); font-size: 0.86rem; font-family: var(--body); }
+    .signin-link a { color: var(--stamp); font-weight: 800; text-decoration: none; transition: color 0.2s ease; }
+    .signin-link a:hover { color: var(--ink); }
+
+    footer.foot-strip {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--line);
+      padding: 14px 32px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 980px) {
+      body { overflow-y: auto; }
+      .stage { flex-direction: column; min-height: auto; }
+      .field-layer { position: absolute; }
+      .info-panel { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 44px; }
+      .signup-panel { flex: unset; padding: 30px 20px 40px; align-items: flex-start; }
+      .signup-card { width: 100%; max-height: none; overflow: visible; }
+    }
+    @media (max-width: 480px) {
+      .signup-card { padding: 30px 22px 26px; }
+      .back-home { position: static; display: inline-flex; margin: 16px 0 0 24px; }
+      .social-buttons { flex-direction: column; }
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 1000px var(--paper) inset !important;
+      -webkit-text-fill-color: var(--ink) !important;
+      border-color: var(--line-bright);
+      transition: background-color 5000s ease-in-out 0s;
+    }
+    input::-ms-clear, input::-ms-reveal { display: none; width: 0; height: 0; }
+    input::-webkit-search-decoration, input::-webkit-search-cancel-button,
+    input::-webkit-search-results-button, input::-webkit-search-results-decoration { display: none; }
+    input[type="password"] { padding-right: 4px !important; }
+
+    html, body { overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+    input, textarea { font-size: 16px; }
+  </style>
+</head>
+
+<body>
+
+  <div class="streak-bar"><i class="fas fa-fire"></i> Join today and start your first streak</div>
+
+  <div class="field-layer">
+    <div class="field-dots"></div>
+    <div class="field-vignette"></div>
+    <div class="postmark p1">Buenos<br/>Aires</div>
+    <div class="postmark p2">Tokyo</div>
+    <div class="postmark p3">Paris</div>
+    <div class="postmark p4">Seoul</div>
+  </div>
+
+  <a href="index.html" class="back-home" data-aos="fade-right" data-aos-duration="600">
+    <i class="fas fa-arrow-left"></i> Back to Home
+  </a>
+
+  <div class="stage">
+    <div class="info-panel">
+      <div class="unit-tag" data-aos="fade-up" data-aos-duration="600">Enrollment — Open</div>
+      <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="80">
+        Start your <em>language passport</em>
+      </h1>
+      <p class="lede" data-aos="fade-up" data-aos-duration="700" data-aos-delay="160">
+        Create an account and get your first stamp today. Every lesson, streak, and new word gets logged to your own learning passport.
+      </p>
+
+      <div class="clearance-list" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
+        <div class="item">
+          <i class="fas fa-route"></i>
+          <span><strong>Personalized path.</strong> Lessons adapt to your level and the language you're learning.</span>
+        </div>
+        <div class="item">
+          <i class="fas fa-fire"></i>
+          <span><strong>Streaks that stick.</strong> Your progress and daily streak are saved to your account.</span>
+        </div>
+        <div class="item">
+          <i class="fas fa-lock"></i>
+          <span><strong>Private by default.</strong> Your password is encrypted and never shared.</span>
+        </div>
+      </div>
+
+      <div class="compass-wrap" data-aos="fade-up" data-aos-duration="700" data-aos-delay="320">
+        <div class="compass"><div class="needle"></div></div>
+        <div class="coord-strip">
+          <span>Free plan: <strong>Unlimited lessons</strong></span>
+          <span>Setup time: <strong>Under 2 min</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="signup-panel">
+      <div class="signup-card" data-aos="fade-left" data-aos-duration="700">
+        <div class="stamp-seal">New<br/>Learner</div>
+
+        <div class="signup-logo">
+          <div class="logo-placeholder">
+            <img
+              id="logoImage"
+              src="./assets/stack4.webp"
+              alt="Wordtrail"
+              onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+            />
+            <div id="logoFallback" class="logo-fallback" style="display:none;">
+              <span>WT</span>
+            </div>
+          </div>
+          <span class="eyebrow">Wordtrail</span>
+          <p>Create your account</p>
+        </div>
+
+        <form id="signupForm" novalidate autocomplete="off">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label>Full Name <span>*</span></label>
+            <div class="input-wrapper" id="nameWrap">
+              <span class="input-icon"><i class="fas fa-user"></i></span>
+              <input
+                type="text"
+                id="fullName"
+                placeholder="Jamie Rivera"
+                autocomplete="name"
+                maxlength="50"
+              />
+            </div>
+            <div class="validation-msg" id="nameError"><i class="fas fa-info-circle"></i> Only alphabets and spaces allowed.</div>
+          </div>
+
+          <!-- Username -->
+          <div class="form-group">
+            <label>Username <span>*</span></label>
+            <div class="input-wrapper" id="userWrap">
+              <span class="input-icon"><i class="fas fa-at"></i></span>
+              <input
+                type="text"
+                id="username"
+                placeholder="jamielearns"
+                autocomplete="username"
+                maxlength="30"
+              />
+            </div>
+            <div class="validation-msg" id="userError"><i class="fas fa-info-circle"></i> Only alphabets (no spaces) allowed.</div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label>Email Address <span>*</span></label>
+            <div class="input-wrapper" id="emailWrap">
+              <span class="input-icon"><i class="fas fa-envelope"></i></span>
+              <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+              />
+            </div>
+            <div class="validation-msg" id="emailError"><i class="fas fa-info-circle"></i> Please enter a valid email address.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label>Password <span>*</span></label>
+            <div class="input-wrapper" id="passWrap">
+              <span class="input-icon"><i class="fas fa-lock"></i></span>
+              <input
+                type="password"
+                id="password"
+                placeholder="Min 8 characters"
+                autocomplete="new-password"
+              />
+              <button type="button" class="toggle-password" id="togglePass" aria-label="Toggle password visibility">
+                <i class="fas fa-eye" id="eyeIcon"></i>
+              </button>
+            </div>
+            <div class="validation-msg" id="passError"><i class="fas fa-info-circle"></i> Minimum 8 characters required.</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label>Confirm Password <span>*</span></label>
+            <div class="input-wrapper" id="confirmWrap">
+              <span class="input-icon"><i class="fas fa-lock"></i></span>
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Re-enter password"
+                autocomplete="new-password"
+              />
+              <button type="button" class="toggle-password" id="toggleConfirmPass" aria-label="Toggle confirm password visibility">
+                <i class="fas fa-eye" id="confirmEyeIcon"></i>
+              </button>
+            </div>
+            <div class="validation-msg" id="confirmError"><i class="fas fa-info-circle"></i> Passwords do not match.</div>
+          </div>
+
+          <!-- Terms & Conditions -->
+          <div class="checkbox-group">
+            <input type="checkbox" id="termsCheckbox" />
+            <label for="termsCheckbox">
+              I agree to the <a href="404.html" onclick="event.preventDefault(); window.location.href='404.html'">Terms &amp; Conditions</a> and <a href="404.html" onclick="event.preventDefault(); window.location.href='404.html'">Privacy Policy</a>.
+            </label>
+          </div>
+          <div class="checkbox-error" id="termsError">You must accept the terms to register.</div>
+
+          <!-- Submit -->
+          <button type="submit" class="signup-btn" id="submitBtn">
+            <i class="fas fa-user-plus"></i> Create My Passport
+          </button>
+        </form>
+
+        <div class="divider"><span>or continue with</span></div>
+
+        <!-- Social Login Buttons -->
+        <div class="social-buttons">
+          <a href="404.html" class="social-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Google
+          </a>
+          <a href="404.html" class="social-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025.8-.223 1.65-.334 2.5-.334.85 0 1.7.111 2.5.334 1.91-1.294 2.75-1.025 2.75-1.025.545 1.376.201 2.393.099 2.646.64.698 1.03 1.591 1.03 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <!-- Sign In link -->
+        <div class="signin-link">
+          <p>Already have an account? <a href="login.html">Sign In</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot-strip">
+    <span>Wordtrail © 2026</span>
+    <span>Your progress is saved the moment you sign up</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      if (window.AOS) {
+        AOS.init({ once: true, easing: 'ease-out-cubic' });
+      }
+
+      const form = document.getElementById('signupForm');
+      const fullName = document.getElementById('fullName');
+      const username = document.getElementById('username');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const termsCheckbox = document.getElementById('termsCheckbox');
+
+      const nameWrap = document.getElementById('nameWrap');
+      const userWrap = document.getElementById('userWrap');
+      const emailWrap = document.getElementById('emailWrap');
+      const passWrap = document.getElementById('passWrap');
+      const confirmWrap = document.getElementById('confirmWrap');
+
+      const nameError = document.getElementById('nameError');
+      const userError = document.getElementById('userError');
+      const emailError = document.getElementById('emailError');
+      const passError = document.getElementById('passError');
+      const confirmError = document.getElementById('confirmError');
+      const termsError = document.getElementById('termsError');
+
+      // ─── Toggle password visibility for Password field ───
+      const toggleBtn = document.getElementById('togglePass');
+      const eyeIcon = document.getElementById('eyeIcon');
+      let passwordVisible = false;
+
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        passwordVisible = !passwordVisible;
+        password.type = passwordVisible ? 'text' : 'password';
+        eyeIcon.className = passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye';
+        password.focus();
+      });
+
+      // ─── Toggle password visibility for Confirm Password field ───
+      const toggleConfirmBtn = document.getElementById('toggleConfirmPass');
+      const confirmEyeIcon = document.getElementById('confirmEyeIcon');
+      let confirmPasswordVisible = false;
+
+      toggleConfirmBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        confirmPasswordVisible = !confirmPasswordVisible;
+        confirmPassword.type = confirmPasswordVisible ? 'text' : 'password';
+        confirmEyeIcon.className = confirmPasswordVisible ? 'fas fa-eye-slash' : 'fas fa-eye';
+        confirmPassword.focus();
+      });
+
+      // ─── Prevent digits and spaces in name/username ───
+      function preventDigitsAndSpaces(e) {
+        const key = e.key;
+        if (key === 'Backspace' || key === 'Delete' || key === 'Tab' ||
+            key === 'Escape' || key === 'Enter' || key.startsWith('Arrow') ||
+            key === 'Home' || key === 'End' || key === 'PageUp' || key === 'PageDown') {
+          return;
+        }
+        if (!/^[A-Za-z]$/.test(key)) {
+          e.preventDefault();
+        }
+      }
+
+      function preventSpaces(e) {
+        if (e.key === ' ') {
+          e.preventDefault();
+        }
+      }
+
+      fullName.addEventListener('keydown', preventDigitsAndSpaces);
+      username.addEventListener('keydown', preventDigitsAndSpaces);
+      username.addEventListener('keydown', preventSpaces);
+
+      function setError(wrap, errorEl, show) {
+        wrap.classList.toggle('error', show);
+        errorEl.classList.toggle('show', show);
+      }
+
+      function validateName() {
+        const val = fullName.value.trim();
+        const ok = val.length > 0 && /^[A-Za-z\s]+$/.test(val);
+        setError(nameWrap, nameError, !ok);
+        return ok;
+      }
+
+      function validateUsername() {
+        const val = username.value.trim();
+        const ok = val.length > 0 && /^[A-Za-z]+$/.test(val);
+        setError(userWrap, userError, !ok);
+        return ok;
+      }
+
+      function validateEmail() {
+        const val = email.value.trim();
+        const ok = val.length > 0 && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val);
+        setError(emailWrap, emailError, !ok);
+        return ok;
+      }
+
+      function validatePassword() {
+        const val = password.value;
+        const ok = val.length >= 8;
+        setError(passWrap, passError, !ok);
+        return ok;
+      }
+
+      function validateConfirm() {
+        const ok = password.value === confirmPassword.value && confirmPassword.value.length > 0;
+        setError(confirmWrap, confirmError, !ok);
+        return ok;
+      }
+
+      function validateTerms() {
+        const checked = termsCheckbox.checked;
+        termsError.classList.toggle('visible', !checked);
+        return checked;
+      }
+
+      fullName.addEventListener('input', validateName);
+      fullName.addEventListener('paste', function() { setTimeout(validateName, 10); });
+
+      username.addEventListener('input', validateUsername);
+      username.addEventListener('paste', function() { setTimeout(validateUsername, 10); });
+
+      email.addEventListener('input', validateEmail);
+      password.addEventListener('input', function() {
+        validatePassword();
+        if (confirmPassword.value.length > 0) validateConfirm();
+      });
+      confirmPassword.addEventListener('input', validateConfirm);
+      termsCheckbox.addEventListener('change', function() {
+        termsError.classList.toggle('visible', !this.checked);
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const isNameValid = validateName();
+        const isUserValid = validateUsername();
+        const isEmailValid = validateEmail();
+        const isPassValid = validatePassword();
+        const isConfirmValid = validateConfirm();
+        const isTermsValid = validateTerms();
+
+        if (isNameValid && isUserValid && isEmailValid && isPassValid && isConfirmValid && isTermsValid) {
+          window.location.href = 'dashboard.html';
+        } else {
+          if (!isNameValid) { fullName.focus(); return; }
+          if (!isUserValid) { username.focus(); return; }
+          if (!isEmailValid) { email.focus(); return; }
+          if (!isPassValid) { password.focus(); return; }
+          if (!isConfirmValid) { confirmPassword.focus(); return; }
+          if (!isTermsValid) { termsCheckbox.focus(); }
+        }
+      });
+
+      [fullName, username, email, password, confirmPassword].forEach(field => {
+        field.addEventListener('blur', function() {
+          if (this === fullName) validateName();
+          else if (this === username) validateUsername();
+          else if (this === email) validateEmail();
+          else if (this === password) { validatePassword(); if (confirmPassword.value.length > 0) validateConfirm(); }
+          else if (this === confirmPassword) validateConfirm();
+        });
+      });
+    })();
+
+    function setViewportHeight() {
+      document.documentElement.style.setProperty(
+        "--vh",
+        `${window.innerHeight * 0.01}px`
+      );
+    }
+
+    setViewportHeight();
+    window.addEventListener("resize", setViewportHeight);
+    window.addEventListener("orientationchange", setViewportHeight);
+  </script>
+
+</body>
+</html>

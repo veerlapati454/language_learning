@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Fluenta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+<style>
+
+  /* ---------- Reset & Base ---------- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --paper: #FFFDF8;
+    --paper-warm: #FBF4E6;
+    --cork: #EAE2CC;
+    --cork-line: rgba(17,17,17,0.07);
+    --ink: #111111;
+    --gold: #E3A548;
+    --indigo: #2B2644;
+    --coral: #D96C4B;
+    --sky: #5B8FA8;
+    --sage: #6E8B6E;
+    --plum: #8A5C7C;
+  }
+
+  html {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  .wrap { max-width: 88rem; margin: 0 auto; }
+  .hand { font-family: 'Caveat', cursive; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
+  }
+
+  /* ---------- Buttons ---------- */
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 8px 8px 28px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+  }
+  .pill-btn:hover { background: #333333; }
+  .pill-btn .arrow-circle {
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border-radius: 999px; padding: 10px; width: 20px; height: 20px;
+  }
+  .pill-btn.small { font-size: 15px; padding: 6px 6px 6px 22px; }
+  .pill-btn.small .arrow-circle { width: 16px; height: 16px; padding: 8px; }
+  .pill-btn.light { background: #ffffff; color: #111111; }
+  .pill-btn.light .arrow-circle { background: #111111; }
+  .pill-btn.light .arrow-circle svg path { stroke: #ffffff; }
+  .pill-btn.light:hover { background: #ececec; }
+  .pill-btn.gold { background: var(--gold); color: #111111; }
+  .pill-btn.gold .arrow-circle { background: #111111; }
+  .pill-btn.gold .arrow-circle svg path { stroke: #ffffff; }
+  .pill-btn.gold:hover { background: #edb768; }
+  .pill-btn.outline { background: transparent; color: #111111; border: 1.5px solid rgba(17,17,17,0.2); padding: 6.5px 6.5px 6.5px 26px; }
+  .pill-btn.outline .arrow-circle { background: #111111; }
+  .pill-btn.outline .arrow-circle svg path { stroke: #ffffff; }
+  .pill-btn.outline:hover { border-color: rgba(17,17,17,0.4); }
+  .pill-btn.block { width: 100%; justify-content: center; padding: 13px 20px; }
+  .pill-btn.block .arrow-circle { margin-left: 4px; }
+
+  .nav-cta {
+    background: #111111; color: #ffffff; font-size: 16px; font-weight: 500;
+    padding: 10px 28px; border-radius: 999px; transition: background-color 0.2s ease;
+  }
+  .nav-cta:hover { background: #333333; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(17,17,17,0.6);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: #E3A548; }
+
+  /* ---------- Navbar (unchanged across site) ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 70;
+    padding: 16px 24px;
+    background: rgba(245, 245, 245, 0.85);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    transform: translateZ(0);
+  }
+  nav.nav-scrolled {
+    background: rgba(245, 245, 245, 0.92);
+    border-bottom-color: rgba(17, 17, 17, 0.06);
+    box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
+    padding: 12px 24px;
+  }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; }
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .nav-logo {
+    width: clamp(48px, 8vw, 100px); height: clamp(28px, 4.4vw, 54px); flex-shrink: 0;
+    border-radius: 80px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
+  @media (max-width: 860px) { .nav-logo { width: 90px; height: 50px; } }
+  @media (max-width: 480px) { .nav-logo { width: 80px; height: 46px; } }
+  .nav-right { display: flex; align-items: center; gap: 32px; margin-left: auto; }
+  .nav-center { display: flex; gap: 32px; }
+  .nav-center a { font-size: 15px; font-weight: 500; color: #4b4b4b; transition: color 0.2s ease; position: relative; }
+  .nav-center a::after {
+    content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1.5px;
+    background: linear-gradient(90deg, #E3A548, #2B2644);
+    transition: width 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-center a:hover { color: #111111; }
+  .nav-center a:hover::after { width: 100%; }
+  .nav-center a.is-active { color: #111111; }
+  .nav-center a.is-active::after { width: 100%; }
+  @media (max-width: 860px) { .nav-center { display: none; } }
+  @media (max-width: 860px) { .nav-right .nav-cta { display: none; } }
+
+  /* ---------- Hamburger ---------- */
+  .nav-hamburger {
+    display: none;
+    align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: #111111; flex-shrink: 0;
+    position: relative; z-index: 60;
+  }
+  @media (max-width: 860px) { .nav-hamburger { display: flex; } }
+  .nav-hamburger .burger-line {
+    position: absolute; width: 18px; height: 1.6px; background: #ffffff; border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), opacity 0.2s ease, top 0.3s cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-hamburger .burger-line:nth-child(1) { top: 16px; }
+  .nav-hamburger .burger-line:nth-child(2) { top: 22px; }
+  .nav-hamburger .burger-line:nth-child(3) { top: 28px; }
+  .nav-hamburger.is-open .burger-line:nth-child(1) { top: 22px; transform: rotate(45deg); }
+  .nav-hamburger.is-open .burger-line:nth-child(2) { opacity: 0; }
+  .nav-hamburger.is-open .burger-line:nth-child(3) { top: 22px; transform: rotate(-45deg); }
+
+  /* ---------- Mobile menu panel ---------- */
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 55;
+    padding: 88px 24px 28px;
+    background: rgba(245, 245, 245, 0.99);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 24px 48px rgba(17,17,17,0.14);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.65,0,0.35,1), visibility 0.35s;
+    height: 100vh;
+    height: 100svh;
+    overflow-y: auto;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (max-width: 860px) { .mobile-menu { display: flex; } }
+  .mobile-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
+  .mobile-menu-links { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; margin-bottom: 20px; flex: 1; }
+  .mobile-menu-links a {
+    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+    padding: 10px 4px; border-bottom: 1px solid rgba(17,17,17,0.08);
+    color: #111111;
+    text-align: center;
+    width: 100%;
+  }
+  .mobile-menu-links a:last-child { border-bottom: none; }
+  .mobile-menu .nav-cta { display: flex; justify-content: center; width: 100%; text-align: center; }
+  body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
+
+  /* ================================================================
+     PRICING PAGE — plans framed as boarding passes to fluency: each
+     tier is a ticket with a torn/perforated stub, a route (your
+     current level -> fluency), and a gate number. Continues the
+     travel/postal vocabulary from the journal without reusing its
+     corkboard surface.
+     ================================================================ */
+
+  .pricing-canvas {
+    position: relative;
+    background: var(--paper);
+  }
+
+  /* ---------- Pricing hero ---------- */
+  .pricing-hero {
+    position: relative;
+    padding: 148px 24px 64px;
+    background: var(--indigo);
+    overflow: hidden;
+    text-align: center;
+  }
+  .pricing-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(110% 80% at 15% 0%, rgba(227,165,72,0.18), transparent 55%),
+                radial-gradient(90% 70% at 90% 100%, rgba(217,108,75,0.16), transparent 55%);
+  }
+  .pricing-hero-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+  .pricing-hero .eyebrow { color: rgba(255,255,255,0.65); justify-content: center; }
+  .pricing-hero h1 {
+    color: #ffffff; font-size: clamp(36px, 5.4vw, 58px); font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1.06; margin-bottom: 18px;
+  }
+  .pricing-hero p { color: rgba(255,255,255,0.62); font-size: 17px; line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+  /* billing toggle, styled like a departures switch */
+  .billing-toggle {
+    margin-top: 40px; position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 999px; padding: 5px;
+  }
+  .billing-toggle button {
+    position: relative; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+    color: rgba(255,255,255,0.68); padding: 10px 22px; border-radius: 999px;
+    transition: color 0.25s ease;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .billing-toggle button.is-active { color: #111111; }
+  .billing-toggle .toggle-pill {
+    position: absolute; top: 5px; left: 5px; bottom: 5px; width: calc(50% - 5px);
+    background: var(--gold); border-radius: 999px;
+    transition: transform 0.32s cubic-bezier(0.65,0,0.35,1);
+    z-index: -1;
+  }
+  .billing-toggle button[data-period="annual"].is-active ~ .toggle-pill,
+  .billing-toggle .toggle-pill.at-annual { transform: translateX(100%); }
+  .save-chip {
+    font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 700;
+    background: var(--coral); color: #ffffff; padding: 2px 8px; border-radius: 999px;
+    letter-spacing: 0.01em;
+  }
+
+  /* ---------- Plans — boarding passes ---------- */
+  .plans-section { padding: 76px 24px 30px; }
+  .plans-grid {
+    display: grid; grid-template-columns: 1fr; gap: 26px; max-width: 1180px; margin: 0 auto;
+    align-items: stretch;
+  }
+  @media (min-width: 920px) { .plans-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .pass {
+    background: var(--paper-warm);
+    border-radius: 14px;
+    border: 1.5px solid rgba(17,17,17,0.09);
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 0 #fff, 0 16px 30px rgba(17,17,17,0.08);
+    transition: transform 0.3s cubic-bezier(0.65,0,0.35,1), box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .pass:hover { transform: translateY(-6px); box-shadow: 0 1px 0 #fff, 0 26px 44px rgba(17,17,17,0.13); }
+  .pass.is-featured {
+    background: var(--indigo); border-color: rgba(255,255,255,0.14); color: #fff;
+    transform: scale(1.03);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.08), 0 28px 52px rgba(17,17,17,0.24);
+  }
+  .pass.is-featured:hover { transform: scale(1.03) translateY(-6px); }
+  @media (max-width: 919px) { .pass.is-featured { transform: none; } .pass.is-featured:hover { transform: translateY(-6px); } }
+
+  .pass-badge {
+    position: absolute; top: 20px; right: -34px; transform: rotate(40deg);
+    background: var(--coral); color: #fff; font-size: 11.5px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 5px 40px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .pass-top { padding: 32px 30px 26px; }
+  .pass-route { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+  .pass-route .stop { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; }
+  .pass-route svg { flex-shrink: 0; opacity: 0.55; }
+  .pass-name { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; text-transform: uppercase; color: var(--coral); margin-bottom: 6px; font-family: 'Inter', sans-serif; }
+  .pass.is-featured .pass-name { color: var(--gold); }
+  .pass-tag { font-size: 14.5px; line-height: 1.5; opacity: 0.65; max-width: 260px; margin-bottom: 26px; }
+  .pass-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+  .pass-price .amount { font-size: 46px; font-weight: 600; letter-spacing: -0.03em; }
+  .pass-price .period { font-size: 14.5px; opacity: 0.55; }
+  .pass-price-note { font-size: 12.5px; opacity: 0.5; margin-bottom: 24px; min-height: 16px; }
+
+  /* perforated tear between stub and details */
+  .pass-tear {
+    position: relative; height: 0; border-top: 1.5px dashed rgba(17,17,17,0.18);
+    margin: 0 0;
+  }
+  .pass.is-featured .pass-tear { border-top-color: rgba(255,255,255,0.2); }
+  .pass-tear::before, .pass-tear::after {
+    content: ""; position: absolute; top: -9px; width: 18px; height: 18px; border-radius: 999px;
+    background: #F5F5F5;
+  }
+  .pass-tear::before { left: -9px; }
+  .pass-tear::after { right: -9px; }
+
+  .pass-features { list-style: none; padding: 26px 30px 8px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .pass-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; line-height: 1.5; }
+  .pass-features li svg { flex-shrink: 0; margin-top: 2px; }
+  .pass-features li.is-muted { opacity: 0.42; }
+
+  .pass-cta { padding: 26px 30px 30px; }
+
+  /* ---------- Trust strip ---------- */
+  .trust-strip {
+    max-width: 1180px; margin: 8px auto 0; padding: 0 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 28px 40px;
+  }
+  .trust-item { display: flex; align-items: center; gap: 10px; color: rgba(17,17,17,0.55); font-size: 13.5px; font-weight: 500; }
+  .trust-item svg { flex-shrink: 0; }
+
+  /* ---------- Comparison table — the ledger ---------- */
+  .compare-section { padding-top: 96px; }
+  .compare-head { max-width: 560px; margin: 0 auto 44px; text-align: center; }
+  .compare-head h2 { font-size: 36px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px; }
+  .compare-head p { color: rgba(17,17,17,0.6); font-size: 15.5px; line-height: 1.6; }
+
+  .compare-table-wrap {
+    max-width: 980px; margin: 0 auto; overflow-x: auto;
+    border-radius: 14px; border: 1.5px solid rgba(17,17,17,0.1);
+    box-shadow: 0 1px 0 #fff, 0 14px 28px rgba(17,17,17,0.07);
+  }
+  table.compare-table { width: 100%; border-collapse: collapse; min-width: 640px; background: var(--paper); }
+  .compare-table th, .compare-table td { padding: 16px 20px; text-align: left; font-size: 14px; }
+  .compare-table thead th {
+    background: var(--indigo); color: #fff; font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 13px; letter-spacing: 0.02em; position: sticky; top: 0;
+  }
+  .compare-table thead th:first-child { border-radius: 14px 0 0 0; }
+  .compare-table thead th:last-child { border-radius: 0 14px 0 0; }
+  .compare-table thead th.col-featured { background: #221e38; }
+  .compare-table tbody th {
+    font-weight: 500; color: rgba(17,17,17,0.75); font-size: 14.5px; white-space: nowrap;
+  }
+  .compare-table tbody tr { border-top: 1px dashed rgba(17,17,17,0.1); }
+  .compare-table tbody tr:nth-child(even) { background: rgba(227,165,72,0.05); }
+  .compare-table td { color: rgba(17,17,17,0.7); }
+  .compare-table td.col-featured, .compare-table th.col-featured { background: rgba(43,38,68,0.04); }
+  .compare-table .yes { color: var(--sage); font-weight: 600; }
+  .compare-table .no { color: rgba(17,17,17,0.28); }
+  .compare-table .group-row th, .compare-table .group-row td {
+    background: var(--paper-warm); font-family: 'Caveat', cursive; font-size: 17px; font-weight: 700;
+    color: var(--coral); padding-top: 12px; padding-bottom: 8px;
+  }
+
+  /* ---------- FAQ accordion ---------- */
+  .pricing-faq-section { padding-top: 90px; }
+  .pricing-faq-head { max-width: 560px; margin: 0 auto 40px; text-align: center; }
+  .pricing-faq-head h2 { font-size: 36px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+  .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--paper-warm); border: 1.5px solid rgba(17,17,17,0.08); border-radius: 12px; overflow: hidden;
+  }
+  .faq-item summary {
+    list-style: none; cursor: pointer; padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item .faq-plus {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 999px; border: 1.5px solid rgba(17,17,17,0.2);
+    display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .faq-item .faq-plus::before, .faq-item .faq-plus::after {
+    content: ""; position: absolute; background: #111111; transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  .faq-item .faq-plus::before { width: 10px; height: 1.6px; }
+  .faq-item .faq-plus::after { width: 1.6px; height: 10px; }
+  .faq-item[open] .faq-plus { transform: rotate(45deg); border-color: var(--coral); }
+  .faq-item[open] summary { color: var(--coral); }
+  .faq-answer { padding: 0 24px 22px; color: rgba(17,17,17,0.62); font-size: 14.5px; line-height: 1.65; max-width: 600px; }
+
+  /* ---------- Newsletter / final CTA (shared look) ---------- */
+  .mesh-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; pointer-events: none; will-change: transform; }
+  .final-cta-section { padding-top: 90px; }
+  .final-cta {
+    background: var(--indigo); border-radius: 22px; margin: 0 24px; padding: 78px 40px;
+    text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;
+    border: 2px dashed rgba(255,255,255,0.16);
+  }
+  .final-cta .mesh-blob-a { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #E3A548, transparent 70%); top: -120px; left: -80px; }
+  .final-cta .mesh-blob-b { width: 460px; height: 460px; background: radial-gradient(circle at 60% 40%, #D96C4B, transparent 70%); bottom: -160px; right: -100px; }
+  .final-cta .hand-label { font-family: 'Caveat', cursive; font-size: 22px; color: var(--gold); margin-bottom: 10px; position: relative; z-index: 1; transform: rotate(-2deg); }
+  .final-cta h2 { color: #ffffff; font-size: 46px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 560px; position: relative; z-index: 1; }
+  .final-cta p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 420px; position: relative; z-index: 1; }
+  .final-cta .pill-btn.light { position: relative; z-index: 1; }
+  @media (max-width: 768px) {
+    .final-cta { padding: 56px 24px; margin: 0 12px; border-radius: 16px; }
+    .final-cta h2 { font-size: 32px; }
+  }
+
+  /* ---------- Footer (unchanged across site) ---------- */
+  footer { background: #111111; padding: 72px 24px 32px; }
+  .footer-top { display: grid; grid-template-columns: 1.3fr 0.8fr 0.9fr 1.1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr; row-gap: 44px; } }
+  @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; } }
+  .footer-logo-placeholder { width: 100%; max-width: 220px; height: 72px; margin-bottom: 16px; overflow: hidden; }
+  .footer-logo-placeholder img { width: 100px; height: 100px; object-fit: contain; }
+  .footer-logo-placeholder span { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; }
+  .footer-tag { color: rgba(255,255,255,0.5); font-size: 14px; max-width: 300px; line-height: 1.5; margin-bottom: 24px; }
+  .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14.5px; color: rgba(255,255,255,0.75); margin-bottom: 12px; transition: color 0.2s ease; }
+  .footer-col a:hover { color: #ffffff; }
+  .footer-address { font-style: normal; color: rgba(255,255,255,0.75); font-size: 14.5px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; align-items: center; gap: 12px; }
+  .footer-social a {
+    width: 38px; height: 38px; border-radius: 999px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .footer-social a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.24); }
+  .footer-social svg path, .footer-social svg rect, .footer-social svg line, .footer-social svg circle { stroke: rgba(255,255,255,0.85); }
+  .footer-social svg circle[r="0.9"] { fill: rgba(255,255,255,0.85); stroke: none; }
+
+  .footer-newsletter { margin-top: 4px; }
+  .footer-newsletter-form { display: flex; gap: 8px; max-width: 320px; }
+  .footer-newsletter-form input[type="email"] {
+    flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px; padding: 11px 16px; font-size: 14px; color: #ffffff; font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .footer-newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+  .footer-newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(227,165,72,0.6); background: rgba(255,255,255,0.1); }
+  .footer-newsletter-form button {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 999px; background: #E3A548;
+    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease;
+  }
+  .footer-newsletter-form button:hover { background: #f0b968; }
+  .footer-newsletter-note { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+
+  .footer-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .footer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
+  }
+  .footer-badge svg { flex-shrink: 0; }
+
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 16px; }
+  .footer-bottom span { color: rgba(255,255,255,0.4); font-size: 13.5px; }
+  .footer-legal-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .footer-legal-links a { color: rgba(255,255,255,0.45); font-size: 13.5px; transition: color 0.2s ease; }
+  .footer-legal-links a:hover { color: #ffffff; }
+
+  /* ---------- Grain overlay ---------- */
+  .grain-overlay {
+    position: fixed; inset: 0; z-index: 999; pointer-events: none;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Custom cursor ---------- */
+  .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 998; pointer-events: none; border-radius: 999px; transform: translate(-50%, -50%); }
+  .cursor-dot { width: 6px; height: 6px; background: #111111; }
+  .cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(17,17,17,0.35); transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease; }
+  .cursor-ring.is-active { width: 54px; height: 54px; border-color: #E3A548; background: rgba(227,165,72,0.08); }
+  @media (max-width: 860px), (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+  .magnetic { display: inline-flex; }
+
+  /* ---------- Mobile refinements ---------- */
+  @media (max-width: 640px) {
+    .pricing-hero { padding: 132px 20px 52px; }
+    .pass.is-featured, .pass:hover, .pass.is-featured:hover { transform: none !important; }
+    .pass { box-shadow: 0 1px 0 #fff, 0 10px 18px rgba(17,17,17,0.10) !important; }
+    .final-cta h2 { font-size: 28px; }
+    .compare-section, .pricing-faq-section, .final-cta-section { padding-top: 64px; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="grain-overlay"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav>
+    <div class="nav-row wrap">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <a href="index.html"><img src="./assets/stack4.webp" alt="Logo placeholder" onerror="this.style.display='none'"></a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-center">
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html">App</a>
+          <a href="blog.html">Blog</a>
+          <a href="pricing.html" class="is-active">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <a href="#" class="nav-cta magnetic">Start Learning</a>
+        <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-links">
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="app.html">App</a>
+      <a href="blog.html">Blog</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="#" class="nav-cta magnetic">Start Learning</a>
+  </div>
+
+  <!-- ============ PRICING HERO ============ -->
+  <section class="pricing-hero" data-aos="fade-up">
+    <div class="wrap pricing-hero-inner">
+      <div class="eyebrow"><span class="dot"></span>Pricing</div>
+      <h1>Every plan is a ticket to the same destination.</h1>
+      <p>Fluency. The only question is how much company, coaching, and speed you want along the way. Switch or cancel any time — no fees at the gate.</p>
+
+      
+    </div>
+  </section>
+
+  <div class="pricing-canvas">
+
+  <!-- ============ PLANS ============ -->
+  <section class="plans-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="plans-grid">
+
+        <!-- FREE -->
+        <div class="pass" data-aos="fade-up" data-aos-delay="0">
+          <div class="pass-top">
+            <div class="pass-route">
+              <span class="stop">Curious</span>
+              <svg width="14" height="10" viewBox="0 0 24 16" fill="none"><path d="M1 8H23M23 8L16 1M23 8L16 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="stop">Hooked</span>
+            </div>
+            <div class="pass-name">Trailhead</div>
+            <p class="pass-tag">For dabbling in a language before you commit to the trip.</p>
+            <div class="pass-price"><span class="amount">$0</span><span class="period">/ forever</span></div>
+            <div class="pass-price-note">No card required</div>
+          </div>
+          <div class="pass-tear"></div>
+          <ul class="pass-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>5 daily lessons in 1 language</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Streak tracking &amp; reminders</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Community conversation boards</li>
+            <li class="is-muted"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Live conversation rooms</li>
+            <li class="is-muted"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Offline lesson downloads</li>
+          </ul>
+          <div class="pass-cta">
+            <a href="#" class="pill-btn outline block magnetic">Start free
+              <span class="arrow-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- PLUS (featured) -->
+        <div class="pass is-featured" data-aos="fade-up" data-aos-delay="80">
+          <span class="pass-badge">Most booked</span>
+          <div class="pass-top">
+            <div class="pass-route">
+              <span class="stop">Hooked</span>
+              <svg width="14" height="10" viewBox="0 0 24 16" fill="none"><path d="M1 8H23M23 8L16 1M23 8L16 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="stop">Conversational</span>
+            </div>
+            <div class="pass-name">Waypoint</div>
+            <p class="pass-tag">The full route: unlimited languages, live rooms, and a plan that adapts to you.</p>
+            <div class="pass-price"><span class="amount" id="plusAmount">$12.99</span><span class="period">/ month</span></div>
+            <div class="pass-price-note" id="plusNote">Billed monthly</div>
+          </div>
+          <div class="pass-tear"></div>
+          <ul class="pass-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#E3A548" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited lessons in all 42 languages</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#E3A548" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>4 live conversation rooms / month</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#E3A548" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Offline downloads for travel days</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#E3A548" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Adaptive review, no repeats you've mastered</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#E3A548" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Streak freezes, twice a month</li>
+          </ul>
+          <div class="pass-cta">
+            <a href="#" class="pill-btn gold block magnetic">Get Waypoint
+              <span class="arrow-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- RESIDENT -->
+        <div class="pass" data-aos="fade-up" data-aos-delay="160">
+          <div class="pass-top">
+            <div class="pass-route">
+              <span class="stop">Conversational</span>
+              <svg width="14" height="10" viewBox="0 0 24 16" fill="none"><path d="M1 8H23M23 8L16 1M23 8L16 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="stop">Fluent</span>
+            </div>
+            <div class="pass-name">Resident</div>
+            <p class="pass-tag">For learners chasing fluency fast, with a coach checking their form.</p>
+            <div class="pass-price"><span class="amount" id="residentAmount">$24.99</span><span class="period">/ month</span></div>
+            <div class="pass-price-note" id="residentNote">Billed monthly</div>
+          </div>
+          <div class="pass-tear"></div>
+          <ul class="pass-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Waypoint</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited live conversation rooms</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Monthly 1:1 session with a tutor</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Personalized progress reports</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L9 17L20 6" stroke="#6E8B6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority reply from teaching team</li>
+          </ul>
+          <div class="pass-cta">
+            <a href="#" class="pill-btn outline block magnetic">Get Resident
+              <span class="arrow-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="trust-strip" data-aos="fade-up" data-aos-delay="200">
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="#6E8B6E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Cancel any time, no fees
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="#6E8B6E" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="#6E8B6E" stroke-width="1.6"/></svg>
+          Secure payments
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#6E8B6E" stroke-width="1.6"/><path d="M12 7V12L15 15" stroke="#6E8B6E" stroke-width="1.6" stroke-linecap="round"/></svg>
+          14-day money-back guarantee
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 12C8 10 9.5 8 12 8C14.5 8 16 10 16 12C16 14 14.5 16 12 16" stroke="#6E8B6E" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#6E8B6E" stroke-width="1.6"/></svg>
+          Switch languages whenever
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARISON TABLE ============ -->
+  <section class="compare-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="compare-head">
+        <h2>Compare the <span class="hand" style="color:var(--coral);">full itinerary</span></h2>
+        <p>Every feature, side by side, if you'd rather read the fine print than guess from three cards.</p>
+      </div>
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">Trailhead</th>
+              <th scope="col" class="col-featured">Waypoint</th>
+              <th scope="col">Resident</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="4">Learning</th></tr>
+            <tr>
+              <th scope="row">Languages available</th>
+              <td>1 at a time</td>
+              <td class="col-featured">All 42</td>
+              <td>All 42</td>
+            </tr>
+            <tr>
+              <th scope="row">Daily lessons</th>
+              <td>5 / day</td>
+              <td class="col-featured">Unlimited</td>
+              <td>Unlimited</td>
+            </tr>
+            <tr>
+              <th scope="row">Adaptive review engine</th>
+              <td class="no">—</td>
+              <td class="col-featured yes">Included</td>
+              <td class="yes">Included</td>
+            </tr>
+            <tr>
+              <th scope="row">Offline downloads</th>
+              <td class="no">—</td>
+              <td class="col-featured yes">Included</td>
+              <td class="yes">Included</td>
+            </tr>
+            <tr class="group-row"><th colspan="4">Speaking</th></tr>
+            <tr>
+              <th scope="row">Live conversation rooms</th>
+              <td class="no">—</td>
+              <td class="col-featured">4 / month</td>
+              <td>Unlimited</td>
+            </tr>
+            <tr>
+              <th scope="row">1:1 tutor sessions</th>
+              <td class="no">—</td>
+              <td class="col-featured no">—</td>
+              <td>1 / month</td>
+            </tr>
+            <tr>
+              <th scope="row">Pronunciation feedback</th>
+              <td>Basic</td>
+              <td class="col-featured">Advanced</td>
+              <td>Advanced</td>
+            </tr>
+            <tr class="group-row"><th colspan="4">Support &amp; extras</th></tr>
+            <tr>
+              <th scope="row">Progress reports</th>
+              <td>Weekly summary</td>
+              <td class="col-featured">Weekly summary</td>
+              <td>Personalized, monthly</td>
+            </tr>
+            <tr>
+              <th scope="row">Streak freezes</th>
+              <td>1 / month</td>
+              <td class="col-featured">2 / month</td>
+              <td>Unlimited</td>
+            </tr>
+            <tr>
+              <th scope="row">Support response time</th>
+              <td>Community boards</td>
+              <td class="col-featured">Within 24 hours</td>
+              <td>Priority, same day</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING FAQ ============ -->
+  <section class="pricing-faq-section" data-aos="fade-up">
+    <div class="wrap">
+      <div class="pricing-faq-head">
+        <h2>Questions before you <span class="grad-text-simple">book</span></h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" data-aos="fade-up" data-aos-delay="0" open>
+          <summary>Can I switch plans later?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Yes — upgrade, downgrade, or switch between monthly and annual billing any time from your account settings. Changes to a higher plan apply immediately; changes to a lower plan apply at your next billing date.</div>
+        </details>
+        <details class="faq-item" data-aos="fade-up" data-aos-delay="60">
+          <summary>What happens when I cancel?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">You'll keep full access through the end of your current billing period, and your progress, streak, and saved words stay in your account if you come back. No cancellation fees, no retention calls.</div>
+        </details>
+        <details class="faq-item" data-aos="fade-up" data-aos-delay="120">
+          <summary>Is there a student or family discount?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Verified students get 40% off Waypoint, and Resident supports up to 5 family members on one plan at a shared rate. Both are set up from the billing tab after you sign up.</div>
+        </details>
+        <details class="faq-item" data-aos="fade-up" data-aos-delay="180">
+          <summary>Do unused live conversation rooms roll over?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">Waypoint's monthly room credits reset each billing cycle and don't carry over, so we'd rather you use them than bank them. Resident includes unlimited rooms, so this isn't a concern on that plan.</div>
+        </details>
+        <details class="faq-item" data-aos="fade-up" data-aos-delay="240">
+          <summary>Is my payment information secure?<span class="faq-plus"></span></summary>
+          <div class="faq-answer">All payments are processed through PCI-compliant providers — we never store your full card details on our servers. You'll see the padlock in your browser at checkout.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final-cta-section" data-aos="fade-up">
+    <div class="final-cta" data-aos="zoom-in">
+      <div class="mesh-blob mesh-blob-a" style="opacity:0.4;"></div>
+      <div class="mesh-blob mesh-blob-b" style="opacity:0.3;"></div>
+      <div class="hand-label">boarding closes in 3, 2...</div>
+      <h2>Your seat's free to claim.</h2>
+      <p>Start on Trailhead today, no card needed, and upgrade whenever you're ready to go further.</p>
+      <a href="#" class="pill-btn light magnetic">
+        Start learning free
+        <span class="arrow-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  </div><!-- /.pricing-canvas -->
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="help" data-aos="fade-up">
+    <div class="wrap">
+      <div class="footer-top">
+        <div data-aos="fade-up">
+          <div class="footer-logo-placeholder">
+            <a href="index.html"><img src="./assets/stackly_logo.webp" alt="Your logo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></a>
+          </div>
+          <p class="footer-tag">An adaptive, reward-powered language platform built for real fluency. Learn 42 languages through daily lessons and live conversation with native speakers.</p>
+
+          <div class="footer-newsletter">
+            <form class="footer-newsletter-form" onsubmit="window.location.href='404.html'; return false;">
+              <input type="email" placeholder="Your email address" aria-label="Email address" required>
+              <button type="submit" aria-label="Subscribe to newsletter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </form>
+            <p class="footer-newsletter-note">One email a month with study tips and new language launches. Unsubscribe anytime.</p>
+          </div>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="80">
+          <h5>Quick Links</h5>
+          <a href="about.html">About</a>
+          <a href="courses.html">Courses</a>
+          <a href="app.html">App</a>
+          <a href="blog.html">Blog</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="140">
+          <h5>Resources</h5>
+          <a href="404.html">Help Center</a>
+          <a href="404.html">Community</a>
+          <a href="404.html">Learner Stories</a>
+          <a href="404.html">Careers</a>
+          <a href="404.html">Press Kit</a>
+          <a href="404.html">Partner With Us</a>
+        </div>
+
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+          <h5>Contact</h5>
+          <address class="footer-address">
+            221B HITEX Avenue<br>
+            JUBILEE 400<br>
+            HYDERABAD<br>
+            <a href="mailto:hello@fluenta.com" style="display:inline; margin:0;">hello@fluenta.com</a><br>
+            <a href="tel:+914012345678" style="display:inline; margin:0;">+91 40 1234 5678</a>
+          </address>
+          <div class="footer-social">
+            <a href="404.html" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 8H13.5C12.6716 8 12 8.67157 12 9.5V11H15L14.5 14H12V21H9V14H7V11H9V9.5C9 7.01472 11.0147 5 13.5 5H15V8Z" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
+            </a>
+            <a href="404.html" aria-label="X / Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+            <a href="404.html" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1"/><path d="M11.5 17V13.2C11.5 11.6 12.5 10.6 13.9 10.6C15.2 10.6 16 11.5 16 13.2V17" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <div class="footer-badges">
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12L11 14L15 10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              GDPR compliant
+            </span>
+            <span class="footer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/><path d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10" stroke="rgba(255,255,255,0.6)" stroke-width="1.6"/></svg>
+              Secure payments
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 STACKLY, Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Cookie Settings</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  function forceScrollTop() {
+    if (location.hash) { history.replaceState(null, '', location.pathname + location.search); }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+  forceScrollTop();
+  window.addEventListener('DOMContentLoaded', forceScrollTop);
+  window.addEventListener('load', forceScrollTop);
+  window.addEventListener('pageshow', forceScrollTop);
+  setTimeout(forceScrollTop, 0);
+  setTimeout(forceScrollTop, 300);
+
+  if (typeof AOS !== 'undefined') {
+    AOS.init({ duration: 250, easing: 'ease-out-cubic', once: true, offset: 40 });
+  }
+  window.addEventListener('load', function () {
+    if (typeof AOS !== 'undefined') { AOS.refresh(); }
+    if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(); }
+  });
+  setTimeout(function () {
+    document.querySelectorAll('[data-aos]').forEach(function (el) {
+      if (!el.classList.contains('aos-animate')) { el.classList.add('aos-animate'); }
+    });
+  }, 350);
+
+  var siteNav = document.querySelector('nav');
+  var navScrollTicking = false;
+  function updateNavScrolled() {
+    if (window.scrollY > 40) { siteNav.classList.add('nav-scrolled'); } else { siteNav.classList.remove('nav-scrolled'); }
+    navScrollTicking = false;
+  }
+  updateNavScrolled();
+  window.addEventListener('scroll', function () {
+    if (!navScrollTicking) { requestAnimationFrame(updateNavScrolled); navScrollTicking = true; }
+  }, { passive: true });
+
+  (function () {
+    var hamburger = document.getElementById('navHamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!hamburger || !menu) return;
+    var savedScrollY = 0;
+    function openMenu() {
+      savedScrollY = window.scrollY || window.pageYOffset;
+      document.body.style.top = (-savedScrollY) + 'px';
+      menu.classList.add('is-open');
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Close menu');
+      document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+      menu.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      document.body.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollY);
+    }
+    hamburger.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (menu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); }
+    });
+    menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 860) closeMenu(); });
+  })();
+
+  /* ---------- Billing toggle ---------- */
+  (function () {
+    var btnMonthly = document.getElementById('btnMonthly');
+    var btnAnnual = document.getElementById('btnAnnual');
+    var pill = document.getElementById('togglePill');
+    var plusAmount = document.getElementById('plusAmount');
+    var plusNote = document.getElementById('plusNote');
+    var residentAmount = document.getElementById('residentAmount');
+    var residentNote = document.getElementById('residentNote');
+    if (!btnMonthly || !btnAnnual) return;
+
+    var prices = {
+      monthly: { plus: '$12.99', plusNote: 'Billed monthly', resident: '$24.99', residentNote: 'Billed monthly' },
+      annual: { plus: '$8.99', plusNote: 'Billed $107.88 annually', resident: '$16.99', residentNote: 'Billed $203.88 annually' }
+    };
+
+    function setPeriod(period) {
+      var isAnnual = period === 'annual';
+      btnMonthly.classList.toggle('is-active', !isAnnual);
+      btnAnnual.classList.toggle('is-active', isAnnual);
+      pill.style.transform = isAnnual ? 'translateX(100%)' : 'translateX(0%)';
+      var p = isAnnual ? prices.annual : prices.monthly;
+      plusAmount.textContent = p.plus;
+      plusNote.textContent = p.plusNote;
+      residentAmount.textContent = p.resident;
+      residentNote.textContent = p.residentNote;
+    }
+
+    btnMonthly.addEventListener('click', function () { setPeriod('monthly'); });
+    btnAnnual.addEventListener('click', function () { setPeriod('annual'); });
+  })();
+
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isCoarse = window.matchMedia('(hover: none)').matches || window.innerWidth < 860;
+
+    function forceRevealEverything() {
+      document.querySelectorAll('[data-aos]').forEach(function (el) {
+        el.style.opacity = ''; el.style.transform = ''; el.style.visibility = '';
+        el.classList.add('aos-animate');
+      });
+    }
+    window.addEventListener('load', function () { setTimeout(forceRevealEverything, 2500); });
+
+    if (typeof gsap === 'undefined') { forceRevealEverything(); return; }
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
+    } else { forceRevealEverything(); return; }
+    gsap.ticker.lagSmoothing(0);
+    if (reduceMotion) { forceRevealEverything(); return; }
+
+    try {
+      gsap.set('.mesh-blob', { opacity: 0 });
+      document.querySelectorAll('.final-cta .mesh-blob').forEach(function (blob, i) {
+        gsap.to(blob, {
+          opacity: 1,
+          x: (i % 2 === 0 ? 1 : -1) * gsap.utils.random(40, 90),
+          y: gsap.utils.random(-50, 50),
+          duration: gsap.utils.random(9, 14),
+          ease: 'sine.inOut', repeat: -1, yoyo: true, force3D: true
+        });
+      });
+
+      if (!isCoarse) {
+        document.querySelectorAll('.magnetic').forEach(function (el) {
+          var strength = 0.35;
+          var xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
+          var yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+          el.addEventListener('mousemove', function (e) {
+            var b = el.getBoundingClientRect();
+            xTo((e.clientX - b.left - b.width / 2) * strength);
+            yTo((e.clientY - b.top - b.height / 2) * strength);
+          });
+          el.addEventListener('mouseleave', function () { xTo(0); yTo(0); });
+        });
+      }
+
+      var dot = document.getElementById('cursorDot');
+      var ring = document.getElementById('cursorRing');
+      if (dot && ring && !isCoarse) {
+        var dotX = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3.out' });
+        var dotY = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3.out' });
+        var ringX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
+        var ringY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
+        window.addEventListener('mousemove', function (e) {
+          dotX(e.clientX); dotY(e.clientY); ringX(e.clientX); ringY(e.clientY);
+        }, { passive: true });
+        document.querySelectorAll('a, button, summary, .pass, .faq-item').forEach(function (el) {
+          el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); });
+          el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); });
+        });
+      } else if (dot && ring) { dot.style.display = 'none'; ring.style.display = 'none'; }
+
+      gsap.utils.toArray('h1, h2').forEach(function (h) {
+        gsap.fromTo(h, { letterSpacing: '0.01em' }, {
+          letterSpacing: '-0.03em', duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: h, start: 'top 90%' }
+        });
+      });
+
+      (function revealAllSections() {
+        var DIST = 36;
+        function fromVars(type) {
+          switch (type) {
+            case 'fade-down': return { y: -DIST, opacity: 0 };
+            case 'fade-left': return { x: DIST, opacity: 0 };
+            case 'fade-right': return { x: -DIST, opacity: 0 };
+            case 'zoom-in': return { scale: 0.86, opacity: 0 };
+            case 'fade-up': default: return { y: DIST, opacity: 0 };
+          }
+        }
+        var groups = new Map();
+        document.querySelectorAll('[data-aos]').forEach(function (el) {
+          var parent = el.parentElement;
+          var type = el.getAttribute('data-aos') || 'fade-up';
+          var groupKey = parent.__gsGroupId || (parent.__gsGroupId = Math.random().toString(36).slice(2));
+          var fullKey = groupKey + '|' + type;
+          if (!groups.has(fullKey)) groups.set(fullKey, []);
+          groups.get(fullKey).push(el);
+        });
+        groups.forEach(function (els) {
+          if (!els.length) return;
+          var type = els[0].getAttribute('data-aos') || 'fade-up';
+          var from = fromVars(type);
+          var isStagger = els.length > 1;
+          gsap.set(els, from);
+          ScrollTrigger.batch(els, {
+            start: 'top 92%', once: true,
+            onEnter: function (batch) {
+              gsap.to(batch, {
+                x: 0, y: 0, scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out',
+                stagger: isStagger ? 0.04 : 0, clearProps: 'willChange'
+              });
+            }
+          });
+        });
+        ScrollTrigger.refresh();
+      })();
+
+    } catch (err) {
+      console.error('Animation setup failed, revealing all content instead:', err);
+      forceRevealEverything();
+    }
+  })();
+</script>
+
+</body>
+</html>
