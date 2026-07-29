@@ -10,7 +10,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
 
     :root {
       --paper: #F1E8D3;
@@ -30,17 +34,24 @@
       --mono: 'JetBrains Mono', monospace;
     }
 
-    html { scroll-behavior: smooth; }
+    /* FIX: Proper smooth scroll setup */
+    html {
+      scroll-behavior: smooth;
+      height: 100%;
+    }
 
     body {
       background: var(--paper);
       font-family: var(--body);
       color: var(--ink);
       min-height: 100vh;
+      min-height: 100dvh; /* dynamic viewport height for mobile */
       position: relative;
       overflow-x: hidden;
+      overflow-y: auto; /* FIX: Allow vertical scrolling */
       display: flex;
       flex-direction: column;
+      -webkit-overflow-scrolling: touch; /* smooth scrolling for iOS */
     }
     a { color: inherit; }
 
@@ -66,11 +77,11 @@
     .streak-bar i { color: var(--stamp); }
 
     /* ---------- Background field ---------- */
-    /* contain limits how much of the page a repaint inside this
-       layer forces the browser to recalculate — cheaper animation frames */
     .field-layer {
-      position: absolute;
+      position: fixed; /* FIX: Use fixed positioning for better performance */
       inset: 0;
+      pointer-events: none; /* FIX: Prevent interaction issues */
+      z-index: 0;
     }
     .field-dots {
       position: absolute;
@@ -97,8 +108,6 @@
       text-transform: uppercase;
       mix-blend-mode: multiply;
       opacity: 0.16;
-      /* promote to its own GPU layer so nothing here forces a
-         full-layer repaint while the form is being typed into */
       will-change: transform;
       transform: translateZ(0);
       backface-visibility: hidden;
@@ -112,9 +121,6 @@
       .compass .needle, .unit-tag::before { animation: none !important; }
     }
 
-    /* on small screens, drop the decorative postmarks entirely —
-       they add paint cost while the form is being typed into and
-       aren't worth it on a cramped viewport */
     @media (max-width: 980px) {
       .postmark { display: none; }
       .compass .needle { animation-duration: 16s; }
@@ -128,6 +134,7 @@
       display: flex;
       align-items: stretch;
       min-height: calc(var(--vh, 1vh) * 100 - 32px);
+      min-height: calc(100dvh - 32px); /* FIX: Use dvh for mobile */
     }
 
     .info-panel {
@@ -425,15 +432,40 @@
 
     @media (max-width: 980px) {
       body { overflow-y: auto; }
-      .stage { flex-direction: column; min-height: auto; }
-      .field-layer { position: absolute; }
-      .info-panel { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 44px; }
-      .signup-panel { flex: unset; padding: 30px 20px 40px; align-items: flex-start; }
-      .signup-card { width: 100%; max-height: none; overflow: visible; }
+      .stage { 
+        flex-direction: column; 
+        min-height: auto; 
+        min-height: 100dvh; /* FIX: Use dvh for mobile */
+      }
+      .field-layer { position: fixed; }
+      .info-panel { 
+        border-right: none; 
+        border-bottom: 1px solid var(--line); 
+        padding: 80px 28px 44px; 
+      }
+      .signup-panel { 
+        flex: unset; 
+        padding: 30px 20px 40px; 
+        align-items: flex-start; 
+      }
+      .signup-card { 
+        width: 100%; 
+        max-height: none; 
+        overflow: visible; 
+      }
+      /* FIX: Ensure smooth scroll works on mobile */
+      .stage {
+        scroll-behavior: smooth;
+      }
     }
+
     @media (max-width: 480px) {
       .signup-card { padding: 30px 22px 26px; }
-      .back-home { position: static; display: inline-flex; margin: 16px 0 0 24px; }
+      .back-home { 
+        position: static; 
+        display: inline-flex; 
+        margin: 16px 0 0 24px; 
+      }
       .social-buttons { flex-direction: column; }
     }
 
@@ -451,7 +483,18 @@
     input::-webkit-search-results-button, input::-webkit-search-results-decoration { display: none; }
     input[type="password"] { padding-right: 4px !important; }
 
-    html, body { overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+    /* FIX: Ensure smooth scrolling on all elements */
+    html, body { 
+      overflow-x: hidden; 
+      -webkit-overflow-scrolling: touch; 
+      scroll-behavior: smooth;
+    }
+    
+    /* FIX: For smooth scrolling on mobile */
+    .stage, .signup-panel, .info-panel {
+      scroll-behavior: smooth;
+    }
+    
     input, textarea { font-size: 16px; }
   </style>
 </head>
